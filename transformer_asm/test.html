@@ -28,14 +28,17 @@
   
     var transformer = new Transformer();
     var ret = transformer.setKey(key);
+    document.write('setKey call return:' + ret  + '<p/>');
     var plain_text = str2ab(testMessage);
     var cipher_text = transformer.transform(plain_text);
     document.write('Transform call:' + cipher_text  + '<p/>');
 
     var ret = transformer.setKey(key);
+    document.write('setKey call return:' + ret  + '<p/>');
     var new_text = transformer.restore(cipher_text);
     document.write('Restore call:' + ab2str(new_text) + '<p/>');
     
+    transformer.dispose();
   </script>
 
 </html>

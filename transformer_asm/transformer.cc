@@ -19,6 +19,15 @@ int create_transformer(void) {
   return -1;
 }
 
+int delete_transformer(int handle) {
+  if (handle < 0 || handle >= kMaxTransformerNum) {
+    return -1;
+  }
+  delete transformer_pool[handle];
+  transformer_pool[handle] = NULL;
+  return 0;
+}
+
 Transformer* _get_transformer_instance(int handle) {
   if (handle < 0 || handle >= kMaxTransformerNum) {
     return NULL;

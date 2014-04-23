@@ -8,6 +8,8 @@ class RabbitTransformer : public Transformer {
 public:
   RabbitTransformer() {};
 
+  virtual ~RabbitTransformer() {};
+
   virtual bool SetKey(const uint8_t* key_str, uint32_t key_len);
 
   virtual bool Configure(const uint8_t* config_data,

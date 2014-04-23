@@ -86,6 +86,14 @@ var Transformer = (function() {
     return result;
   };
 
+  var delete_transformer = Module.cwrap('delete_transformer', 'number',
+                                        ['number']);
+
+  Transformer.prototype.dispose = function() {
+    delete_transformer(this.handle);
+    this.handle = -1;
+  }
+
   return Transformer;
 }());
 

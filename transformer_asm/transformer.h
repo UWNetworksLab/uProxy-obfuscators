@@ -16,6 +16,8 @@ public:
     eTransformDecodeFailed,     // Decoding failed
   };
 
+  virtual ~Transformer() {};
+
   /**
    * Sets the key for transformation and encryption. 
    */
