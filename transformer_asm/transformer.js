@@ -3,6 +3,11 @@ var Transformer = (function() {
   var IV_SIZE = 8;
 
   var create_transformer = Module.cwrap('create_transformer', 'number', []);
+
+  /**
+   * Create a transformer instance. 
+   * @constructor 
+   */
   var Transformer = function() {
     this.handle = create_transformer();
   };
@@ -10,20 +15,30 @@ var Transformer = (function() {
   var set_key = Module.cwrap('set_key', 'number',
                              ['number', 'number', 'number']);
 
-  // key : Uint8Array
+  /**
+   * Sets the key for transformation session. 
+   *  
+   * @param {Uint8Array} key session key. 
+   * @return {boolean} true if successful. 
+   */
   Transformer.prototype.setKey = function(key) {
     var ptr = Module._malloc(key.byteLength);
     var dataHeap = new Uint8Array(Module.HEAPU8.buffer, ptr, key.byteLength);
     dataHeap.set(key);
     var ret = set_key(this.handle, dataHeap.byteOffset, key.byteLength);
     Module._free(dataHeap.byteOffset);
-    return ret;
+    return ret == 0;
   };
 
   var transform = Module.cwrap('transform', 'number',
                                ['number', 'number', 'number', 'number', 'number']);
 
-  // plain_text : Uint8Array
+  /**
+   * Transforms a piece of data to obfuscated form.
+   *  
+   * @param {Uint8Array} plain_text data need to be obfuscated. 
+   * @return {?Uint8Array} obfuscated data, or null if failed. 
+   */
   Transformer.prototype.transform = function(plain_text) {
     var len = plain_text.byteLength;
     var ptr = Module._malloc(len);
@@ -54,7 +69,12 @@ var Transformer = (function() {
     return result;
   }
 
-  // cipher_text: Uint8Array
+  /**
+   * Restores data from obfuscated form to original form.
+   *  
+   * @param {Uint8Array} cipher_text obfuscated data. 
+   * @return {?Uint8Array} original data, or null if failed. 
+   */
   Transformer.prototype.restore = function(cipher_text) {
     var restore = Module.cwrap('restore', 'number',
                                  ['number', 'number', 'number', 'number', 'number']);
@@ -89,6 +109,12 @@ var Transformer = (function() {
   var delete_transformer = Module.cwrap('delete_transformer', 'number',
                                         ['number']);
 
+  /**
+   * Dispose the transformer. 
+   *  
+   * This should be the last method to be called for a transformer 
+   * instance. 
+   */
   Transformer.prototype.dispose = function() {
     delete_transformer(this.handle);
     this.handle = -1;
