@@ -9,7 +9,7 @@ LDFLAGS = -L/usr/local/lib -lgmp
 
 # the build target executable:
 TARGET = main
-OBJ = main.o rank_unrank.o
+OBJ = src/main.o src/rank_unrank.o
 
 all: $(TARGET)
 
