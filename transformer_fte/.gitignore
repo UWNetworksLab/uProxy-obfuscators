@@ -1,6 +1,8 @@
 nbproject
 main
+bin/*
 src/*.o
+src/*/*.o
 thirdparty/gtest-1.7.0/CMakeCache.txt
 thirdparty/gtest-1.7.0/CMakeFiles/
 thirdparty/gtest-1.7.0/Makefile
