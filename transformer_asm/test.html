@@ -29,14 +29,21 @@
     var transformer = new Transformer();
     var ret = transformer.setKey(key);
     document.write('setKey call return:' + ret  + '<p/>');
-    var plain_text = str2ab(testMessage);
-    var cipher_text = transformer.transform(plain_text);
-    document.write('Transform call:' + cipher_text  + '<p/>');
+    var plainText = str2ab(testMessage);
+    var cipherText = transformer.transform(plainText);
+    document.write('Transform call:' + cipherText  + '<p/>');
 
     var ret = transformer.setKey(key);
     document.write('setKey call return:' + ret  + '<p/>');
-    var new_text = transformer.restore(cipher_text);
-    document.write('Restore call:' + ab2str(new_text) + '<p/>');
+    var newText = transformer.restore(cipherText);
+    var newMsg = ab2str(newText);
+    document.write('Restore call:' + newMsg + '<p/>');
+
+    if (newMsg == testMessage) {
+      document.write('Message has been obfuscated and restored successfully.');
+    } else {
+      document.write('Failed in obfuscation/restore round trip transformation.');
+    }
     
     transformer.dispose();
   </script>

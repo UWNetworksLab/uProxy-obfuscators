@@ -7,10 +7,8 @@ OBJ_DIR=objs
 
 CC=$(EMSCRIPTEN_DIR)/emcc
 EXPORTS=-s EXPORTED_FUNCTIONS="['_delete_transformer','_create_transformer','_set_key','_configure','_transform','_flush_transform','_restore']"
-LD_FLAGS = $(EXPORTS)
-#CFLAGS = -O2 -I $(EMSCRIPT_INC_DIR) 
-CFLAGS = -I $(EMSCRIPT_INC_DIR) $(EXPORTS)
-#CFLAGS = -I $(EMSCRIPT_INC_DIR) 
+LD_FLAGS = -O2 $(EXPORTS)
+CFLAGS = -O2 -I $(EMSCRIPT_INC_DIR) $(EXPORTS) 
 
 
 TARGET = transformer_asm.js
