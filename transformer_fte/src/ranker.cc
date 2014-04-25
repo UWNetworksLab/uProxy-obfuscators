@@ -13,13 +13,13 @@
 // You should have received a copy of the GNU General Public License
 // along with libfte.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "rank_unrank.h"
+#include "ranker.h"
 
 #include <assert.h>
 #include <sstream>
 
 /*
- * Please see rank_unrank.h for a detailed explantion of the
+ * Please see ranker.h for a detailed explantion of the
  * methods in this file and their purpose.
  */
 
@@ -37,76 +37,18 @@ array_type_string_t1 tokenize( std::string line, char delim ) {
     return retval;
 }
 
-// Exceptions
-static class _invalid_rank_input: public std::exception
-{
-    virtual const char* what() const throw()
-    {
-        return "Invalid rank input: ensure integer is within the correct range.";
-    }
-} invalid_rank_input;
-
-static class _invalid_unrank_input: public std::exception
-{
-    virtual const char* what() const throw()
-    {
-        return "Invalid unrank input: ensure string is exactly fixed length sizee.";
-    }
-} invalid_unrank_input;
-
-static class _invalid_fst_format: public std::exception
-{
-    virtual const char* what() const throw()
-    {
-        return "Invalid FST format.";
-    }
-} invalid_fst_format;
-
-static class _invalid_fst_exception_state_name: public std::exception
-{
-    virtual const char* what() const throw()
-    {
-        return "Invalid rank_unrank format: rank_unrank has N states, and a state that is not in the range 0,1,...,N-1.";
-    }
-} invalid_fst_exception_state_name;
-
-static class _invalid_fst_exception_symbol_name: public std::exception
-{
-    virtual const char* what() const throw()
-    {
-        return "Invalid rank_unrank format: rank_unrank has symbol that is not in the range 0,1,...,255.";
-    }
-} invalid_fst_exception_symbol_name;
-
-
-static class _invalid_input_exception_not_in_final_states: public std::exception
-{
-    virtual const char* what() const throw()
-    {
-        return "Please verify your input, the string does not result in an accepting path in the rank_unrank.";
-    }
-} invalid_input_exception_not_in_final_states;
-
-static class _symbol_not_in_sigma: public std::exception
-{
-    virtual const char* what() const throw()
-    {
-        return "Please verify your input, it contains a symbol not in the sigma of the rank_unrank.";
-    }
-} symbol_not_in_sigma;
-
 /*
  * Parameters:
- *   dfa_str: a minimized ATT FST formatted rank_unrank, see: http://www2.research.att.com/~fsmtools/fsm/man4/fsm.5.html
- *   max_len: the maxium length to compute rank_unrank::buildTable
+ *   dfa_str: a minimized ATT FST formatted ranker, see: http://www2.research.att.com/~fsmtools/fsm/man4/fsm.5.html
+ *   max_len: the maxium length to compute ranker::buildTable
  */
-rank_unrank::rank_unrank(const std::string dfa_str, const uint32_t max_len)
+ranker::ranker(const std::string dfa_str, const uint32_t max_len)
     : _fixed_slice(max_len),
       _start_state(0),
       _num_states(0),
       _num_symbols(0)
 {
-    // construct the _start_state, _final_states and symbols/states of our rank_unrank
+    // construct the _start_state, _final_states and symbols/states of our ranker
     bool startStateIsntSet = true;
     std::string line;
     std::istringstream my_str_stream(dfa_str);
@@ -139,7 +81,7 @@ rank_unrank::rank_unrank(const std::string dfa_str, const uint32_t max_len)
                 _states.push_back( final_state );
             }
         } else if (split_vec.size()>0) {
-            throw invalid_fst_format;
+            throw _InvalidFstFormat;
         } else {
             // blank line, ignore
         }
@@ -158,7 +100,7 @@ rank_unrank::rank_unrank(const std::string dfa_str, const uint32_t max_len)
         _sigma_reverse.insert( std::pair<char,uint32_t>((char)(_symbols.at(j)), j) );
     }
 
-    // intialize all transitions in our rank_unrank to our dead state
+    // intialize all transitions in our ranker to our dead state
     _delta.resize(_num_states);
     for (j=0; j<_num_states; j++) {
         _delta.at(j).resize(_num_symbols);
@@ -195,41 +137,41 @@ rank_unrank::rank_unrank(const std::string dfa_str, const uint32_t max_len)
         }
     }
 
-    rank_unrank::_validate();
+    ranker::_validate();
 
     // perform our precalculation to speed up (un)ranking
-    rank_unrank::_buildTable();
+    ranker::_buildTable();
 }
 
 
-void rank_unrank::_validate() {
-    // ensure rank_unrank has at least one state
+void ranker::_validate() {
+    // ensure ranker has at least one state
     if (_states.size()==0)
-        throw invalid_fst_format;
+        throw _InvalidFstFormat;
 
-    // ensure rank_unrank has at least one symbol
+    // ensure ranker has at least one symbol
     if (_sigma.size()==0)
-        throw invalid_fst_format;
+        throw _InvalidFstFormat;
     if (_sigma_reverse.size()==0)
-        throw invalid_fst_format;
+        throw _InvalidFstFormat;
 
     // ensure we have N states, labeled 0,1,..N-1
     array_type_uint32_t1::iterator state;
     for (state=_states.begin(); state!=_states.end(); state++) {
         if (*state >= _states.size()) {
-            throw invalid_fst_exception_state_name;
+            throw _InvalidFstStateName;
         }
     }
 
     // ensure all symbols are in the range 0,1,...,255
     for (uint32_t i = 0; i < _symbols.size(); i++) {
         if (_symbols.at(i) > 256) {
-            throw invalid_fst_exception_symbol_name;
+            throw _InvalidSymbol;
         }
     }
 }
 
-void rank_unrank::_buildTable() {
+void ranker::_buildTable() {
     uint32_t i;
     uint32_t q;
     uint32_t a;
@@ -263,15 +205,15 @@ void rank_unrank::_buildTable() {
 }
 
 
-std::string rank_unrank::unrank( const mpz_class c_in ) {
+std::string ranker::unrank( const mpz_class c_in ) {
     std::string retval;
 
-    // throw exception if input integer is not in range of pre-computed value
+    // throw _exception if input integer is not in range of pre-computed value
     mpz_class words_in_slice = getNumWordsInLanguage( _fixed_slice, _fixed_slice );
     if ( c_in > words_in_slice )
-        throw invalid_unrank_input;
+        throw _InvalidUnrankInput;
 
-    // walk the rank_unrank subtracting values from c until we have our n symbols
+    // walk the ranker subtracting values from c until we have our n symbols
     mpz_class c = c_in;
     uint32_t i = 0;
     uint32_t q = _start_state;
@@ -320,21 +262,21 @@ std::string rank_unrank::unrank( const mpz_class c_in ) {
     // bail if our last state q is not in _final_states
     if (find(_final_states.begin(),
              _final_states.end(), q)==_final_states.end()) {
-        throw invalid_input_exception_not_in_final_states;
+        throw _InvalidInputNoAcceptingPaths;
     }
 
     return retval;
 }
 
-mpz_class rank_unrank::rank( const std::string X ) {
+mpz_class ranker::rank( const std::string X ) {
     mpz_class retval = 0;
 
     // verify len(X) is what we expect
     if (X.length()!=_fixed_slice) {
-        throw invalid_rank_input;
+        throw _InvalidRankInput;
     }
 
-    // walk the rank_unrank, adding values from _T to c
+    // walk the ranker, adding values from _T to c
     uint32_t i = 0;
     uint32_t j = 0;
     uint32_t n = X.size();
@@ -346,7 +288,7 @@ mpz_class rank_unrank::rank( const std::string X ) {
         try {
             symbol_as_int = _sigma_reverse.at(X.at(i-1));
         } catch (int e) {
-            throw symbol_not_in_sigma;
+            throw _InvalidSymbol;
         }
 
         if (_delta_dense.at(q)) {
@@ -383,13 +325,13 @@ mpz_class rank_unrank::rank( const std::string X ) {
     // bail if our last state q is not in _final_states
     if (find(_final_states.begin(),
              _final_states.end(), q)==_final_states.end()) {
-        throw invalid_input_exception_not_in_final_states;
+        throw _InvalidInputNoAcceptingPaths;
     }
 
     return retval;
 }
 
-mpz_class rank_unrank::getNumWordsInLanguage( const uint32_t min_word_length,
+mpz_class ranker::getNumWordsInLanguage( const uint32_t min_word_length,
                                       const uint32_t max_word_length )
 {
     // verify min_word_length <= max_word_length <= _fixed_slice

@@ -1,1 +1,9 @@
 nbproject
+main
+src/*.o
+thirdparty/gtest-1.7.0/CMakeCache.txt
+thirdparty/gtest-1.7.0/CMakeFiles/
+thirdparty/gtest-1.7.0/Makefile
+thirdparty/gtest-1.7.0/cmake_install.cmake
+thirdparty/gtest-1.7.0/libgtest.a
+thirdparty/gtest-1.7.0/libgtest_main.a

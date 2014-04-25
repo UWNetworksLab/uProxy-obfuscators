@@ -1,15 +1,18 @@
+GTEST_DIR = thirdparty/gtest-1.7.0
+GMP_DIR = /usr/local/lib
+
 # the compiler: gcc for C program, define as g++ for C++
 CXX = g++
 
 # compiler flags:
 #  -g    adds debugging information to the executable file
 #  -Wall turns on most, but not all, compiler warnings
-CXXFLAGS  = -g -Wall
-LDFLAGS = -L/usr/local/lib -lgmp
+CXXFLAGS  = -g -Wall -I$(GTEST_DIR)/include
+LDFLAGS = -L$(GMP_DIR) -L$(GTEST_DIR) -lgmp -lgtest
 
 # the build target executable:
 TARGET = main
-OBJ = src/main.o src/rank_unrank.o
+OBJ = src/main.o src/ranker.o
 
 all: $(TARGET)
 
