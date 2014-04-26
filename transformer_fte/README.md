@@ -12,7 +12,11 @@ Build
 
 ```
 $ make
+g++ -g -Wall -Isrc -Ithirdparty/gtest-1.7.0/include -c -o src/test.o src/test.cc
+g++ -g -Wall -Isrc -Ithirdparty/gtest-1.7.0/include -c -o src/ranker.o src/ranker.cc
 ...
+$ ls bin
+main	test
 ```
 
 Test
