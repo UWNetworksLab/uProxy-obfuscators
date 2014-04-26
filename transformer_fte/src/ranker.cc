@@ -15,7 +15,6 @@
 
 #include "ranker.h"
 
-#include <iostream>
 #include <assert.h>
 #include <sstream>
 
@@ -60,11 +59,15 @@ ranker::ranker(const std::string dfa_str, const uint32_t max_len)
         array_type_string_t1 split_vec = tokenize( line, '\t' );
         if (split_vec.size() == 4) {
             uint32_t current_state = strtol(split_vec.at(0).c_str(),NULL,10);
+            uint32_t new_state = strtol(split_vec.at(1).c_str(),NULL,10);
             uint32_t symbol = strtol(split_vec.at(2).c_str(),NULL,10);
+
             if (find(_states.begin(), _states.end(), current_state)==_states.end()) {
                 _states.push_back( current_state );
             }
-
+            if (find(_states.begin(), _states.end(), new_state)==_states.end()) {
+                _states.push_back( new_state );
+            }
             if (find(_symbols.begin(), _symbols.end(), symbol)==_symbols.end()) {
                 _symbols.push_back( symbol );
             }
@@ -142,7 +145,6 @@ ranker::ranker(const std::string dfa_str, const uint32_t max_len)
     // perform our precalculation to speed up (un)ranking
     ranker::_buildTable();
 
-    std::cout << getNumWordsInLanguage(0, _fixed_slice) << std::endl;
     if (1 >= getNumWordsInLanguage(0, _fixed_slice)) {
         throw _InvalidInputNoAcceptingPaths;
     }
