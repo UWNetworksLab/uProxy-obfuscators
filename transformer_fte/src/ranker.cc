@@ -15,6 +15,7 @@
 
 #include "ranker.h"
 
+#include <iostream>
 #include <assert.h>
 #include <sstream>
 
@@ -77,9 +78,6 @@ ranker::ranker(const std::string dfa_str, const uint32_t max_len)
             if (find(_final_states.begin(), _final_states.end(), final_state)==_final_states.end()) {
                 _final_states.push_back( final_state );
             }
-            if (find(_states.begin(), _states.end(), final_state)==_states.end()) {
-                _states.push_back( final_state );
-            }
         } else if (split_vec.size()>0) {
             throw _InvalidFstFormat;
         } else {
@@ -137,22 +135,31 @@ ranker::ranker(const std::string dfa_str, const uint32_t max_len)
         }
     }
 
+    
+
     ranker::_validate();
 
     // perform our precalculation to speed up (un)ranking
     ranker::_buildTable();
+
+    std::cout << getNumWordsInLanguage(0, _fixed_slice) << std::endl;
+    if (1 >= getNumWordsInLanguage(0, _fixed_slice)) {
+        throw _InvalidInputNoAcceptingPaths;
+    }
 }
 
 
 void ranker::_validate() {
     // ensure ranker has at least one state
-    if (_states.size()==0)
+    if (0 == _states.size())
+        throw _InvalidFstFormat;
+    if (0 == _final_states.size())
         throw _InvalidFstFormat;
 
     // ensure ranker has at least one symbol
-    if (_sigma.size()==0)
+    if (0 == _sigma.size())
         throw _InvalidFstFormat;
-    if (_sigma_reverse.size()==0)
+    if (0 == _sigma_reverse.size())
         throw _InvalidFstFormat;
 
     // ensure we have N states, labeled 0,1,..N-1

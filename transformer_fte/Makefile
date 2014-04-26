@@ -8,7 +8,7 @@ CXX = g++
 #  -g    adds debugging information to the executable file
 #  -Wall turns on most, but not all, compiler warnings
 CXXFLAGS  = -g -Wall -Isrc -I$(GTEST_DIR)/include
-LDFLAGS = -L$(GMP_DIR) -L$(GTEST_DIR) -lgmp -lgtest
+LDFLAGS = -L$(GMP_DIR) -L$(GTEST_DIR) -lgmpxx -lgmp -lgtest
 
 # the build target executable:
 TARGET_TEST = bin/test
@@ -17,7 +17,10 @@ OBJ_TEST = src/test.o src/ranker.o src/tests/cause_exceptions.o
 TARGET_MAIN = bin/main
 OBJ_MAIN = src/main.o src/ranker.o
 
-all: $(TARGET_TEST) $(TARGET_MAIN)
+all: $(GTEST_DIR)/libgtest.a $(TARGET_TEST) $(TARGET_MAIN)
+
+$(GTEST_DIR)/libgtest.a:
+	cd $(GTEST_DIR) && cmake . && $(MAKE)
 
 %.o: %.cc
 	$(CXX) $(CXXFLAGS) -c -o $@ $<
