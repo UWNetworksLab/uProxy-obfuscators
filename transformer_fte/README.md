@@ -7,14 +7,18 @@ Dependencies
 * make, g++
 * GMP: http://gmplib.org/
 
-Building
---------
+Build
+-----
 
 ```
 $ make
-g++ -g -Wall -Isrc -Ithirdparty/gtest-1.7.0/include -c -o src/test.o src/test.cc
-g++ -g -Wall -Isrc -Ithirdparty/gtest-1.7.0/include -c -o src/ranker.o src/ranker.cc
 ...
+```
+
+Test
+----
+
+```
 $ make test
 [==========] Running 6 tests from 1 test case.
 [----------] Global test environment set-up.
@@ -31,8 +35,8 @@ $ make test
 [  PASSED  ] 6 tests.
 ```
 
-Example Usage
--------------
+Code
+----
 
 ```c++
 #include <iostream>
