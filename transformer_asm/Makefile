@@ -1,12 +1,15 @@
 EMSCRIPTEN_DIR=/Users/shanjian/dev/emsdk_portable/emscripten/1.13.0
 
-SRC=.
+SRC=cc_src
 EMSCRIPT_INC_DIR=$(EMSCRIPTEN_DIR)/system/include/
 OBJ_DIR=objs
 
 
 CC=$(EMSCRIPTEN_DIR)/emcc
-EXPORTS=-s EXPORTED_FUNCTIONS="['_delete_transformer','_create_transformer','_set_key','_configure','_transform','_flush_transform','_restore']"
+EXPORTS=-s EXPORTED_FUNCTIONS="[\
+    '_delete_transformer','_create_transformer',\
+    '_set_key','_set_init_vector','_configure',\
+    '_transform','_flush_transform','_restore']"
 LD_FLAGS = -O2 $(EXPORTS)
 CFLAGS = -O2 -I $(EMSCRIPT_INC_DIR) $(EXPORTS) 
 

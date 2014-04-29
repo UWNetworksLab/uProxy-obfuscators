@@ -2,6 +2,14 @@
 var Transformer = (function() {
   var IV_SIZE = 8;
 
+  var generateRandomUint8Array = function(len) {
+    var vector = new Uint8Array(len);
+    for (var i = 0; i < len; i++) {
+      vector[i] = (Math.random()+'').substr(3) & 255;
+    }
+    return vector;
+  }
+
   var create_transformer = Module.cwrap('create_transformer', 'number', []);
 
   /**
@@ -12,6 +20,7 @@ var Transformer = (function() {
     this.handle = create_transformer();
   };
 
+  // int set_key(int handle, const unsigned char* key, uint32_t key_len)
   var set_key = Module.cwrap('set_key', 'number',
                              ['number', 'number', 'number']);
 
@@ -30,8 +39,26 @@ var Transformer = (function() {
     return ret == 0;
   };
 
+  
+  // int set_init_vector(int handle, const unsigned char* data,
+  //                     uint32_t data_len)
+  var set_init_vector = Module.cwrap('set_init_vector', 'number',
+                                     ['number', 'number', 'number']);
+  var setInitVector = function(handle) {
+    var iv = generateRandomUint8Array(IV_SIZE);
+    var ptr = Module._malloc(iv.byteLength);
+    var dataHeap = new Uint8Array(Module.HEAPU8.buffer, ptr, iv.byteLength);
+    dataHeap.set(iv);
+    var ret = set_init_vector(handle, dataHeap.byteOffset, iv.byteLength);
+    Module._free(dataHeap.byteOffset);
+    return ret == 0;
+  }
+  
+  // int transform(int handle, const uint8_t* data, uint32_t data_len,
+  //               uint8_t* output, uint32_t* output_len) {
   var transform = Module.cwrap('transform', 'number',
-                               ['number', 'number', 'number', 'number', 'number']);
+                               ['number', 'number', 'number', 
+                                'number', 'number']);
 
   /**
    * Transforms a piece of data to obfuscated form.
@@ -40,6 +67,10 @@ var Transformer = (function() {
    * @return {?Uint8Array} obfuscated data, or null if failed. 
    */
   Transformer.prototype.transform = function(plain_text) {
+    if (!setInitVector(this.handle)) {
+      return null;
+    }
+
     var len = plain_text.byteLength;
     var ptr = Module._malloc(len);
     var dataHeap1 = new Uint8Array(Module.HEAPU8.buffer, ptr, len);
@@ -69,6 +100,12 @@ var Transformer = (function() {
     return result;
   }
 
+  // int restore(int handle, const uint8_t* data, uint32_t data_len,
+  //             uint8_t* result, uint32_t* result_len) {
+  var restore = Module.cwrap('restore', 'number',
+                             ['number', 'number', 'number', 'number', 
+                              'number']);
+
   /**
    * Restores data from obfuscated form to original form.
    *  
@@ -76,8 +113,6 @@ var Transformer = (function() {
    * @return {?Uint8Array} original data, or null if failed. 
    */
   Transformer.prototype.restore = function(cipher_text) {
-    var restore = Module.cwrap('restore', 'number',
-                                 ['number', 'number', 'number', 'number', 'number']);
     var len = cipher_text.byteLength;
     var ptr = Module._malloc(len);
     var dataHeap1 = new Uint8Array(Module.HEAPU8.buffer, ptr, len);

@@ -82,8 +82,15 @@ int set_key(int handle, const unsigned char* key, uint32_t key_len) {
   if (instance == NULL) {
     return -1;
   }
-
   return instance->SetKey(key, key_len) ? 0 : -1; 
+}
+
+int set_init_vector(int handle, const unsigned char* data, uint32_t data_len) {
+  Transformer* instance = _get_transformer_instance(handle);
+  if (instance == NULL) {
+    return -1;
+  }
+  return instance->SetInitVector(data, data_len) ? 0 : -1; 
 }
 
 }

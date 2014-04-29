@@ -23,6 +23,14 @@ public:
    */
   virtual bool SetKey(const uint8_t *key_str, uint32_t key_len) = 0;
 
+
+  /**
+   * Sets the initial vector for upcoming transformation session. 
+   *  
+   * The initial vector must be reset for each transformation session. 
+   */
+  virtual bool SetInitVector(const uint8_t* data, uint32_t data_len) = 0;
+
   /**
    * Configures how Transformer should work by passing it a JSON format 
    * configuration string. This method only need to be called once, probably 
