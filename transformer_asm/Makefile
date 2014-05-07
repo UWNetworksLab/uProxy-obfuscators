@@ -1,5 +1,4 @@
-#EMSCRIPTEN_DIR=/Users/shanjian/dev/emsdk_portable/emscripten/1.13.0
-EMSCRIPTEN_DIR=/Users/kpdyer/Downloads/emsdk_portable/emscripten/1.12.0
+EMSCRIPTEN_DIR=/Users/shanjian/dev/emsdk_portable/emscripten/1.13.0
 
 SRC=cc_src
 EMSCRIPT_INC_DIR=$(EMSCRIPTEN_DIR)/system/include/
