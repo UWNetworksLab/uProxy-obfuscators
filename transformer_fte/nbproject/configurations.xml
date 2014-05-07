@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configurationDescriptor version="94">
+  <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
+    <df root="." name="0">
+      <df name="cc_src">
+        <in>rabbit.cc</in>
+        <in>rabbit_transformer.cc</in>
+        <in>transformer.cc</in>
+      </df>
+    </df>
+    <logicalFolder name="ExternalFiles"
+                   displayName="Important Files"
+                   projectFiles="false"
+                   kind="IMPORTANT_FILES_FOLDER">
+      <itemPath>Makefile</itemPath>
+    </logicalFolder>
+  </logicalFolder>
+  <sourceFolderFilter>^(nbproject)$</sourceFolderFilter>
+  <sourceRootList>
+    <Elem>.</Elem>
+  </sourceRootList>
+  <projectmakefile>Makefile</projectmakefile>
+  <confs>
+    <conf name="Default" type="0">
+      <toolsSet>
+        <compilerSet>default</compilerSet>
+        <dependencyChecking>false</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
+      </toolsSet>
+      <flagsDictionary>
+        <element flagsID="0" commonFlags="-nostdinc -O2 -std=c++03"/>
+      </flagsDictionary>
+      <codeAssistance>
+      </codeAssistance>
+      <makefileType>
+        <makeTool>
+          <buildCommandWorkingDir>.</buildCommandWorkingDir>
+          <buildCommand>${MAKE} -f Makefile</buildCommand>
+          <cleanCommand>${MAKE} -f Makefile clean</cleanCommand>
+          <executablePath></executablePath>
+          <ccTool>
+            <incDir>
+              <pElem>../../../../Downloads/emsdk_portable/emscripten/1.12.0/system/local/include</pElem>
+              <pElem>../../../../Downloads/emsdk_portable/emscripten/1.12.0/system/include/compat</pElem>
+              <pElem>../../../../Downloads/emsdk_portable/emscripten/1.12.0/system/include/libcxx</pElem>
+              <pElem>../../../../Downloads/emsdk_portable/emscripten/1.12.0/system/include</pElem>
+              <pElem>../../../../Downloads/emsdk_portable/emscripten/1.12.0/system/include/emscripten</pElem>
+              <pElem>../../../../Downloads/emsdk_portable/emscripten/1.12.0/system/include/bsd</pElem>
+              <pElem>../../../../Downloads/emsdk_portable/emscripten/1.12.0/system/include/libc</pElem>
+              <pElem>../../../../Downloads/emsdk_portable/emscripten/1.12.0/system/include/gfx</pElem>
+              <pElem>../../../../Downloads/emsdk_portable/emscripten/1.12.0/system/include/net</pElem>
+              <pElem>../../../../Downloads/emsdk_portable/emscripten/1.12.0/system/include/SDL</pElem>
+              <pElem>.</pElem>
+            </incDir>
+            <preprocessorList>
+              <Elem>EMSCRIPTEN</Elem>
+              <Elem>__EMSCRIPTEN__</Elem>
+              <Elem>__IEEE_LITTLE_ENDIAN</Elem>
+            </preprocessorList>
+            <undefinedList>
+              <Elem>__APPLE__</Elem>
+              <Elem>__ELF__</Elem>
+              <Elem>__MMX__</Elem>
+              <Elem>__SSE2_MATH__</Elem>
+              <Elem>__SSE2__</Elem>
+              <Elem>__SSE_MATH__</Elem>
+              <Elem>__SSE__</Elem>
+              <Elem>__STRICT_ANSI__</Elem>
+              <Elem>__i386</Elem>
+              <Elem>__i386__</Elem>
+              <Elem>__linux__</Elem>
+              <Elem>__native_client__</Elem>
+              <Elem>__pnacl__</Elem>
+              <Elem>i386</Elem>
+            </undefinedList>
+          </ccTool>
+        </makeTool>
+      </makefileType>
+      <item path="cc_src/rabbit.cc" ex="false" tool="1" flavor2="4">
+        <ccTool flags="0">
+        </ccTool>
+      </item>
+      <item path="cc_src/rabbit_transformer.cc" ex="false" tool="1" flavor2="4">
+        <ccTool flags="0">
+        </ccTool>
+      </item>
+      <item path="cc_src/transformer.cc" ex="false" tool="1" flavor2="4">
+        <ccTool flags="0">
+        </ccTool>
+      </item>
+    </conf>
+  </confs>
+</configurationDescriptor>

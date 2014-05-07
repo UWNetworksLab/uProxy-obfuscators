@@ -24,7 +24,7 @@ all: directories $(TARGET)
 directories: ${OBJ_DIR}
 
 
-_OBJ = rabbit.bc rabbit_transformer.bc transformer.bc
+_OBJ = fte_transformer.bc transformer.bc
 OBJ=$(patsubst %, $(OBJ_DIR)/%, $(_OBJ))
 
 
