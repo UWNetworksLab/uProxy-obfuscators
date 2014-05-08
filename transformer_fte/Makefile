@@ -10,11 +10,11 @@ EXPORTS=-s EXPORTED_FUNCTIONS="[\
     '_delete_transformer','_create_transformer',\
     '_set_key','_set_init_vector','_configure',\
     '_transform','_flush_transform','_restore']"
-LD_FLAGS = -O2 $(EXPORTS)
-CFLAGS = -O2 -I $(EMSCRIPT_INC_DIR) $(EXPORTS) 
+LD_FLAGS = -O2 $(EXPORTS) -L../../libfte/.libs -lfte
+CFLAGS = -O2 -I$(EMSCRIPT_INC_DIR) -I../../../gmp-5.1.3 -I../../libfte/src $(EXPORTS) 
 
 
-TARGET = transformer_asm.js
+TARGET = transformer_fte.js
 
 .PHONY: directories
 
@@ -28,13 +28,13 @@ OBJ=$(patsubst %, $(OBJ_DIR)/%, $(_OBJ))
 
 
 $(TARGET): $(OBJ)
-	$(CC) $(LD_FLAGS) -o $@ $^
+	$(CC) ../../../gmp-5.1.3/.libs/libgmp.a ../../../gmp-5.1.3/.libs/libgmpxx.a $(LD_FLAGS) -o $@ $^
 	
 $(OBJ_DIR):
 	mkdir -p $(OBJ_DIR)
 
 $(OBJ_DIR)/%.bc:    $(SRC)/%.cc
-	$(CC) -o $@ $< $(CFLAGS)
+	$(CC) ../../../gmp-5.1.3/.libs/libgmp.a ../../../gmp-5.1.3/.libs/libgmpxx.a -o $@ $< $(CFLAGS)
 
 .PHONY: clean
 
