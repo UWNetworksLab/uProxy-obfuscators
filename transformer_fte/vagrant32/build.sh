@@ -34,8 +34,8 @@ git clone $GIT_EMSCRIPTEN
 git clone $GIT_EMSCRIPTEN_FASTCOMP
 cd emscripten-fastcomp/tools
 git clone $GIT_EMSCRIPTEN_FASTCOMP_CLANG clang
-cd ..
-../configure --enable-optimized --disable-assertions --enable-targets=host,js
+cd ../..
+./configure --enable-optimized --disable-assertions --enable-targets=host,js
 make -j`nproc`
 
 
@@ -54,7 +54,7 @@ make -j`nproc`
 cd $WORKING_DIR
 git clone $GIT_LIBFTE
 cd libfte
-make .libs/libfte.a
+GMP_DIR=/vagrant/sandbox/gmp-5.1.3 make .libs/libfte.a
 
-em++ -O3 --closure 1 examples/fte.cc -L$GMP_DIR/.libs -lgmp -I$GMP_DIR -o examples/fte.js
+em++ -O3 --closure 1 examples/fte.cc -L$GMP_DIR/.libs -lgmp -I$GMP_DIR -o examples/fte.js -s ALLOW_MEMORY_GROWTH=1
 nodejs examples/fte.js
