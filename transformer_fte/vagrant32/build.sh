@@ -2,18 +2,18 @@
 
 # Tested on 14.04, 32-bit
 
-WORKING_DIR=/vagrant/sandbox
-PATH=$WORKING_DIR/emscripten-fastcomp/Release/bin:$WORKING_DIR/emscripten:$PATH
-LLVM=$WORKING_DIR/emscripten-fastcomp/Release/bin
+export WORKING_DIR=/vagrant/sandbox
+export PATH=$WORKING_DIR/emscripten-fastcomp/Release/bin:$WORKING_DIR/emscripten:$PATH
+export LLVM=$WORKING_DIR/emscripten-fastcomp/Release/bin
 
-GMP_SERVER=ftp.gnu.org
-GMP_VERSION=5.1.3
-GMP_DIR=$WORKING_DIR/gmp-$GMP_VERSION
+export GMP_SERVER=ftp.gnu.org
+export GMP_VERSION=5.1.3
+export GMP_DIR=/vagrant/sandbox/gmp-5.1.3
 
-GIT_LIBFTE=https://github.com/uProxy/libfte.git
-GIT_EMSCRIPTEN=https://github.com/kripken/emscripten.git
-GIT_EMSCRIPTEN_FASTCOMP=https://github.com/kripken/emscripten-fastcomp
-GIT_EMSCRIPTEN_FASTCOMP_CLANG=https://github.com/kripken/emscripten-fastcomp-clang
+export GIT_LIBFTE=https://github.com/uProxy/libfte.git
+export GIT_EMSCRIPTEN=https://github.com/kripken/emscripten.git
+export GIT_EMSCRIPTEN_FASTCOMP=https://github.com/kripken/emscripten-fastcomp
+export GIT_EMSCRIPTEN_FASTCOMP_CLANG=https://github.com/kripken/emscripten-fastcomp-clang
 
 
 ###
