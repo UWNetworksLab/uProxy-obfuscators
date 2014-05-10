@@ -33,6 +33,11 @@ make -j`nproc`
 
 
 ###
+# init emscripten
+$WORKING_DIR/emscripten/emcc
+
+
+###
 # build GMP
 cd $WORKING_DIR
 wget https://$GMP_SERVER/gnu/gmp/gmp-$GMP_VERSION.tar.bz2
@@ -50,9 +55,9 @@ make -j`nproc`
 cd $WORKING_DIR
 git clone $GIT_LIBFTE
 cd libfte
-GMP_DIR=/vagrant/sandbox/gmp-5.1.3 make .libs/libfte.a
+make .libs/libfte.js
 
 
 # validate that we built everything correctly
-em++ -O3 --closure 1 examples/fte.cc -L$GMP_DIR/.libs -lgmp -I$GMP_DIR -o examples/fte.js -s ALLOW_MEMORY_GROWTH=1
-nodejs examples/fte.js
+make bin/main.js
+nodejs bin/main.js
