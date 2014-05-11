@@ -16,6 +16,7 @@ export GIT_EMSCRIPTEN_FASTCOMP=https://github.com/kripken/emscripten-fastcomp
 export GIT_EMSCRIPTEN_FASTCOMP_CLANG=https://github.com/kripken/emscripten-fastcomp-clang
 
 export EMCC_CORES=`nproc`
+export CXXFLAGS="-I$WORKING_DIR/emscripten/system/lib/libcxxabi/include"
 
 ###
 mkdir -p $WORKING_DIR
@@ -51,9 +52,9 @@ cd $WORKING_DIR
 wget https://$GMP_SERVER/gnu/gmp/gmp-$GMP_VERSION.tar.bz2
 tar xvf gmp-*.tar.bz2
 cd gmp-*
-emconfigure ./configure CFLAGS="-g0 -O3" CXXFLAGS="-g0 -O3" ABI=32 --disable-assembly --enable-static --disable-shared
-#sed -i 's/HAVE_LONG_LONG 1/HAVE_LONG_LONG 0/g' config.h
-#sed -i 's/HAVE_LONG_DOUBLE 1/HAVE_LONG_DOUBLE 0/g' config.h
+emconfigure ./configure CFLAGS="-g0 -O3" CXXFLAGS="-g0 -O3" ABI=32 --disable-assembly --disable-static --enable-shared
+sed -i 's/HAVE_LONG_LONG 1/HAVE_LONG_LONG 0/g' config.h
+sed -i 's/HAVE_LONG_DOUBLE 1/HAVE_LONG_DOUBLE 0/g' config.h
 sed -i 's/HAVE_QUAD_T 1/HAVE_QUAD_T 0/g' config.h
 sed -i 's/HAVE_OBSTACK_VPRINTF 1/HAVE_OBSTACK_VPRINTF 0/g' config.h
 make -j`nproc`
@@ -62,13 +63,12 @@ make -j`nproc`
 # build libfte
 cd $WORKING_DIR
 git clone $GIT_LIBFTE
-cd libfte
-cd thirdparty/gtest-*
+cd libfte/thirdparty/gtest-*
 emconfigure ./configure CFLAGS="-g0 -O3" CXXFLAGS="-g0 -O3 -I$WORKING_DIR/emscripten/system/lib/libcxxabi/include" --enable-static --disable-shared
 make -j`nproc`
 
 
 # validate that we built everything correctly
 cd $WORKING_DIR/libfte
-make -j`nproc` bin/test.js
+CFLAGS="-g0 -O3" CXXFLAGS="-g0 -O3 -I$WORKING_DIR/emscripten/system/lib/libcxxabi/include" make -j`nproc` bin/test.js
 nodejs bin/test.js
