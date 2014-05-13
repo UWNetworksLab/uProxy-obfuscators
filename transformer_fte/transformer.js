@@ -70,23 +70,28 @@ var Transformer = (function() {
     if (!setInitVector(this.handle)) {
       return null;
     }
+    
+    // TODO: hard-coded for now
+    var plaintext_len = 128;
+    var ciphertext_len = 128;
 
     var len = plain_text.byteLength;
     var ptr = Module._malloc(len);
     var dataHeap1 = new Uint8Array(Module.HEAPU8.buffer, ptr, len);
     dataHeap1.set(new Uint8Array(plain_text.buffer));
 
-    ptr = Module._malloc(len + IV_SIZE);
-    var dataHeap2 = new Uint8Array(Module.HEAPU8.buffer, ptr, len + IV_SIZE);
+    ptr = Module._malloc(ciphertext_len);
+    var dataHeap2 = new Uint8Array(Module.HEAPU8.buffer, ptr, ciphertext_len);
 
     ptr = Module._malloc(4);
     var dataHeap3 = new Uint8Array(Module.HEAPU8.buffer, ptr, 4);
-    var data = new Uint32Array([plain_text.byteLength + IV_SIZE]);
+    var data = new Uint32Array([ciphertext_len]);
     dataHeap3.set(new Uint8Array(data.buffer));
 
     var ret = transform(this.handle,
                         dataHeap1.byteOffset, plain_text.byteLength,
                         dataHeap2.byteOffset, dataHeap3.byteOffset);
+    
     if (ret != 0) {
       return null;
     }

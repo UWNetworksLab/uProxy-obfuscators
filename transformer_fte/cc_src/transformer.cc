@@ -37,19 +37,24 @@ Transformer* _get_transformer_instance(int handle) {
 
 int transform(int handle, const uint8_t* data, uint32_t data_len,
               uint8_t* output, uint32_t* output_len) {
+    
   Transformer* instance = _get_transformer_instance(handle);
   if (instance == NULL) {
     return -1;
   }
-  std::vector<std::string> transformed_data; 
-  if (!instance->Transform(data, data_len, transformed_data)) {
+  
+  std::vector<std::string> transformed_data;
+  bool success = instance->Transform(data, data_len, transformed_data);
+  if (!success) {
     *output_len = 0;
     return -1;
   }
+  
   if (transformed_data[0].size() > *output_len) {
-    *output_len = transformed_data.size();
+    *output_len = transformed_data[0].size();
     return -1;
   }
+  
   memcpy(output, transformed_data[0].data(), transformed_data[0].size());
   *output_len = transformed_data[0].size();
   return 0;

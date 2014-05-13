@@ -1,19 +1,17 @@
-#ifndef __RABBIT_TRANSFORMER_H__
-#define __RABBIT_TRANSFORMER_H__
-
-#include "transformer.h"
-#include "tests/dfas.h"
-#include "fte/fte.h"
+#ifndef __FTE_TRANSFORMER_H__
+#define __FTE_TRANSFORMER_H__
 
 #include <string>
 
+#include "transformer.h"
+
+#include "fte/fte.h"
+#include "fte/ranking/sample_dfas.h"
+
+
 class FteTransformer : public Transformer {
 public:
-  FteTransformer()
-  : cryptor_(fte::FTE(VALID_DFA_5,128,VALID_DFA_5,128,"FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF"))
-  {
-      cryptor_ = fte::FTE(VALID_DFA_5,128,VALID_DFA_5,128,"FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF");
-  };
+  FteTransformer();
 
   virtual ~FteTransformer() {};
 
@@ -43,4 +41,4 @@ protected:
   std::string  key_;
 };
 
-#endif // __RABBIT_TRANSFORMER_H__
+#endif // __FTE_TRANSFORMER_H__
