@@ -9,6 +9,8 @@ export LLVM=$WORKING_DIR/emscripten-fastcomp/Release/bin
 export GMP_SERVER=ftp.gnu.org
 export GMP_VERSION=5.1.3
 export GMP_DIR=/vagrant/sandbox/gmp-5.1.3
+export GMP_INC_DIR=$GMP_DIR
+export GMP_LIB_DIR=$GMP_DIR/.libs
 
 export GIT_LIBFTE=https://github.com/uProxy/libfte.git
 export GIT_EMSCRIPTEN=https://github.com/kripken/emscripten.git
@@ -63,12 +65,12 @@ make -j`nproc`
 # build libfte
 cd $WORKING_DIR
 git clone $GIT_LIBFTE
-cd libfte/thirdparty/gtest-*
+cd libfte/third_party/gtest-*
 emconfigure ./configure CFLAGS="-g0 -O3" CXXFLAGS="-g0 -O3 -I$WORKING_DIR/emscripten/system/lib/libcxxabi/include" --enable-static --disable-shared
 make -j`nproc`
 
 
 # validate that we built everything correctly
 cd $WORKING_DIR/libfte
-CFLAGS="-g0 -O3" CXXFLAGS="-g0 -O3 -I$WORKING_DIR/emscripten/system/lib/libcxxabi/include" make -j`nproc` bin/test.js
+EMSCRIPTEN=1 CFLAGS="-g0 -O3" CXXFLAGS="-g0 -O3 -I$WORKING_DIR/emscripten/system/lib/libcxxabi/include" make -j`nproc` bin/test.js
 nodejs bin/test.js
