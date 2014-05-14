@@ -72,7 +72,6 @@ var Transformer = (function() {
     }
     
     // TODO: hard-coded for now
-    var plaintext_len = 128;
     var ciphertext_len = 128;
 
     var len = plain_text.byteLength;
