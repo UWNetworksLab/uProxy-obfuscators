@@ -3,13 +3,8 @@
 #include "fte_transformer.h"
 
 FteTransformer::FteTransformer()
-  : cryptor_(fte::FTE(VALID_DFA_5,128,
-                      VALID_DFA_5,128,
-                      "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF"))
 {
-    cryptor_ = fte::FTE(VALID_DFA_5,128,
-                        VALID_DFA_5,128,
-                        "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF");
+
 }
 
 bool FteTransformer::Transform(
@@ -45,5 +40,13 @@ bool FteTransformer::SetKey(const uint8_t* key_str, uint32_t key_len) {
 }
 
 bool FteTransformer::SetInitVector(const uint8_t* data, uint32_t data_len) {
+    return true;
+}
+
+bool FteTransformer::Configure(const uint8_t* data, uint32_t data_len) {
+    cryptor_ = fte::FTE(VALID_DFA_5,128,
+                        VALID_DFA_5,128,
+                        "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF");
+    
     return true;
 }

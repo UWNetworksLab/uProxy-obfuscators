@@ -98,4 +98,12 @@ int set_init_vector(int handle, const unsigned char* data, uint32_t data_len) {
   return instance->SetInitVector(data, data_len) ? 0 : -1; 
 }
 
+int configure(int handle, const unsigned char* data, uint32_t data_len) {
+  Transformer* instance = _get_transformer_instance(handle);
+  if (instance == NULL) {
+    return -1;
+  }
+  return instance->Configure(data, data_len) ? 0 : -1; 
+}
+
 }

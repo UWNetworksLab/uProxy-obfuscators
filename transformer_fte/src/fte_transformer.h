@@ -12,7 +12,7 @@
 class FteTransformer : public Transformer {
 public:
   FteTransformer();
-
+  
   virtual ~FteTransformer() {};
 
   virtual bool SetKey(const uint8_t* key_str, uint32_t key_len);
@@ -20,12 +20,11 @@ public:
   virtual bool SetInitVector(const uint8_t* data, uint32_t data_len);
 
   virtual bool Configure(const uint8_t* config_data,
-                         uint32_t config_data_len) { 
-    return true; 
-  }
+                         uint32_t config_data_len);
 
   virtual bool Transform(const uint8_t* data, uint32_t data_len,
                          std::vector<std::string>& transformed_data);
+  
   virtual bool FlushTransform(std::vector<std::string>& transformed_data);
 
   virtual bool Restore(const uint8_t* data, uint32_t data_len,

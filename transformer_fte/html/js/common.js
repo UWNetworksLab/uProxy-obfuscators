@@ -22,7 +22,8 @@
           key[i] = i;
         }
 
-        var transformer = new Transformer();
+        var transformer = new FteTransformer();        
+        transformer.configure('');
         transformer.setKey(key);
         
         var abPlaintext = str2ab(inputPlaintext);
@@ -41,6 +42,7 @@
         var elapsed = end - start;
         elapsed = elapsed / trials;
     } catch (err) {
+        alert(err);
     } finally {
         transformer.dispose();
     }
@@ -49,7 +51,7 @@
         return [success, elapsed];
     }
     
-    function doTest(inputLanguage, inputMaxLen,
+    /*function doTest(inputLanguage, inputMaxLen,
                     outputLanguage, outputMaxLen,
                     key, inputPlaintext) {
 
@@ -59,7 +61,8 @@
           key[i] = i;
         }
 
-        var transformer = new Transformer();
+        var transformer = new FteTransformer();        
+        transformer.configure('');
         transformer.setKey(key);
         
         var abPlaintext = str2ab(inputPlaintext);
@@ -75,4 +78,4 @@
         
         
         return [success, ciphertext];
-    }
+    }*/
