@@ -9,7 +9,7 @@
     
   <script src="js/common.ts"></script>
   <script src="js/benchmark.data.ts"></script>
-  <script src="js/transformer_fte.ts"></script>
+  <script src="js/transformer_fte.js"></script>
   <script src="js/transformer.ts"></script>
       
     <script>
@@ -50,10 +50,10 @@
         window.onload = function(){ 
           writeTable();
           for (var i = 0; i < testResults.length; i++) {
-            //(function(i) {
-            //    setTimeout(function() {
+            (function(i) {
+                setTimeout(function() {
               fillTable(i);
-            //},100)})(i);
+            },100)})(i);
           }
         };
     </script>

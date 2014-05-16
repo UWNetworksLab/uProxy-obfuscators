@@ -43,9 +43,19 @@ bool FteTransformer::SetInitVector(const uint8_t* data, uint32_t data_len) {
 }
 
 bool FteTransformer::Configure(const uint8_t* data, uint32_t data_len) {
-    cryptor_ = fte::FTE(VALID_DFA_5,128,
-                        VALID_DFA_5,128,
-                        "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF");
 
+    const char * s = reinterpret_cast<const char *>(data);
+    std::string jsonStr = std::string(s, data_len);
+    
+    std::string input_dfa = VALID_DFA_5;
+    uint32_t input_max_len = 128;
+    std::string output_dfa = VALID_DFA_5;
+    uint32_t output_max_len = 128;
+    fte::Key key = "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF";
+    
+    cryptor_ = fte::FTE(input_dfa,input_max_len,
+                        output_dfa,output_max_len,
+                        key);
+    
     return true;
 }
