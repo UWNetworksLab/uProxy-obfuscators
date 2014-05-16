@@ -1,0 +1,61 @@
+<!doctype html>
+<html>
+  <style type="text/css">
+      body { font-family: arial; }
+      thead tr td { font-weight: bold; }
+      tr.fail { background-color:red; }
+  </style>
+    
+  <script src="js/common.js"></script>
+  <script src="js/test_vectors.data.js"></script>
+  <script src="js/transformer_fte.js"></script>
+  <script src="js/transformer.js"></script>
+    
+    <script>
+        function outputTable() {
+            for (var i = 0; i < testResults.length; i++) {
+              retval = doTest(testResults[i]['inputLanguage'], testResults[i]['inputMaxLen'],
+                                                      testResults[i]['outputLanguage'], testResults[i]['outputMaxLen'],
+                                                      testResults[i]['key'], testResults[i]['plaintext']);
+              var success = retval[0];
+              var ciphertext = retval[1];
+            
+              var rowClass = 'fail';  
+              if (success) {
+                  rowClass = 'success';
+              }
+              document.write('<tr class="'+rowClass+'">');
+                  document.write('<td class="testNum">'+(i+1)+'</td>');
+                  document.write('<td class="testInputLanguage">('+testResults[i]['inputLanguage']+', '+testResults[i]['inputMaxLen']+')</td>');
+                  document.write('<td class="testInputLanguage">('+testResults[i]['outputLanguage']+', '+testResults[i]['outputMaxLen']+')</td>');
+                  document.write('<td class="testKey">'+testResults[i]['key']+'</td>');
+                  document.write('<td class="testInputPlaintext">');
+                      document.write(testResults[i]['plaintext']);
+                  document.write('</td>');
+                  document.write('<td class="testOutputCiphertext">');
+                      document.write(ciphertext);
+                  document.write('</td>');
+              document.write('</tr>');
+            }
+        }
+    </script>
+  
+  <body>
+    <table border="1" cellspacing="5">
+        <thead>
+      <tr>
+          <td class="testNum">Test #</td>
+          <td class="testInputLanguage">Input Language</td>
+          <td class="testOutputLanguage">Output Language</td>
+          <td class="testKey">Key</td>
+          <td class="testInputPlaintext">Input Plaintext</td>
+          <td class="testOutputCiphertext">Output Ciphertext</td>
+      </tr>
+    </thead>
+        <script>outputTable();</script>
+    </table>
+      
+  </body>
+  
+</html>
+

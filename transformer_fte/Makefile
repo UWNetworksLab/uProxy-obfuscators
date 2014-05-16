@@ -4,7 +4,7 @@ GMP_INC_DIR=/vagrant/sandbox/gmp-5.1.3
 GMP_LIB_DIR=/vagrant/sandbox/gmp-5.1.3/.libs
 FTE_LIB_DIR=/vagrant/sandbox/libfte
 
-SRC=cc_src
+SRC=src
 EMSCRIPT_INC_DIR=$(EMSCRIPTEN_DIR)/system/include/
 OBJ_DIR=objs
 
@@ -18,7 +18,7 @@ LD_FLAGS = -g0 -O3 --closure 1 $(EXPORTS) -L$(FTE_LIB_DIR) -L$(GMP_LIB_DIR) -L..
 CFLAGS = -g0 -O3 --closure 1 -I$(EMSCRIPT_INC_DIR) -I$(GMP_INC_DIR) -I../../libfte/src $(EXPORTS) 
 
 
-TARGET = transformer_fte.js
+TARGET = html/js/transformer_fte.js
 
 .PHONY: directories
 
