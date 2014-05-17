@@ -54,7 +54,7 @@ cd $WORKING_DIR
 wget https://$GMP_SERVER/gnu/gmp/gmp-$GMP_VERSION.tar.bz2
 tar xvf gmp-*.tar.bz2
 cd gmp-*
-emconfigure ./configure CFLAGS="-g0 -O3" CXXFLAGS="-g0 -O3" ABI=32 --disable-assembly --disable-static --enable-shared
+emconfigure ./configure CFLAGS="-g0 -O3" CPPFLAGS="-g0 -O3" ABI=32 --disable-assembly --disable-static --enable-shared
 sed -i 's/HAVE_LONG_LONG 1/HAVE_LONG_LONG 0/g' config.h
 sed -i 's/HAVE_LONG_DOUBLE 1/HAVE_LONG_DOUBLE 0/g' config.h
 sed -i 's/HAVE_QUAD_T 1/HAVE_QUAD_T 0/g' config.h
