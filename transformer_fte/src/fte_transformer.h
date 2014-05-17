@@ -35,9 +35,8 @@ class FteTransformer : public Transformer {
     }
 
   protected:
-    fte::FTE     cryptor_;
-    std::string  init_vector_;
-    std::string  key_;
+    fte::FTE  cryptor_;
+    fte::Key  key_;
 };
 
 #endif // __FTE_TRANSFORMER_H__

@@ -18,8 +18,8 @@
               var retval  = '';
               retval += '<tr id="row'+i+'">';
               retval += '<td class="testNum">'+(i+1)+'</td>';
-              retval += '<td class="testInputLanguage">('+testResults[i]['inputLanguage']+', '+testResults[i]['inputMaxLen']+')</td>';
-              retval += '<td class="testInputLaguage">('+testResults[i]['outputLanguage']+', '+testResults[i]['outputMaxLen']+')</td>';
+              retval += '<td class="testInputLanguage">('+testResults[i]['inputLanguageRegex']+', '+testResults[i]['inputMaxLen']+')</td>';
+              retval += '<td class="testInputLaguage">('+testResults[i]['outputLanguageRegex']+', '+testResults[i]['outputMaxLen']+')</td>';
               retval += '<td class="testCost">';
               retval += '-';
               retval += '</td>';
@@ -30,8 +30,8 @@
         }
         function fillTable(i) {
   
-              retval = doBenchmark(testResults[i]['inputLanguage'], testResults[i]['inputMaxLen'],
-                                   testResults[i]['outputLanguage'], testResults[i]['outputMaxLen'],
+              retval = doBenchmark(testResults[i]['inputLanguageDFA'], testResults[i]['inputMaxLen'],
+                                   testResults[i]['outputLanguageDFA'], testResults[i]['outputMaxLen'],
                                    testResults[i]['key'], testResults[i]['plaintext']);
               var success = retval[0];
               var elapsed = retval[1];

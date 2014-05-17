@@ -1,5 +1,7 @@
 #include <stdlib.h>
 
+#include "rapidjson/document.h"
+
 #include "fte_transformer.h"
 
 FteTransformer::FteTransformer() {
@@ -35,6 +37,8 @@ bool FteTransformer::FlushTransform(std::vector<std::string>& transformed_data) 
 }
 
 bool FteTransformer::SetKey(const uint8_t* key_str, uint32_t key_len) {
+    const char * s = reinterpret_cast<const char *>(key_str);
+    key_ = std::string(s, key_len);
     return true;
 }
 
@@ -43,14 +47,18 @@ bool FteTransformer::SetInitVector(const uint8_t* data, uint32_t data_len) {
 }
 
 bool FteTransformer::Configure(const uint8_t* data, uint32_t data_len) {
-
+    
+    rapidjson::Document document;
     const char * s = reinterpret_cast<const char *>(data);
     std::string jsonStr = std::string(s, data_len);
+    if (document.Parse<0>(jsonStr.c_str()).HasParseError()) {
+        return false;
+    }
     
-    std::string input_dfa = VALID_DFA_5;
-    uint32_t input_max_len = 128;
-    std::string output_dfa = VALID_DFA_5;
-    uint32_t output_max_len = 128;
+    std::string input_dfa = document["input_dfa"].GetString();
+    uint32_t input_max_len = document["input_max_len"].GetInt();
+    std::string output_dfa = document["output_dfa"].GetString();
+    uint32_t output_max_len = document["output_max_len"].GetInt();
     fte::Key key = "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF";
     
     cryptor_ = fte::FTE(input_dfa,input_max_len,
