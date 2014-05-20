@@ -6,12 +6,6 @@ export WORKING_DIR=/vagrant/sandbox
 export PATH=$WORKING_DIR/emscripten-fastcomp/Release/bin:$WORKING_DIR/emscripten:$PATH
 export LLVM=$WORKING_DIR/emscripten-fastcomp/Release/bin
 
-export GMP_SERVER=ftp.gnu.org
-export GMP_VERSION=5.1.3
-export GMP_DIR=/vagrant/sandbox/gmp-5.1.3
-export GMP_INC_DIR=$GMP_DIR
-export GMP_LIB_DIR=$GMP_DIR/.libs
-
 export GIT_LIBFTE=https://github.com/uProxy/libfte.git
 export GIT_EMSCRIPTEN=https://github.com/kripken/emscripten.git
 export GIT_EMSCRIPTEN_FASTCOMP=https://github.com/kripken/emscripten-fastcomp
@@ -46,20 +40,6 @@ $WORKING_DIR/emscripten/emcc
 #  - using emar provided by emscripten results in archives that cause llvm-nm (and hence the build) to hang
 sudo rm /vagrant/sandbox/emscripten/emar
 sudo ln -s /usr/bin/ar /vagrant/sandbox/emscripten/emar
-
-
-###
-# build GMP
-cd $WORKING_DIR
-wget https://$GMP_SERVER/gnu/gmp/gmp-$GMP_VERSION.tar.bz2
-tar xvf gmp-*.tar.bz2
-cd gmp-*
-emconfigure ./configure CFLAGS="-g0 -O3" CXXFLAGS="-g0 -O3" ABI=32 --disable-assembly --disable-static --enable-shared
-sed -i 's/HAVE_LONG_LONG 1/HAVE_LONG_LONG 0/g' config.h
-sed -i 's/HAVE_LONG_DOUBLE 1/HAVE_LONG_DOUBLE 0/g' config.h
-sed -i 's/HAVE_QUAD_T 1/HAVE_QUAD_T 0/g' config.h
-sed -i 's/HAVE_OBSTACK_VPRINTF 1/HAVE_OBSTACK_VPRINTF 0/g' config.h
-make -j`nproc`
 
 
 # build libfte
