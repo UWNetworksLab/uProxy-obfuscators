@@ -28,9 +28,6 @@ var FteTransformer = (function() {
         return ret == 0;
     };
 
-
-
-
     // int configure(int handle, const unsigned char* data,
     //                     uint32_t data_len)
     var configure = Module.cwrap('configure', 'number', ['number', 'number', 'number']);
@@ -42,8 +39,6 @@ var FteTransformer = (function() {
         Module._free(dataHeap.byteOffset);
         return ret == 0;
     }
-
-
 
     // int set_init_vector(int handle, const unsigned char* data,
     //                     uint32_t data_len)
@@ -69,8 +64,8 @@ var FteTransformer = (function() {
             return null;
         }
 
-        // TODO: hard-coded for now
-        var ciphertext_len = 128;
+        // TODO: this should not be hard-coded, need this to be defined programatically in configure
+        var ciphertext_len = 1024;
 
         var len = plain_text.byteLength;
         var ptr = Module._malloc(len);

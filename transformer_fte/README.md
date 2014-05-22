@@ -1,7 +1,31 @@
-This is a implementation of a simple obfuscation module using FTE. The
-core module is written in C++, compiled to JS using Emscripten.
+fte.js
+======
 
-https://github.com/kripken/emscripten/wiki
+Dependencies
+------------
 
-After emscript SDK is installed, set the "EMSCRIPTEN_DIR" to the installation directory.
+* libfte: https://github.com/uProxy/libfte
+* emscripten: https://github.com/kripken/emscripten
 
+and (included)
+
+* rapidjson: https://code.google.com/p/rapidjson/
+
+Building
+--------
+
+First, you must build libfte with emscripten. Then
+
+```
+emconfigure ./configure
+make
+```
+
+which will produce ```.libs/fte.js```.
+
+Example Usage
+-------------
+
+```
+
+```

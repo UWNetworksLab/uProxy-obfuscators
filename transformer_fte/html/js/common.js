@@ -31,7 +31,6 @@ function doBenchmark(inputLanguage, inputMaxLen,
         for (var i = 0; i < 16; i++) {
             key[i] = 0xFF;
         }
-        //var key = "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF";
 
         var transformer = new FteTransformer();
         
@@ -49,10 +48,10 @@ function doBenchmark(inputLanguage, inputMaxLen,
 
         var abPlaintext = str2ab(inputPlaintext);
         var ciphertext = transformer.transform(abPlaintext);
-        //var abOutputPlaintext = transformer.restore(ciphertext);
-        //var outputPlaintext = ab2str(abOutputPlaintext);
+        var abOutputPlaintext = transformer.restore(ciphertext);
+        var outputPlaintext = ab2str(abOutputPlaintext);
 
-        var success = true;//(outputPlaintext === inputPlaintext);
+        var success = (outputPlaintext === inputPlaintext);
 
         var trials = 100;
         var start = new Date().getTime();
