@@ -2,25 +2,31 @@
 
 # Tested on 14.04, 32-bit
 
-export WORKING_DIR=/vagrant/sandbox
-export PATH=$WORKING_DIR/emscripten-fastcomp/Release/bin:$WORKING_DIR/emscripten:$PATH
-export LLVM=$WORKING_DIR/emscripten-fastcomp/Release/bin
+export WORKING_DIR=/home/vagrant
+export BUILD_DIR=$WORKING_DIR/build
+export INSTALL_DIR=$WORKING_DIR/install
+export PATH=$BUILD_DIR/emscripten-fastcomp/Release/bin:$BUILD_DIR/emscripten:$PATH
+export LLVM=$BUILD_DIR/emscripten-fastcomp/Release/bin
 
-export GIT_LIBFTE=https://github.com/uProxy/libfte.git
 export GIT_EMSCRIPTEN=https://github.com/kripken/emscripten.git
 export GIT_EMSCRIPTEN_FASTCOMP=https://github.com/kripken/emscripten-fastcomp
 export GIT_EMSCRIPTEN_FASTCOMP_CLANG=https://github.com/kripken/emscripten-fastcomp-clang
+export HTTP_GMP=https://ftp.gnu.org/gnu/gmp/gmp-6.0.0a.tar.bz2
+export GIT_LIBFTE=https://github.com/uProxy/libfte.git
+export GIT_OBFUSCATION=https://github.com/uProxy/obfuscation.git
 
 export EMCC_CORES=`nproc`
-export CXXFLAGS="-I$WORKING_DIR/emscripten/system/lib/libcxxabi/include"
+
+# gtest relies on cxxabi, so we need to include this following hack
+export CFLAGS="-O3"
+export CXXFLAGS="-O3 -I$BUILD_DIR/emscripten/system/lib/libcxxabi/include"
 
 ###
-mkdir -p $WORKING_DIR
+mkdir -p $BUILD_DIR
 
 
-###
 # https://github.com/kripken/emscripten/wiki/LLVM-Backend
-cd $WORKING_DIR
+cd $BUILD_DIR
 git clone $GIT_EMSCRIPTEN
 git clone $GIT_EMSCRIPTEN_FASTCOMP
 cd emscripten-fastcomp/tools
@@ -30,27 +36,41 @@ cd ..
 make -j`nproc`
 
 
-###
 # init emscripten
-$WORKING_DIR/emscripten/emcc
+$BUILD_DIR/emscripten/emcc
 
 
-###
 # fix broken emar
-#  - using emar provided by emscripten results in archives that cause llvm-nm (and hence the build) to hang
+#  - using emar provided by emscripten results in archives that cause llvm-nm to hang
 sudo rm /vagrant/sandbox/emscripten/emar
 sudo ln -s /usr/bin/ar /vagrant/sandbox/emscripten/emar
 
 
-# build libfte
-cd $WORKING_DIR
-git clone $GIT_LIBFTE
-cd libfte/third_party/gtest-*
-emconfigure ./configure CFLAGS="-g0 -O3" CXXFLAGS="-g0 -O3 -I$WORKING_DIR/emscripten/system/lib/libcxxabi/include" --enable-static --disable-shared
+# build/install gmp
+cd $BUILD_DIR
+wget $HTTP_GMP
+tar xvf gmp-6.0.0a.tar.bz2
+cd gmp-*
+emconfigure ./configure --prefix=$INSTALL_DIR --disable-assembly --enable-shared --disable-static
+# hack
+sed -i 's/HAVE_OBSTACK_VPRINTF 1/HAVE_OBSTACK_VPRINTF 0/g' config.h
 make -j`nproc`
+cp gmpxx.h $INSTALL_DIR/include/
+make install
 
 
-# validate that we built everything correctly
-cd $WORKING_DIR/libfte
-EMSCRIPTEN=1 CFLAGS="-g0 -O3" CXXFLAGS="-g0 -O3 -I$WORKING_DIR/emscripten/system/lib/libcxxabi/include" make -j`nproc` bin/test.js
-nodejs bin/test.js
+# build libfte
+cd $BUILD_DIR
+git clone $GIT_LIBFTE
+cd libfte
+emconfigure ./configure --prefix=$INSTALL_DIR --with-gmp=$INSTALL_DIR
+make -j`nproc`
+make install
+
+
+# build transformer_fte
+cd $BUILD_DIR
+git clone $GIT_OBFUSCATION
+cd obfuscation/transformer_fte
+emconfigure ./configure --prefix=$INSTALL_DIR --with-libfte=$INSTALL_DIR --with-gmp=$INSTALL_DIR
+make -j`nproc`
