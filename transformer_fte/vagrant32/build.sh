@@ -23,6 +23,7 @@ export CXXFLAGS="-O3 -I$BUILD_DIR/emscripten/system/lib/libcxxabi/include"
 
 ###
 mkdir -p $BUILD_DIR
+mkdir -p $INSTALL_DIR
 
 
 # https://github.com/kripken/emscripten/wiki/LLVM-Backend
@@ -55,7 +56,7 @@ emconfigure ./configure --prefix=$INSTALL_DIR --disable-assembly --enable-shared
 # hack
 sed -i 's/HAVE_OBSTACK_VPRINTF 1/HAVE_OBSTACK_VPRINTF 0/g' config.h
 make -j`nproc`
-cp gmpxx.h $INSTALL_DIR/include/
+cp -f gmpxx.h $INSTALL_DIR/include/
 make install
 
 

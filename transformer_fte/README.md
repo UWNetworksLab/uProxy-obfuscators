@@ -21,7 +21,7 @@ emconfigure ./configure
 make
 ```
 
-which will produce ```.libs/fte.js```.
+which will produce ```fte.js```.
 
 Example Usage
 -------------
