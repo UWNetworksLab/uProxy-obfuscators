@@ -19,8 +19,8 @@ EXPORTS=-s EXPORTED_FUNCTIONS="[\
     '_set_key','_set_init_vector','_configure',\
     '_transform','_flush_transform','_restore']"
 OPTIMIZATION_FLAGS = -O3
-CXXFLAGS = $(OPTIMIZATION_FLAGS) -Wno-warn-absolute-paths -I$(GMP_INC_DIR) -I$(FTE_INC_DIR) -I$(RAPIDJSON_INC_DIR) $(EXPORTS) 
-LDFLAGS = $(OPTIMIZATION_FLAGS) -Wno-warn-absolute-paths $(EXPORTS) -L$(FTE_LIB_DIR) -L$(GMP_LIB_DIR) -L$(FTE_LIB_DIR) -lgmp -lfte
+CXXFLAGS_ = $(CXXFLAGS) $(OPTIMIZATION_FLAGS) -Wno-warn-absolute-paths -I$(GMP_INC_DIR) -I$(FTE_INC_DIR) -I$(RAPIDJSON_INC_DIR) $(EXPORTS) 
+LDFLAGS_ = $(LDFLAGS) $(OPTIMIZATION_FLAGS) -Wno-warn-absolute-paths $(EXPORTS) -L$(FTE_LIB_DIR) -L$(GMP_LIB_DIR) -L$(FTE_LIB_DIR) -lgmp -lfte
 
 TRANSFORMERJS = src/transformer.js
 TARGET_FTEJS = fte.js
@@ -32,11 +32,11 @@ default: $(TARGET_FTEJS)
 FTEJS_OBJS = src/fte_transformer.o src/transformer.o
 
 $(TARGET_FTEJS): $(FTEJS_OBJS)
-	$(CXX) $(LDFLAGS) -o $@ $^
+	$(CXX) $(LDFLAGS_) -o $@ $^
 	cat $(TRANSFORMERJS) >> $(TARGET_FTEJS)
 	
 %.o: $(SRC)/%.cc
-	$(CXX) -o $@ $< $(CXXFLAGS)
+	$(CXX) -o $@ $< $(CXXFLAGS_)
 
 .PHONY: clean
 

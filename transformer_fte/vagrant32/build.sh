@@ -11,9 +11,7 @@ export LLVM=$BUILD_DIR/emscripten-fastcomp/Release/bin
 export GIT_EMSCRIPTEN=https://github.com/kripken/emscripten.git
 export GIT_EMSCRIPTEN_FASTCOMP=https://github.com/kripken/emscripten-fastcomp
 export GIT_EMSCRIPTEN_FASTCOMP_CLANG=https://github.com/kripken/emscripten-fastcomp-clang
-
 export HTTP_GMP=https://ftp.gnu.org/gnu/gmp/gmp-6.0.0a.tar.bz2
-
 export GIT_LIBFTE=https://github.com/uProxy/libfte.git
 export GIT_OBFUSCATION=https://github.com/uProxy/obfuscation.git
 
