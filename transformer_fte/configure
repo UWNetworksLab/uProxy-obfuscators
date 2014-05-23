@@ -1741,10 +1741,7 @@ ac_compiler_gnu=$ac_cv_c_compiler_gnu
 if test "${with_gmp+set}" = set; then :
   withval=$with_gmp; gmpdir="$withval"
 else
-  { { $as_echo "$as_me:${as_lineno-$LINENO}: error: in \`$ac_pwd':" >&5
-$as_echo "$as_me: error: in \`$ac_pwd':" >&2;}
-as_fn_error $? "You must specify the path to the GMP directory
-See \`config.log' for more details" "$LINENO" 5; }
+  gmpdir="/usr/local"
 
 fi
 
@@ -1755,10 +1752,7 @@ fi
 if test "${with_libfte+set}" = set; then :
   withval=$with_libfte; libftedir="$withval"
 else
-  { { $as_echo "$as_me:${as_lineno-$LINENO}: error: in \`$ac_pwd':" >&5
-$as_echo "$as_me: error: in \`$ac_pwd':" >&2;}
-as_fn_error $? "You must specify the path to the libfte directory
-See \`config.log' for more details" "$LINENO" 5; }
+  libftedir="/usr/local"
 
 fi
 
