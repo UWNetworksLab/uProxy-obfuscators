@@ -35,7 +35,7 @@ $(TARGET_FTEJS): $(FTEJS_OBJS)
 	$(CXX) $(LDFLAGS_) -o $@ $^
 	cat $(TRANSFORMERJS) >> $(TARGET_FTEJS)
 	
-%.o: $(SRC)/%.cc
+%.o: %.cc
 	$(CXX) -o $@ $< $(CXXFLAGS_)
 
 .PHONY: clean
