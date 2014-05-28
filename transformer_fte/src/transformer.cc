@@ -1,11 +1,7 @@
 #include "fte_transformer.h"
 
-
-static FteTransformer *the_transformer = NULL;
-
 const int kMaxTransformerNum = 32;
 static Transformer*  transformer_pool[kMaxTransformerNum] = {0};
-
 
 extern "C"  {
 

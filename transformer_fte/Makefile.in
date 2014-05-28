@@ -24,14 +24,23 @@ LDFLAGS_ = $(LDFLAGS) $(OPTIMIZATION_FLAGS) -Wno-warn-absolute-paths $(EXPORTS) 
 
 TRANSFORMERJS = src/transformer.js
 TARGET_FTEJS = html/js/transformer.fte.js
+TARGET_RABBITJS = html/js/transformer.rabbit.js
 
-default: $(TARGET_FTEJS)
+default: $(TARGET_FTEJS) $(TARGET_RABBITJS)
 
 .PHONY: directories
 
-FTEJS_OBJS = src/fte_transformer.o src/transformer.o
+FTEJS_OBJS = src/fte_transformer.o \
+             src/transformer.o
+
+RABBITJS_OBJS = src/rabbit_transformer.o \
+                src/rabbit.o \
+                src/transformer.o
 
 $(TARGET_FTEJS): $(FTEJS_OBJS)
+	$(CXX) $(LDFLAGS_) -o $@ $^
+
+$(TARGET_RABBITJS): $(RABBITJS_OBJS)
 	$(CXX) $(LDFLAGS_) -o $@ $^
 	
 %.o: %.cc
@@ -42,4 +51,6 @@ $(TARGET_FTEJS): $(FTEJS_OBJS)
 clean:
 	rm -f $(FTEJS_OBJS)
 	rm -f $(TARGET_FTEJS)
+	rm -f $(RABBITJS_OBJS)
+	rm -f $(TARGET_RABBITJS)
 
