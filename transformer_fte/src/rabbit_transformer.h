@@ -7,7 +7,7 @@
 #include <string>
 
 class RabbitTransformer : public Transformer {
-public:
+ public:
   RabbitTransformer() {};
 
   virtual ~RabbitTransformer() {};
@@ -17,8 +17,8 @@ public:
   virtual bool SetInitVector(const uint8_t* data, uint32_t data_len);
 
   virtual bool Configure(const uint8_t* config_data,
-                         uint32_t config_data_len) { 
-    return true; 
+                         uint32_t config_data_len) {
+    return true;
   }
 
   virtual bool Transform(const uint8_t* data, uint32_t data_len,
@@ -32,7 +32,7 @@ public:
     return eTransformNoneError;
   }
 
-protected:
+ protected:
   RabbitCryptor cryptor_;
   std::string  init_vector_;
   std::string  key_;

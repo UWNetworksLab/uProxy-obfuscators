@@ -35,9 +35,9 @@ const uint32_t BLOCKLENGTH = 16;
 
 /* Data structures */
 
-/* 
+/*
  * ctx is the structure containing the representation of the
- * internal state of your cipher. 
+ * internal state of your cipher.
  */
 
 struct RABBIT_ctx {
@@ -47,7 +47,7 @@ struct RABBIT_ctx {
 };
 
 struct ctx {
-  /* 
+  /*
    * Put here all state variable needed during the encryption process.
    */
   RABBIT_ctx master_ctx;
@@ -55,7 +55,7 @@ struct ctx {
 };
 
 class RabbitCryptor {
-public:
+ public:
   RABBIT_ctx _master_ctx;
   RABBIT_ctx _work_ctx;
 
@@ -70,7 +70,7 @@ public:
    * (declared here) encrypts byte strings of arbitrary length, while
    * the encrypt_blocks() function (defined later) only accepts
    * lengths which are multiples of BLOCKLENGTH.
-   * 
+   *
    * The user is allowed to make multiple calls to
    * encrypt_blocks() to incrementally encrypt a long message,
    * but he is NOT allowed to make additional encryption calls once he
@@ -90,7 +90,7 @@ public:
    *
    * ivsetup();
    * encrypt_bytes();
-   * 
+   *
    * The following sequence is not:
    *
    * keysetup();
@@ -129,7 +129,7 @@ public:
                      uint8_t *output,
                      uint32_t msglen);
 
-  /* 
+  /*
    * For testing purposes it can sometimes be useful to have a function
    * which immediately generates keystream without having to provide it
    * with a zero plaintext. If your cipher cannot provide this function
@@ -137,8 +137,8 @@ public:
    * reset the GENERATES_KEYSTREAM flag.
    */
   void keystream_bytes(
-      uint8_t *keystream,
-      uint32_t length);                /* Length of keystream in bytes. */
+    uint8_t *keystream,
+    uint32_t length);                /* Length of keystream in bytes. */
 
 
 
@@ -151,14 +151,14 @@ public:
   }
 
   void process_blocks(
-      int action,                 /* 0 = encrypt; 1 = decrypt; */
-      const uint8_t *input,
-      uint8_t *output,
-      uint32_t blocks);                /* Message length in blocks. */
+    int action,                 /* 0 = encrypt; 1 = decrypt; */
+    const uint8_t *input,
+    uint8_t *output,
+    uint32_t blocks);                /* Message length in blocks. */
 
   void keystream_blocks(
-      uint8_t *keystream,
-      uint32_t blocks);                /* Keystream length in blocks. */
+    uint8_t *keystream,
+    uint32_t blocks);                /* Keystream length in blocks. */
 
 };
 

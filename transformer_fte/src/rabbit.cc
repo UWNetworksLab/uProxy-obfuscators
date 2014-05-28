@@ -1,6 +1,6 @@
 /**
- * Rabbit.cc code is ported from rabbit.c by Cyptico A/S. The original code is 
- * free for any use since 10/6, 2008.  
+ * Rabbit.cc code is ported from rabbit.c by Cyptico A/S. The original code is
+ * free for any use since 10/6, 2008.
  */
 
 #include "rabbit.h"
@@ -21,7 +21,7 @@
 /* the upper 32 bits XOR the lower 32 bits */
 static uint32_t RABBIT_g_func(uint32_t x) {
   /* Temporary variables */
-  uint32_t a, b, h, l; 
+  uint32_t a, b, h, l;
 
   /* Construct high and low argument for squaring */
   a = x & 0xFFFF;
@@ -48,22 +48,22 @@ static void RABBIT_next_state(RABBIT_ctx *p_instance) {
   }
 
   /* Calculate new counter values */
-  p_instance->c[0] = 
-      U32V(p_instance->c[0] + 0x4D34D34D + p_instance->carry);
-  p_instance->c[1] = 
-      U32V(p_instance->c[1] + 0xD34D34D3 + (p_instance->c[0] < c_old[0]));
-  p_instance->c[2] = 
-      U32V(p_instance->c[2] + 0x34D34D34 + (p_instance->c[1] < c_old[1]));
-  p_instance->c[3] = 
-      U32V(p_instance->c[3] + 0x4D34D34D + (p_instance->c[2] < c_old[2]));
-  p_instance->c[4] = 
-      U32V(p_instance->c[4] + 0xD34D34D3 + (p_instance->c[3] < c_old[3]));
-  p_instance->c[5] = 
-      U32V(p_instance->c[5] + 0x34D34D34 + (p_instance->c[4] < c_old[4]));
-  p_instance->c[6] = 
-      U32V(p_instance->c[6] + 0x4D34D34D + (p_instance->c[5] < c_old[5]));
-  p_instance->c[7] = 
-      U32V(p_instance->c[7] + 0xD34D34D3 + (p_instance->c[6] < c_old[6]));
+  p_instance->c[0] =
+    U32V(p_instance->c[0] + 0x4D34D34D + p_instance->carry);
+  p_instance->c[1] =
+    U32V(p_instance->c[1] + 0xD34D34D3 + (p_instance->c[0] < c_old[0]));
+  p_instance->c[2] =
+    U32V(p_instance->c[2] + 0x34D34D34 + (p_instance->c[1] < c_old[1]));
+  p_instance->c[3] =
+    U32V(p_instance->c[3] + 0x4D34D34D + (p_instance->c[2] < c_old[2]));
+  p_instance->c[4] =
+    U32V(p_instance->c[4] + 0xD34D34D3 + (p_instance->c[3] < c_old[3]));
+  p_instance->c[5] =
+    U32V(p_instance->c[5] + 0x34D34D34 + (p_instance->c[4] < c_old[4]));
+  p_instance->c[6] =
+    U32V(p_instance->c[6] + 0x4D34D34D + (p_instance->c[5] < c_old[5]));
+  p_instance->c[7] =
+    U32V(p_instance->c[7] + 0xD34D34D3 + (p_instance->c[6] < c_old[6]));
   p_instance->carry = (p_instance->c[7] < c_old[7]);
 
   /* Calculate the g-values */
@@ -85,7 +85,7 @@ static void RABBIT_next_state(RABBIT_ctx *p_instance) {
 /* ------------------------------------------------------------------------- */
 
 
-void RabbitCryptor::keysetup(const uint8_t *key, uint32_t keysize, 
+void RabbitCryptor::keysetup(const uint8_t *key, uint32_t keysize,
                              uint32_t ivsize) {
   /* Temporary variables */
   uint32_t k0, k1, k2, k3, i;
@@ -192,18 +192,18 @@ void RabbitCryptor::process_bytes(int action, const uint8_t *input,
     RABBIT_next_state(&(_work_ctx));
 
     /* Encrypt/decrypt 16 bytes of data */
-    *(uint32_t *)(output + 0) = *(uint32_t *)(input + 0) ^ 
-        U32TO32_LITTLE(_work_ctx.x[0] ^ (_work_ctx.x[5] >> 16) ^ 
-                       U32V(_work_ctx.x[3] << 16));
-    *(uint32_t *)(output + 4) = *(uint32_t *)(input + 4) ^ 
-        U32TO32_LITTLE(_work_ctx.x[2] ^ (_work_ctx.x[7] >> 16) ^ 
-                       U32V(_work_ctx.x[5] << 16));
-    *(uint32_t *)(output + 8) = *(uint32_t *)(input + 8) ^ 
-        U32TO32_LITTLE(_work_ctx.x[4] ^ (_work_ctx.x[1] >> 16) ^ 
-                       U32V(_work_ctx.x[7] << 16));
-    *(uint32_t *)(output + 12) = *(uint32_t *)(input + 12) ^ 
-        U32TO32_LITTLE(_work_ctx.x[6] ^ (_work_ctx.x[3] >> 16) ^ 
-                       U32V(_work_ctx.x[1] << 16));
+    *(uint32_t *)(output + 0) = *(uint32_t *)(input + 0) ^
+                                U32TO32_LITTLE(_work_ctx.x[0] ^ (_work_ctx.x[5] >> 16) ^
+                                    U32V(_work_ctx.x[3] << 16));
+    *(uint32_t *)(output + 4) = *(uint32_t *)(input + 4) ^
+                                U32TO32_LITTLE(_work_ctx.x[2] ^ (_work_ctx.x[7] >> 16) ^
+                                    U32V(_work_ctx.x[5] << 16));
+    *(uint32_t *)(output + 8) = *(uint32_t *)(input + 8) ^
+                                U32TO32_LITTLE(_work_ctx.x[4] ^ (_work_ctx.x[1] >> 16) ^
+                                    U32V(_work_ctx.x[7] << 16));
+    *(uint32_t *)(output + 12) = *(uint32_t *)(input + 12) ^
+                                 U32TO32_LITTLE(_work_ctx.x[6] ^ (_work_ctx.x[3] >> 16) ^
+                                     U32V(_work_ctx.x[1] << 16));
 
     /* Increment pointers and decrement length */
     input += 16;
@@ -218,13 +218,13 @@ void RabbitCryptor::process_bytes(int action, const uint8_t *input,
 
     /* Generate 16 bytes of pseudo-random data */
     *(uint32_t *)(buffer + 0) = U32TO32_LITTLE(
-         _work_ctx.x[0] ^ (_work_ctx.x[5] >> 16) ^ U32V(_work_ctx.x[3] << 16));
+                                  _work_ctx.x[0] ^ (_work_ctx.x[5] >> 16) ^ U32V(_work_ctx.x[3] << 16));
     *(uint32_t *)(buffer + 4) = U32TO32_LITTLE(
-         _work_ctx.x[2] ^ (_work_ctx.x[7] >> 16) ^ U32V(_work_ctx.x[5] << 16));
+                                  _work_ctx.x[2] ^ (_work_ctx.x[7] >> 16) ^ U32V(_work_ctx.x[5] << 16));
     *(uint32_t *)(buffer + 8) = U32TO32_LITTLE(
-         _work_ctx.x[4] ^ (_work_ctx.x[1] >> 16) ^ U32V(_work_ctx.x[7] << 16));
+                                  _work_ctx.x[4] ^ (_work_ctx.x[1] >> 16) ^ U32V(_work_ctx.x[7] << 16));
     *(uint32_t *)(buffer + 12) = U32TO32_LITTLE(
-         _work_ctx.x[6] ^ (_work_ctx.x[3] >> 16) ^ U32V(_work_ctx.x[1] << 16));
+                                   _work_ctx.x[6] ^ (_work_ctx.x[3] >> 16) ^ U32V(_work_ctx.x[1] << 16));
 
     /* Encrypt/decrypt the data */
     for (i = 0; i < msglen; i++) {
@@ -248,13 +248,13 @@ void RabbitCryptor::keystream_bytes(uint8_t *keystream, uint32_t length) {
 
     /* Generate 16 bytes of pseudo-random data */
     *(uint32_t *)(keystream + 0) = U32TO32_LITTLE(
-        _work_ctx.x[0] ^ (_work_ctx.x[5] >> 16) ^ U32V(_work_ctx.x[3] << 16));
+                                     _work_ctx.x[0] ^ (_work_ctx.x[5] >> 16) ^ U32V(_work_ctx.x[3] << 16));
     *(uint32_t *)(keystream + 4) = U32TO32_LITTLE(
-        _work_ctx.x[2] ^ (_work_ctx.x[7] >> 16) ^ U32V(_work_ctx.x[5] << 16));
+                                     _work_ctx.x[2] ^ (_work_ctx.x[7] >> 16) ^ U32V(_work_ctx.x[5] << 16));
     *(uint32_t *)(keystream + 8) = U32TO32_LITTLE(
-        _work_ctx.x[4] ^ (_work_ctx.x[1] >> 16) ^ U32V(_work_ctx.x[7] << 16));
+                                     _work_ctx.x[4] ^ (_work_ctx.x[1] >> 16) ^ U32V(_work_ctx.x[7] << 16));
     *(uint32_t *)(keystream + 12) = U32TO32_LITTLE(
-        _work_ctx.x[6] ^ (_work_ctx.x[3] >> 16) ^ U32V(_work_ctx.x[1] << 16));
+                                      _work_ctx.x[6] ^ (_work_ctx.x[3] >> 16) ^ U32V(_work_ctx.x[1] << 16));
 
     /* Increment pointers and decrement length */
     keystream += 16;
@@ -268,13 +268,13 @@ void RabbitCryptor::keystream_bytes(uint8_t *keystream, uint32_t length) {
 
     /* Generate 16 bytes of pseudo-random data */
     *(uint32_t *)(buffer + 0) = U32TO32_LITTLE(
-        _work_ctx.x[0] ^ (_work_ctx.x[5] >> 16) ^ U32V(_work_ctx.x[3] << 16));
+                                  _work_ctx.x[0] ^ (_work_ctx.x[5] >> 16) ^ U32V(_work_ctx.x[3] << 16));
     *(uint32_t *)(buffer + 4) = U32TO32_LITTLE(
-        _work_ctx.x[2] ^ (_work_ctx.x[7] >> 16) ^ U32V(_work_ctx.x[5] << 16));
+                                  _work_ctx.x[2] ^ (_work_ctx.x[7] >> 16) ^ U32V(_work_ctx.x[5] << 16));
     *(uint32_t *)(buffer + 8) = U32TO32_LITTLE(
-        _work_ctx.x[4] ^ (_work_ctx.x[1] >> 16) ^ U32V(_work_ctx.x[7] << 16));
+                                  _work_ctx.x[4] ^ (_work_ctx.x[1] >> 16) ^ U32V(_work_ctx.x[7] << 16));
     *(uint32_t *)(buffer + 12) = U32TO32_LITTLE(
-        _work_ctx.x[6] ^ (_work_ctx.x[3] >> 16) ^ U32V(_work_ctx.x[1] << 16));
+                                   _work_ctx.x[6] ^ (_work_ctx.x[3] >> 16) ^ U32V(_work_ctx.x[1] << 16));
 
     /* Copy remaining data */
     for (i = 0; i < length; i++) {
@@ -297,13 +297,13 @@ void RabbitCryptor::process_blocks(int action, const uint8_t *input,
 
     /* Encrypt/decrypt 16 bytes of data */
     *(uint32_t *)(output + 0) = *(uint32_t *)(input + 0) ^ U32TO32_LITTLE(
-        _work_ctx.x[0] ^ (_work_ctx.x[5] >> 16) ^ U32V(_work_ctx.x[3] << 16));
+                                  _work_ctx.x[0] ^ (_work_ctx.x[5] >> 16) ^ U32V(_work_ctx.x[3] << 16));
     *(uint32_t *)(output + 4) = *(uint32_t *)(input + 4) ^ U32TO32_LITTLE(
-        _work_ctx.x[2] ^ (_work_ctx.x[7] >> 16) ^ U32V(_work_ctx.x[5] << 16));
+                                  _work_ctx.x[2] ^ (_work_ctx.x[7] >> 16) ^ U32V(_work_ctx.x[5] << 16));
     *(uint32_t *)(output + 8) = *(uint32_t *)(input + 8) ^ U32TO32_LITTLE(
-        _work_ctx.x[4] ^ (_work_ctx.x[1] >> 16) ^ U32V(_work_ctx.x[7] << 16));
+                                  _work_ctx.x[4] ^ (_work_ctx.x[1] >> 16) ^ U32V(_work_ctx.x[7] << 16));
     *(uint32_t *)(output + 12) = *(uint32_t *)(input + 12) ^ U32TO32_LITTLE(
-       _work_ctx.x[6] ^ (_work_ctx.x[3] >> 16) ^ U32V(_work_ctx.x[1] << 16));
+                                   _work_ctx.x[6] ^ (_work_ctx.x[3] >> 16) ^ U32V(_work_ctx.x[1] << 16));
 
     /* Increment pointers to input and output data */
     input += 16;
