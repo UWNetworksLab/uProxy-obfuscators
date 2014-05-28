@@ -6,7 +6,6 @@
 #include "transformer.h"
 
 #include "fte/fte.h"
-#include "fte/ranking/sample_dfas.h"
 
 
 class FteTransformer : public Transformer {

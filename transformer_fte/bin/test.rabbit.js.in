@@ -1,0 +1,4 @@
+for (var i = 0; i < testResults.length; i++) {            
+  retval = doBenchmark(testResults[i]['key'], testResults[i]['plaintext']);
+  console.log(retval);
+}

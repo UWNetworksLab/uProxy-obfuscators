@@ -1,4 +1,13 @@
 var Transformer = (function() {
+  var IV_SIZE = 8;
+
+  var generateRandomUint8Array = function(len) {
+    var vector = new Uint8Array(len);
+    for (var i = 0; i < len; i++) {
+      vector[i] = (Math.random()+'').substr(3) & 255;
+    }
+    return vector;
+  }
 
     var create_transformer = Module.cwrap('create_transformer', 'number', []);
 
@@ -44,7 +53,13 @@ var Transformer = (function() {
     //                     uint32_t data_len)
     var set_init_vector = Module.cwrap('set_init_vector', 'number', ['number', 'number', 'number']);
     var setInitVector = function(handle) {
-        return true;
+    var iv = generateRandomUint8Array(IV_SIZE);
+    var ptr = Module._malloc(iv.byteLength);
+    var dataHeap = new Uint8Array(Module.HEAPU8.buffer, ptr, iv.byteLength);
+    dataHeap.set(iv);
+    var ret = set_init_vector(handle, dataHeap.byteOffset, iv.byteLength);
+    Module._free(dataHeap.byteOffset);
+    return ret == 0;
     }
 
     // int transform(int handle, const uint8_t* data, uint32_t data_len,

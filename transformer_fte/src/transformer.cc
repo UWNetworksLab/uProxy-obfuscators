@@ -1,20 +1,12 @@
-#include "fte_transformer.h"
+#include "transformer.h"
+
+//static FteTransformer *the_transformer = NULL;
 
 const int kMaxTransformerNum = 32;
-static Transformer*  transformer_pool[kMaxTransformerNum] = {0};
+Transformer*  transformer_pool[kMaxTransformerNum] = {0};
 
 extern "C"  {
-
-  int create_transformer(void) {
-    for (int i = 0; i < kMaxTransformerNum; i++) {
-      if (transformer_pool[i] == NULL) {
-        transformer_pool[i] = new FteTransformer();
-        return i;
-      }
-    }
-    return -1;
-  }
-
+ 
   int delete_transformer(int handle) {
     if (handle < 0 || handle >= kMaxTransformerNum) {
       return -1;

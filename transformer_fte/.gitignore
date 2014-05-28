@@ -1,3 +1,9 @@
 config.log
 config.status
 Makefile
+*.o
+*.map
+bin/test.fte.js
+bin/test.rabbit.js
+html/js/transformer.fte.js
+html/js/transformer.rabbit.js

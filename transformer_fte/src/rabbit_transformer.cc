@@ -1,7 +1,4 @@
 #include "rabbit_transformer.h"
-//#include "emscripten/bind.h"
-
-//using namespace emscripten;
 
 #include <stdlib.h>
 
@@ -77,3 +74,4 @@ bool RabbitTransformer::Restore(const uint8_t* data, uint32_t data_len,
   return true;
 }
 
+REGISTER_TRANSPORT(RabbitTransformer);

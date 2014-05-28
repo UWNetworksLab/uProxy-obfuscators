@@ -1,5 +1,7 @@
 #include <stdlib.h>
 
+#include <iostream>
+
 #include "rapidjson/document.h"
 
 #include "fte_transformer.h"
@@ -27,9 +29,7 @@ bool FteTransformer::Restore(const uint8_t* data, uint32_t data_len,
 
   const char * s = reinterpret_cast<const char *>(data);
   std::string datagram(s, data_len);
-  std::string plaintext;
-  cryptor_.Decrypt(datagram, &plaintext);
-  result = plaintext;
+  cryptor_.Decrypt(datagram, &result);
 
   return true;
 }
@@ -49,7 +49,6 @@ bool FteTransformer::SetInitVector(const uint8_t* data, uint32_t data_len) {
 }
 
 bool FteTransformer::Configure(const uint8_t* data, uint32_t data_len) {
-
   rapidjson::Document document;
   const char * s = reinterpret_cast<const char *>(data);
   std::string jsonStr = std::string(s, data_len);
@@ -57,16 +56,19 @@ bool FteTransformer::Configure(const uint8_t* data, uint32_t data_len) {
     return false;
   }
 
-  std::string input_dfa = document["input_dfa"].GetString();
-  uint32_t input_max_len = document["input_max_len"].GetInt();
-  std::string output_dfa = document["output_dfa"].GetString();
-  uint32_t output_max_len = document["output_max_len"].GetInt();
+  std::string plaintext_dfa = document["plaintext_dfa"].GetString();
+  uint32_t plaintext_max_len = document["plaintext_max_len"].GetInt();
+  std::string ciphertext_dfa = document["ciphertext_dfa"].GetString();
+  uint32_t ciphertext_max_len = document["ciphertext_max_len"].GetInt();
   std::string key = "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF";
 
   cryptor_ = fte::Fte();
   cryptor_.set_key(key);
-  cryptor_.SetLanguages(input_dfa,input_max_len,
-                        output_dfa,output_max_len);
+  std::cout << plaintext_max_len << std::endl;
+  cryptor_.SetLanguages(plaintext_dfa, plaintext_max_len,
+                        ciphertext_dfa, ciphertext_max_len);
 
   return true;
 }
+
+REGISTER_TRANSPORT(FteTransformer);

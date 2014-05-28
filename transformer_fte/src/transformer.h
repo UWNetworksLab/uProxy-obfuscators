@@ -4,6 +4,18 @@
 #include <string>
 #include <vector>
 
+#define REGISTER_TRANSPORT(transport_name) extern "C"  { \
+  int create_transformer(void) { \
+    for (int i = 0; i < kMaxTransformerNum; i++) { \
+      if (transformer_pool[i] == NULL) { \
+        transformer_pool[i] = new (transport_name)(); \
+        return i; \
+      } \
+    } \
+    return -1; \
+  } \
+}
+
 class Transformer {
  public:
   enum TransformerError {
@@ -73,5 +85,8 @@ class Transformer {
 
   virtual TransformerError GetErrorInfo(std::string *detail = NULL) = 0;
 };
+
+extern const int kMaxTransformerNum;
+extern Transformer*  transformer_pool[];
 
 #endif // __TRANSFORMER_H__
