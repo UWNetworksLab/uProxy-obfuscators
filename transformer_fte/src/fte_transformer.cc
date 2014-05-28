@@ -14,7 +14,8 @@ bool FteTransformer::Transform(
 
     const char * s = reinterpret_cast<const char *>(data);
     std::string datagram(s, data_len);
-    std::string ciphertext = cryptor_.encrypt(datagram);
+    std::string ciphertext;
+    cryptor_.Encrypt(datagram, &ciphertext);
     transformed_data.push_back(ciphertext);
 
     return true;
@@ -26,7 +27,8 @@ bool FteTransformer::Restore(const uint8_t* data, uint32_t data_len,
 
     const char * s = reinterpret_cast<const char *>(data);
     std::string datagram(s, data_len);
-    std::string plaintext = cryptor_.decrypt(datagram);
+    std::string plaintext;
+    cryptor_.Decrypt(datagram, &plaintext);
     result = plaintext;
 
     return true;
@@ -59,11 +61,12 @@ bool FteTransformer::Configure(const uint8_t* data, uint32_t data_len) {
     uint32_t input_max_len = document["input_max_len"].GetInt();
     std::string output_dfa = document["output_dfa"].GetString();
     uint32_t output_max_len = document["output_max_len"].GetInt();
-    fte::Key key = "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF";
+    std::string key = "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF";
     
-    cryptor_ = fte::FTE(input_dfa,input_max_len,
-                        output_dfa,output_max_len,
-                        key);
+    cryptor_ = fte::Fte();
+    cryptor_.set_key(key);
+    cryptor_.SetLanguages(input_dfa,input_max_len,
+                          output_dfa,output_max_len);
     
     return true;
 }

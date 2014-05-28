@@ -1,4 +1,4 @@
-var FteTransformer = (function() {
+var Transformer = (function() {
 
     var create_transformer = Module.cwrap('create_transformer', 'number', []);
 
@@ -6,7 +6,7 @@ var FteTransformer = (function() {
      * Create a transformer instance.
      * @constructor
      */
-    var FteTransformer = function() {
+    var Transformer = function() {
         this.handle = create_transformer();
     };
 
@@ -19,7 +19,7 @@ var FteTransformer = (function() {
      * @param {Uint8Array} key session key.
      * @return {boolean} true if successful.
      */
-    FteTransformer.prototype.setKey = function(key) {
+    Transformer.prototype.setKey = function(key) {
         var ptr = Module._malloc(key.byteLength);
         var dataHeap = new Uint8Array(Module.HEAPU8.buffer, ptr, key.byteLength);
         dataHeap.set(key);
@@ -31,7 +31,7 @@ var FteTransformer = (function() {
     // int configure(int handle, const unsigned char* data,
     //                     uint32_t data_len)
     var configure = Module.cwrap('configure', 'number', ['number', 'number', 'number']);
-    FteTransformer.prototype.configure = function(jsonStr) {
+    Transformer.prototype.configure = function(jsonStr) {
         var ptr = Module._malloc(jsonStr.byteLength);
         var dataHeap = new Uint8Array(Module.HEAPU8.buffer, ptr, jsonStr.byteLength);
         dataHeap.set(new Uint8Array(jsonStr.buffer));
@@ -59,7 +59,7 @@ var FteTransformer = (function() {
      * @param {Uint8Array} plain_text data need to be obfuscated.
      * @return {?Uint8Array} obfuscated data, or null if failed.
      */
-    FteTransformer.prototype.transform = function(plain_text) {
+    Transformer.prototype.transform = function(plain_text) {
         if (!setInitVector(this.handle)) {
             return null;
         }
@@ -109,7 +109,7 @@ var FteTransformer = (function() {
      * @param {Uint8Array} cipher_text obfuscated data.
      * @return {?Uint8Array} original data, or null if failed.
      */
-    FteTransformer.prototype.restore = function(cipher_text) {
+    Transformer.prototype.restore = function(cipher_text) {
         var len = cipher_text.byteLength;
         var ptr = Module._malloc(len);
         var dataHeap1 = new Uint8Array(Module.HEAPU8.buffer, ptr, len);
@@ -146,10 +146,10 @@ var FteTransformer = (function() {
      * This should be the last method to be called for a transformer
      * instance.
      */
-    FteTransformer.prototype.dispose = function() {
+    Transformer.prototype.dispose = function() {
         delete_transformer(this.handle);
         this.handle = -1;
     }
 
-    return FteTransformer;
+    return Transformer;
 }());
