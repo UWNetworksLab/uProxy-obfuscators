@@ -1,19 +1,19 @@
 uProxy obfuscation
 ==================
 
-The uProxy obfuscation module provides transport-layer resistance from DPI systems.
+The uProxy obfuscation layer provides resistance against large-scale DPI attempts to passively detect uProxy.
 
-The obfuscation layer provides resistance against large-scale DPI attempts to passively detect uProxy. This obfsucation layer does not protect against an adversary that can throw expensive resources (such as people power) to identify a connection.
+This obfsucation layer does not protect against active adversaries, or adversaries that can throw expensive resource (such as people) at identifying connection properties.
 
 Building
 --------
 
-The process of building this library is currently complex enough to require a vagrant script. So far, we've only had success building on a 32-bit Linux guest system.
+The process of building this library is complex enough to require a Vagrant script. So far, we've only had success building this module on a 32-bit Linux guest system.
 
 ### Required software 
 
-* vagrant: https://vagrantup.com/
-* ubuntu vagrant image: https://cloud-images.ubuntu.com/vagrant/trusty/current/trusty-server-cloudimg-i386-vagrant-disk1.box
+* Vagrant: https://vagrantup.com/
+* Ubuntu Vagrant image: https://cloud-images.ubuntu.com/vagrant/trusty/current/trusty-server-cloudimg-i386-vagrant-disk1.box
 
 ### Add an Ubuntu 14.04 32-bit vagrant box
 
