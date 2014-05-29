@@ -13,14 +13,13 @@ GMP_LIB_DIR=$(GMP_DIR)/lib
 
 RAPIDJSON_INC_DIR=$(THIRDPARTY_DIR)/rapidjson/include
 
-SRC=src
 EXPORTS=-s EXPORTED_FUNCTIONS="[\
     '_delete_transformer','_create_transformer',\
     '_set_key','_set_init_vector','_configure',\
     '_transform','_flush_transform','_restore']"
-OPTIMIZATION_FLAGS = -O0
-CXXFLAGS_ = $(CXXFLAGS) $(OPTIMIZATION_FLAGS) -s DISABLE_EXCEPTION_CATCHING=0 -Wno-warn-absolute-paths -I$(GMP_INC_DIR) -I$(FTE_INC_DIR) -I$(RAPIDJSON_INC_DIR) $(EXPORTS) 
-LDFLAGS_ = $(LDFLAGS) $(OPTIMIZATION_FLAGS) -s DISABLE_EXCEPTION_CATCHING=0 -Wno-warn-absolute-paths $(EXPORTS) -L$(FTE_LIB_DIR) -L$(GMP_LIB_DIR) -L$(FTE_LIB_DIR) -lgmp -lfte
+OPTIMIZATION_FLAGS = -O3
+CXXFLAGS_ = $(CXXFLAGS) $(OPTIMIZATION_FLAGS) -Wno-warn-absolute-paths -I$(GMP_INC_DIR) -I$(FTE_INC_DIR) -I$(RAPIDJSON_INC_DIR) $(EXPORTS) 
+LDFLAGS_ = $(LDFLAGS) $(OPTIMIZATION_FLAGS) -Wno-warn-absolute-paths $(EXPORTS) -L$(FTE_LIB_DIR) -L$(GMP_LIB_DIR) -L$(FTE_LIB_DIR) -lgmp -lfte
 
 TRANSFORMERJS = src/transformer.js
 TARGET_TESTFTEJS = bin/test.fte.js
