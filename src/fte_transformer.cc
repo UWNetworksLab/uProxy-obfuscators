@@ -1,7 +1,5 @@
 #include <stdlib.h>
 
-#include <iostream>
-
 #include "rapidjson/document.h"
 
 #include "fte_transformer.h"
@@ -60,11 +58,9 @@ bool FteTransformer::Configure(const uint8_t* data, uint32_t data_len) {
   uint32_t plaintext_max_len = document["plaintext_max_len"].GetInt();
   std::string ciphertext_dfa = document["ciphertext_dfa"].GetString();
   uint32_t ciphertext_max_len = document["ciphertext_max_len"].GetInt();
-  std::string key = "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF";
 
   cryptor_ = fte::Fte();
-  cryptor_.set_key(key);
-  std::cout << plaintext_max_len << std::endl;
+  cryptor_.set_key(key_);
   cryptor_.SetLanguages(plaintext_dfa, plaintext_max_len,
                         ciphertext_dfa, ciphertext_max_len);
 

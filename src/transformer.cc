@@ -1,7 +1,5 @@
 #include "transformer.h"
 
-//static FteTransformer *the_transformer = NULL;
-
 const int kMaxTransformerNum = 32;
 Transformer*  transformer_pool[kMaxTransformerNum] = {0};
 
