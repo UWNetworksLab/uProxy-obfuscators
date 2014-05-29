@@ -27,7 +27,9 @@ bool FteTransformer::Restore(const uint8_t* data, uint32_t data_len,
 
   const char * s = reinterpret_cast<const char *>(data);
   std::string datagram(s, data_len);
-  cryptor_.Decrypt(datagram, &result);
+  std::string plaintext;
+  cryptor_.Decrypt(datagram, &plaintext);
+  result = plaintext;
 
   return true;
 }

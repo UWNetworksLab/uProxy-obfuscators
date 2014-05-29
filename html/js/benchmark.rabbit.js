@@ -1,11 +1,10 @@
 function doBenchmark(key, input_plaintext) {
-        var key = new Uint8Array(16);
-        for (var i = 0; i < 16; i++) {
-            key[i] = 0xFF;
-        }
-
         var transformer = new Transformer();
-        transformer.setKey(key);
+
+        var key = "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF";
+        var ab_key = str2ab8(key);
+        transformer.setKey(ab_key);
+
         var abPlaintext = str2ab(input_plaintext);
         var ciphertext = transformer.transform(abPlaintext);
         transformer.setKey(key);
