@@ -8,7 +8,7 @@ This obfsucation layer does not protect against active adversaries, or adversari
 Building
 --------
 
-The process of building this library is complex enough to require a Vagrant script. So far, we've only had success building this module on a 32-bit Linux guest system.
+The process of building this library is complex enough to require a Vagrant script. (See ```vagrant/build.sh```.) So far, we've only had success building this module on a 32-bit Linux guest system.
 
 ### Required software 
 
