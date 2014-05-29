@@ -21,3 +21,7 @@ function str2ab8(str) {
     }
     return buf;
 }
+
+function ab2str8(buf) {
+    return String.fromCharCode.apply(null, new Uint8Array(buf.buffer));
+}

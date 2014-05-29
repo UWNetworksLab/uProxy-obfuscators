@@ -17,6 +17,7 @@ var Transformer = (function() {
      */
     var Transformer = function() {
         this.handle = create_transformer();
+        this.ciphertext_max_len_ = false;
     };
 
     // int set_key(int handle, const unsigned char* key, uint32_t key_len)
@@ -41,6 +42,9 @@ var Transformer = (function() {
     //                     uint32_t data_len)
     var configure = Module.cwrap('configure', 'number', ['number', 'number', 'number']);
     Transformer.prototype.configure = function(jsonStr) {
+        var jsonStrE = ab2str8(jsonStr);
+        var jsonStrO = JSON.parse(jsonStrE);
+        this.ciphertext_max_len_ = jsonStrO.ciphertext_max_len;
         var ptr = Module._malloc(jsonStr.byteLength);
         var dataHeap = new Uint8Array(Module.HEAPU8.buffer, ptr, jsonStr.byteLength);
         dataHeap.set(new Uint8Array(jsonStr.buffer));
@@ -79,14 +83,15 @@ var Transformer = (function() {
             return null;
         }
 
-        // TODO: this should not be hard-coded, need this to be defined programatically in configure
-        var ciphertext_len = 1024;
-
-        var len = plain_text.byteLength;
-        var ptr = Module._malloc(len);
-        var dataHeap1 = new Uint8Array(Module.HEAPU8.buffer, ptr, len);
+        var plaintext_len = plain_text.byteLength;
+        var ptr = Module._malloc(plaintext_len);
+        var dataHeap1 = new Uint8Array(Module.HEAPU8.buffer, ptr, plaintext_len);
         dataHeap1.set(new Uint8Array(plain_text.buffer));
 
+        var ciphertext_len = plaintext_len;
+        if (this.ciphertext_max_len_) {
+          ciphertext_len = this.ciphertext_max_len_;
+        }
         ptr = Module._malloc(ciphertext_len);
         var dataHeap2 = new Uint8Array(Module.HEAPU8.buffer, ptr, ciphertext_len);
 
