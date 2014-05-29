@@ -1,0 +1,76 @@
+CXX=@CXX@
+
+THIRDPARTY_DIR = third_party
+
+# TODO: no hardcoded vagrant paths
+FTE_DIR=@libftedir@
+FTE_INC_DIR=$(FTE_DIR)/include
+FTE_LIB_DIR=$(FTE_DIR)/lib
+
+GMP_DIR=@gmpdir@
+GMP_INC_DIR=$(GMP_DIR)/include
+GMP_LIB_DIR=$(GMP_DIR)/lib
+
+RAPIDJSON_INC_DIR=$(THIRDPARTY_DIR)/rapidjson/include
+
+SRC=src
+EXPORTS=-s EXPORTED_FUNCTIONS="[\
+    '_delete_transformer','_create_transformer',\
+    '_set_key','_set_init_vector','_configure',\
+    '_transform','_flush_transform','_restore']"
+OPTIMIZATION_FLAGS = -O0
+CXXFLAGS_ = $(CXXFLAGS) $(OPTIMIZATION_FLAGS) -s DISABLE_EXCEPTION_CATCHING=0 -Wno-warn-absolute-paths -I$(GMP_INC_DIR) -I$(FTE_INC_DIR) -I$(RAPIDJSON_INC_DIR) $(EXPORTS) 
+LDFLAGS_ = $(LDFLAGS) $(OPTIMIZATION_FLAGS) -s DISABLE_EXCEPTION_CATCHING=0 -Wno-warn-absolute-paths $(EXPORTS) -L$(FTE_LIB_DIR) -L$(GMP_LIB_DIR) -L$(FTE_LIB_DIR) -lgmp -lfte
+
+TRANSFORMERJS = src/transformer.js
+TARGET_TESTFTEJS = bin/test.fte.js
+TARGET_TESTRABBITJS = bin/test.rabbit.js
+TARGET_FTEJS = html/js/transformer.fte.js
+TARGET_RABBITJS = html/js/transformer.rabbit.js
+
+default: $(TARGET_FTEJS) $(TARGET_RABBITJS) $(TARGET_TESTFTEJS) $(TARGET_TESTRABBITJS)
+
+.PHONY: directories
+
+FTEJS_OBJS = src/fte_transformer.o \
+             src/transformer.o
+
+RABBITJS_OBJS = src/rabbit_transformer.o \
+                src/rabbit.o \
+                src/transformer.o
+
+$(TARGET_FTEJS): $(FTEJS_OBJS)
+	$(CXX) $(LDFLAGS_) -o $@ $^
+
+$(TARGET_RABBITJS): $(RABBITJS_OBJS)
+	$(CXX) $(LDFLAGS_) -o $@ $^
+
+$(TARGET_TESTFTEJS): $(TARGET_FTEJS)
+	cat $(TARGET_FTEJS) > $(TARGET_TESTFTEJS)
+	cat html/js/transformer.js >> $(TARGET_TESTFTEJS)
+	cat html/js/common.js >> $(TARGET_TESTFTEJS)
+	cat html/js/benchmark.data.js >> $(TARGET_TESTFTEJS)
+	cat html/js/benchmark.fte.js >> $(TARGET_TESTFTEJS)
+	cat bin/test.fte.js.in >> $(TARGET_TESTFTEJS)
+
+$(TARGET_TESTRABBITJS): $(TARGET_RABBITJS)
+	cat $(TARGET_RABBITJS) > $(TARGET_TESTRABBITJS)
+	cat html/js/transformer.js >> $(TARGET_TESTRABBITJS)
+	cat html/js/common.js >> $(TARGET_TESTRABBITJS)
+	cat html/js/benchmark.data.js >> $(TARGET_TESTRABBITJS)
+	cat html/js/benchmark.rabbit.js >> $(TARGET_TESTRABBITJS)
+	cat bin/test.rabbit.js.in >> $(TARGET_TESTRABBITJS)
+
+	
+%.o: %.cc
+	$(CXX) -o $@ $< $(CXXFLAGS_)
+
+.PHONY: clean
+
+clean:
+	rm -f $(FTEJS_OBJS)
+	rm -f $(TARGET_FTEJS)
+	rm -f $(RABBITJS_OBJS)
+	rm -f $(TARGET_RABBITJS)
+	rm -f $(TARGET_TESTFTEJS)
+	rm -f $(TARGET_TESTRABBITJS)
