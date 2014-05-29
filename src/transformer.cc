@@ -4,7 +4,7 @@ const int kMaxTransformerNum = 32;
 Transformer*  transformer_pool[kMaxTransformerNum] = {0};
 
 extern "C"  {
- 
+
   int delete_transformer(int handle) {
     if (handle < 0 || handle >= kMaxTransformerNum) {
       return -1;

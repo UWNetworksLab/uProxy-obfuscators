@@ -1,7 +1,7 @@
 uProxy obfuscation
 ==================
 
-The uProxy obfuscation model provide transport-layer resistance to DPI systems.
+The uProxy obfuscation module provides transport-layer resistance from DPI systems.
 
 The obfuscation layer provides resistance against large-scale DPI attempts to passively detect uProxy. This obfsucation layer does not protect against an adversary that can throw expensive resources (such as people power) to identify a connection.
 

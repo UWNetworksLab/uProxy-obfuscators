@@ -2,5 +2,5 @@ for (var i = 0; i < testResults.length; i++) {
   retval = doBenchmark(testResults[i]['inputLanguageDFA'], testResults[i]['inputMaxLen'],
                                    testResults[i]['outputLanguageDFA'], testResults[i]['outputMaxLen'],
                                    testResults[i]['key'], testResults[i]['plaintext']);
-console.log(retval);
+  console.log(retval);
 }

@@ -85,7 +85,7 @@ make install
 # build transformer_fte
 cd $BUILD_DIR
 git clone $GIT_OBFUSCATION
-cd obfuscation/transformer_fte
+cd obfuscation
 emconfigure ./configure
 make -j`nproc`
 
