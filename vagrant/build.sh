@@ -76,5 +76,5 @@ git clone $GIT_OBFUSCATION
 cd obfuscation/transformer_fte
 emconfigure ./configure
 make -j`nproc`
-cp -f fte.js /vagrant/
-cp -fr html /vagrant/
+mkdir -p /vagrant/build
+cp -fr html /vagrant/build

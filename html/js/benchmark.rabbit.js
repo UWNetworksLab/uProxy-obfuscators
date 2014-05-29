@@ -1,6 +1,4 @@
 function doBenchmark(key, input_plaintext) {
-var success = true;
-var elapsed = 0.1;
         var key = new Uint8Array(16);
         for (var i = 0; i < 16; i++) {
             key[i] = 0xFF;
