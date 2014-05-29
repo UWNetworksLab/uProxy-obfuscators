@@ -41,6 +41,7 @@ bool FteTransformer::FlushTransform(std::vector<std::string>& transformed_data) 
 bool FteTransformer::SetKey(const uint8_t* key_str, uint32_t key_len) {
   const char * s = reinterpret_cast<const char *>(key_str);
   key_ = std::string(s, key_len);
+  cryptor_.set_key(key_);
   return true;
 }
 

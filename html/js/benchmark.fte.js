@@ -1,6 +1,10 @@
-function doBenchmark(plaintext_dfa, plaintext_max_len,
-                     ciphertext_dfa, ciphertext_max_len,
-                     key, input_plaintext) {
+function doBenchmark(plaintext_regex, plaintext_max_len,
+                     ciphertext_regex, ciphertext_max_len) {
+
+        var input_plaintext = "Hello, World!";
+
+        var plaintext_dfa = regex2dfa(plaintext_regex);
+        var ciphertext_dfa = regex2dfa(ciphertext_regex);
 
         var transformer = new Transformer();
         
