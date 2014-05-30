@@ -1,4 +1,4 @@
-function doBenchmark(plaintext_len) {
+function do_rabbit_benchmark(plaintext_len) {
   var transformer = new Transformer();
 
   var key = "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF";

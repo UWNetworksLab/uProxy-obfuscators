@@ -1,4 +1,6 @@
 for (var i = 0; i < test_languages.length; i++) {            
-  retval = doBenchmark(test_languages[i]['plaintext_max_len']);
-  console.log(retval);
+  retval = do_rabbit_benchmark(test_languages[i]['plaintext_max_len']);
+  console.log(["plaintext len (bytes) = " + test_languages[i]['plaintext_max_len'],
+               "avg. encrypt cost (ms) = " + retval[0],
+               "success = " + retval[1]]);
 }

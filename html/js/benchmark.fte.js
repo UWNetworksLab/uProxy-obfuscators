@@ -1,4 +1,4 @@
-function doBenchmark(plaintext_regex, plaintext_max_len,
+function do_fte_benchmark(plaintext_regex, plaintext_max_len,
   ciphertext_regex, ciphertext_max_len) {
 
   var input_plaintext = "Hello, World!";
