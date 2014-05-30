@@ -30,7 +30,7 @@
         }
         function fillTable(i) {
   
-              retval = doBenchmark(test_languages[i]['plaintext_max_len']);
+              retval = do_rabbit_benchmark(test_languages[i]['plaintext_max_len']);
               var success = retval[0];
               var elapsed = retval[1];
             
