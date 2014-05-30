@@ -32,11 +32,11 @@ default: $(TARGET_FTEJS) $(TARGET_RABBITJS) $(TARGET_TESTFTEJS) $(TARGET_TESTRAB
 .PHONY: directories
 
 FTEJS_OBJS = src/fte_transformer.o \
-             src/transformer.o
+             src/transformer_factory.o
 
 RABBITJS_OBJS = src/rabbit_transformer.o \
                 src/rabbit.o \
-                src/transformer.o
+                src/transformer_factory.o
 
 $(TARGET_FTEJS): $(FTEJS_OBJS)
 	$(CXX) $(LDFLAGS_) -o $@ $^
