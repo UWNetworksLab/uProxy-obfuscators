@@ -1,22 +1,25 @@
-function doBenchmark(key, input_plaintext) {
+function doBenchmark(plaintext_len) {
         var transformer = new Transformer();
 
         var key = "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF";
         var ab_key = str2ab8(key);
         transformer.setKey(ab_key);
 
-        var abPlaintext = str2ab(input_plaintext);
-        var ciphertext = transformer.transform(abPlaintext);
-        transformer.setKey(key);
-        var abOutputPlaintext = transformer.restore(ciphertext);
-        var outputPlaintext = ab2str(abOutputPlaintext);
+        var input_plaintext = "";
+        for (var i = 0; i < plaintext_len; ++i) {
+            input_plaintext += "x";
+        }
+        var ab_plaintext = str2ab(input_plaintext);
+        var ciphertext = transformer.transform(ab_plaintext);
+        var ab_output_plaintext = transformer.restore(ciphertext);
+        var output_plaintext = ab2str(ab_output_plaintext);
 
-        var success = (outputPlaintext === input_plaintext);
+        var success = (output_plaintext === input_plaintext);
 
         var trials = 100;
         var start = new Date().getTime();
         for (var i = 0; i < trials; i++) {
-            transformer.transform(abPlaintext);
+            transformer.transform(ab_plaintext);
         }
         var end = new Date().getTime();
         var elapsed = end - start;

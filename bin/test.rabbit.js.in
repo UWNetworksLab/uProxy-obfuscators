@@ -1,4 +1,4 @@
 for (var i = 0; i < test_languages.length; i++) {            
-  retval = doBenchmark();
+  retval = doBenchmark(test_languages[i]['plaintext_max_len']);
   console.log(retval);
 }
