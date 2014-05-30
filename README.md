@@ -40,7 +40,7 @@ wait roughly 1-2 hours, then
 $ ls build/html/
 benchmark.fte.html  benchmark.rabbit.html  js
 $ ls build/html/js/
-benchmark.data.js  benchmark.fte.js  benchmark.rabbit.js  common.js  transformer.js transformer.fte.js transformer.rabbit.js
+benchmark.data.js  benchmark.fte.js  benchmark.rabbit.js  common.js regex2dfa.js transformer.fte.js transformer.rabbit.js
 ```
 
 Example Usage
@@ -55,8 +55,6 @@ Include the following scripts on your page.
 <script src="js/common.js"></script>
 <!-- Provides the emscripten-compiled FteTransformer. -->
 <script src="js/transformer.fte.js"></script>
-<!-- Provides the generic Transformer API. -->
-<script src="js/transformer.js"></script>
 ```
 
 Then one can invoke the FTE transformer as follows.
@@ -99,8 +97,6 @@ Include the following scripts on your page.
 <script src="js/common.js"></script>
 <!-- Provides the emscripten-compiled RabbitTransformer. -->
 <script src="js/transformer.rabbit.js"></script>
-<!-- Provides the generic Transformer API. -->
-<script src="js/transformer.js"></script>
 ```
 
 Then one can invoke the Rabbit transformer as follows.

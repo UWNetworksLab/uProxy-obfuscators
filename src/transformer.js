@@ -88,7 +88,7 @@ var Transformer = (function() {
         var dataHeap1 = new Uint8Array(Module.HEAPU8.buffer, ptr, plaintext_len);
         dataHeap1.set(new Uint8Array(plaintext.buffer));
 
-        var ciphertext_len = plaintext_len;
+        var ciphertext_len = plaintext_len + IV_SIZE;
         if (this.ciphertext_max_len_) {
           ciphertext_len = this.ciphertext_max_len_;
         }
@@ -114,6 +114,7 @@ var Transformer = (function() {
         Module._free(dataHeap1.byteOffset);
         Module._free(dataHeap2.byteOffset);
         Module._free(dataHeap3.byteOffset);
+
         return result;
     }
 

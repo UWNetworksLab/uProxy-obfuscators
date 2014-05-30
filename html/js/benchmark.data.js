@@ -9,18 +9,6 @@ var test_languages = [
         'plaintext_regex': '^.+$',
         'plaintext_max_len': 256,
         'ciphertext_regex': '^.+$',
-        'ciphertext_max_len': 256 
-    },
-    {
-        'plaintext_regex': '^.+$',
-        'plaintext_max_len': 512,
-        'ciphertext_regex': '^.+$',
-        'ciphertext_max_len': 512
-    },
-    {
-        'plaintext_regex': '^.+$',
-        'plaintext_max_len': 1024,
-        'ciphertext_regex': '^.+$',
-        'ciphertext_max_len': 1024
+        'ciphertext_max_len': 256
     }
 ];
