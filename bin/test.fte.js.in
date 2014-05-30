@@ -1,6 +1,10 @@
-for (var i = 0; i < testResults.length; i++) {            
-  retval = doBenchmark(testResults[i]['inputLanguageDFA'], testResults[i]['inputMaxLen'],
-                                   testResults[i]['outputLanguageDFA'], testResults[i]['outputMaxLen'],
-                                   testResults[i]['key'], testResults[i]['plaintext']);
-  console.log(retval);
+for (var i = 0; i < test_languages.length; i++) {            
+  retval = do_fte_benchmark(test_languages[i]['plaintext_regex'],
+                            test_languages[i]['plaintext_max_len'],
+                            test_languages[i]['ciphertext_regex'],
+                            test_languages[i]['ciphertext_max_len']);
+  console.log(["fte",[test_languages[i]['plaintext_regex'],
+                            test_languages[i]['plaintext_max_len'],
+                            test_languages[i]['ciphertext_regex'],
+                            test_languages[i]['ciphertext_max_len']], "avg. cost (ms) = "+retval[1], "success = "+retval[0]]);
 }

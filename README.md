@@ -40,7 +40,7 @@ wait roughly 1-2 hours, then
 $ ls build/html/
 benchmark.fte.html  benchmark.rabbit.html  js
 $ ls build/html/js/
-benchmark.data.js  benchmark.fte.js  benchmark.rabbit.js  common.js  transformer.js transformer.fte.js transformer.rabbit.js
+benchmark.data.js  benchmark.fte.js  benchmark.rabbit.js  common.js regex2dfa.js transformer.fte.js transformer.rabbit.js
 ```
 
 Example Usage
@@ -53,10 +53,10 @@ Include the following scripts on your page.
 ```html
 <!-- Provides str2ab and ab2str functions. -->
 <script src="js/common.js"></script>
+<!-- Provides regex2dfa. -->
+<script src="js/regex2dfa.js"></script>
 <!-- Provides the emscripten-compiled FteTransformer. -->
 <script src="js/transformer.fte.js"></script>
-<!-- Provides the generic Transformer API. -->
-<script src="js/transformer.js"></script>
 ```
 
 Then one can invoke the FTE transformer as follows.
@@ -64,21 +64,18 @@ Then one can invoke the FTE transformer as follows.
 ```javascript
 var transformer = new Transformer();
 
-var key = new Uint8Array(16);
-for (var i = 0; i < 16; i++) {
-  key[i] = 0xFF;
-}
-transformer.setKey(key);
+var key = "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF";
+var ab_key = str2ab8(key);
+transformer.setKey(ab_key);
         
 // The plaintext_dfa and ciphertext_dfa strings are AT&T-formatted DFAs.
 // The plaintext_max_len and ciphertext_max_len are the largest strings
 //   we'll encrypt/decrypt.
 var jsonObj = {
-  'plaintext_dfa': plaintext_dfa,
-  'plaintext_max_len': plaintext_max_len,
-  'ciphertext_dfa': ciphertext_dfa,
-  'ciphertext_max_len': ciphertext_max_len
-};
+  'plaintext_dfa': regex2dfa("^.+$"),
+  'plaintext_max_len': 128,
+  'ciphertext_dfa': regex2dfa("^.+$"),,
+  'ciphertext_max_len': 128
         
 var json_str = JSON.stringify(jsonObj);
 var ab_json_str = str2ab8(json_str);
@@ -99,8 +96,6 @@ Include the following scripts on your page.
 <script src="js/common.js"></script>
 <!-- Provides the emscripten-compiled RabbitTransformer. -->
 <script src="js/transformer.rabbit.js"></script>
-<!-- Provides the generic Transformer API. -->
-<script src="js/transformer.js"></script>
 ```
 
 Then one can invoke the Rabbit transformer as follows.
@@ -108,11 +103,9 @@ Then one can invoke the Rabbit transformer as follows.
 ```javascript
 var transformer = new Transformer();
 
-var key = new Uint8Array(16);
-for (var i = 0; i < 16; i++) {
-  key[i] = 0xFF;
-}
-transformer.setKey(key);
+var key = "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF";
+var ab_key = str2ab8(key);
+transformer.setKey(ab_key);
 
 var ab_plaintext = str2ab(input_plaintext);
 var ciphertext = transformer.transform(ab_plaintext);

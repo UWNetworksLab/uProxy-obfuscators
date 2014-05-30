@@ -1,49 +1,45 @@
-function doBenchmark(plaintext_dfa, plaintext_max_len,
-    ciphertext_dfa, ciphertext_max_len,
-    key, input_plaintext) {
+function do_fte_benchmark(plaintext_regex, plaintext_max_len,
+  ciphertext_regex, ciphertext_max_len) {
 
-    try {
-        var key = new Uint8Array(16);
-        for (var i = 0; i < 16; i++) {
-            key[i] = 0xFF;
-        }
+  var input_plaintext = "Hello, World!";
 
-        var transformer = new Transformer();
-        
-        var jsonObj = {
-            'plaintext_dfa': plaintext_dfa,
-            'plaintext_max_len': plaintext_max_len,
-            'ciphertext_dfa': ciphertext_dfa,
-            'ciphertext_max_len': ciphertext_max_len
-        };
-        
-        var jsonStr = JSON.stringify(jsonObj);
-        var abJsonStr = str2ab8(jsonStr);
-        transformer.configure(abJsonStr);
-        transformer.setKey(key);
+  var plaintext_dfa = regex2dfa(plaintext_regex);
+  var ciphertext_dfa = regex2dfa(ciphertext_regex);
 
-        var abPlaintext = str2ab(input_plaintext);
-        var ciphertext = transformer.transform(abPlaintext);
-        var abOutputPlaintext = transformer.restore(ciphertext);
-        var outputPlaintext = ab2str(abOutputPlaintext);
+  var transformer = new Transformer();
 
-        var success = (outputPlaintext === input_plaintext);
+  var key = "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF";
+  var ab_key = str2ab8(key);
+  transformer.setKey(ab_key);
 
-        var trials = 100;
-        var start = new Date().getTime();
-        for (var i = 0; i < trials; i++) {
-            transformer.transform(abPlaintext);
-        }
-        var end = new Date().getTime();
-        var elapsed = end - start;
-        elapsed = elapsed / trials;
-    } catch (err) {
-        alert(err);
-    } finally {
-        transformer.dispose();
-    }
-    transformer.dispose();
+  var json_obj = {
+    'plaintext_dfa': plaintext_dfa,
+    'plaintext_max_len': plaintext_max_len,
+    'ciphertext_dfa': ciphertext_dfa,
+    'ciphertext_max_len': ciphertext_max_len
+  };
 
+  var json_str = JSON.stringify(json_obj);
+  var ab_json_str = str2ab8(json_str);
+  transformer.configure(ab_json_str);
 
-    return [success, elapsed];
+  var ab_plaintext = str2ab(input_plaintext);
+  var ciphertext = transformer.transform(ab_plaintext);
+  var ab_output_plaintext = transformer.restore(ciphertext);
+  var output_plaintext = ab2str(ab_output_plaintext);
+
+  var success = (output_plaintext === input_plaintext);
+
+  var trials = 100;
+  var start = new Date().getTime();
+  for (var i = 0; i < trials; i++) {
+    transformer.transform(ab_plaintext);
+  }
+  var end = new Date().getTime();
+  var elapsed = end - start;
+  elapsed = elapsed / trials;
+
+  transformer.dispose();
+
+  return [success, elapsed];
 }

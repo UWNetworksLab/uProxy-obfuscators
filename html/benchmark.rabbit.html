@@ -8,19 +8,18 @@
   </style>
     
   <script src="js/common.js"></script>
+  <script src="js/regex2dfa.js"></script>
   <script src="js/benchmark.data.js"></script>
   <script src="js/benchmark.rabbit.js"></script>
   <script src="js/transformer.rabbit.js"></script>
-  <script src="js/transformer.js"></script>
       
     <script>
         function writeTable() {
-            for (var i = 0; i < testResults.length; i++) {
+            for (var i = 0; i < test_languages.length; i++) {
               var retval  = '';
               retval += '<tr id="row'+i+'">';
               retval += '<td class="testNum">'+(i+1)+'</td>';
-              retval += '<td class="testInputLanguage">('+testResults[i]['inputLanguageRegex']+', '+testResults[i]['inputMaxLen']+')</td>';
-              retval += '<td class="testInputLaguage">('+testResults[i]['outputLanguageRegex']+', '+testResults[i]['outputMaxLen']+')</td>';
+              retval += '<td class="plaintext_len">'+test_languages[i]['plaintext_max_len']+'</td>';
               retval += '<td class="testCost">';
               retval += '-';
               retval += '</td>';
@@ -31,9 +30,7 @@
         }
         function fillTable(i) {
   
-              retval = doBenchmark(testResults[i]['inputLanguageDFA'], testResults[i]['inputMaxLen'],
-                                   testResults[i]['outputLanguageDFA'], testResults[i]['outputMaxLen'],
-                                   testResults[i]['key'], testResults[i]['plaintext']);
+              retval = doBenchmark(test_languages[i]['plaintext_max_len']);
               var success = retval[0];
               var elapsed = retval[1];
             
@@ -41,7 +38,6 @@
               if (success) {
                   rowClass = 'success';
               }
-              
 
                  var toUpdate = document.getElementById('row'+i).className = rowClass;
                  var toUpdate = document.getElementById('row'+i).getElementsByClassName('testCost')[0];
@@ -50,7 +46,7 @@
         }
         window.onload = function(){ 
           writeTable();
-          for (var i = 0; i < testResults.length; i++) {
+          for (var i = 0; i < test_languages.length; i++) {
             (function(i) {
                 setTimeout(function() {
               fillTable(i);
@@ -64,8 +60,7 @@
       <thead>
       <tr>
           <td class="testNum">Test #</td>
-          <td class="testInputLanguage">Input Language</td>
-          <td class="testOutputLanguage">Output Language</td>
+          <td class="plaintext_len">Plaintext Len (bytes)</td>
           <td class="testCost">Avg. Encrypt Cost (ms)</td>
       </tr>
     </thead>
