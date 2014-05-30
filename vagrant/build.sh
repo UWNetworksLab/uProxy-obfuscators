@@ -18,6 +18,10 @@ export GIT_OBFUSCATION=https://github.com/uProxy/obfuscation.git
 
 export EMCC_CORES=`nproc`
 
+export EMSCRIPTEN_VERSION=1.16.0
+export EMSCRIPTEN_FASTCOMP_VERSION=1.16.0
+export EMSCRIPTEN_FASTCOMP_CLANG_VERSION=1.16.0
+
 # gtest relies on cxxabi, so we need to include this following hack
 export CFLAGS="-O3"
 export CXXFLAGS="-O3 -I$INSTALL_DIR/include -I$BUILD_DIR/emscripten/system/lib/libcxxabi/include"
@@ -42,9 +46,20 @@ ln -s $INSTALL_DIR/bin/node $INSTALL_DIR/bin/nodejs
 # https://github.com/kripken/emscripten/wiki/LLVM-Backend
 cd $BUILD_DIR
 git clone $GIT_EMSCRIPTEN
+cd emscripten
+git checkout $EMSCRIPTEN_VERSION
+
+cd $BUILD_DIR
 git clone $GIT_EMSCRIPTEN_FASTCOMP
+cd emscripten-fastcomp
+git checkout $EMSCRIPTEN_FASTCOMP_VERSION
+
+cd $BUILD_DIR
 cd emscripten-fastcomp/tools
 git clone $GIT_EMSCRIPTEN_FASTCOMP_CLANG clang
+cd clang
+git checkout $EMSCRIPTEN_FASTCOMP_CLANG_VERSION
+cd ..
 cd ..
 ./configure --prefix=$INSTALL_DIR --enable-optimized --disable-assertions --enable-targets=host,js
 make -j`nproc`
