@@ -75,18 +75,18 @@ var Transformer = (function() {
     /**
      * Transforms a piece of data to obfuscated form.
      *
-     * @param {Uint8Array} plain_text data need to be obfuscated.
+     * @param {Uint8Array} plaintext data need to be obfuscated.
      * @return {?Uint8Array} obfuscated data, or null if failed.
      */
-    Transformer.prototype.transform = function(plain_text) {
+    Transformer.prototype.transform = function(plaintext) {
         if (!setInitVector(this.handle)) {
             return null;
         }
 
-        var plaintext_len = plain_text.byteLength;
+        var plaintext_len = plaintext.byteLength;
         var ptr = Module._malloc(plaintext_len);
         var dataHeap1 = new Uint8Array(Module.HEAPU8.buffer, ptr, plaintext_len);
-        dataHeap1.set(new Uint8Array(plain_text.buffer));
+        dataHeap1.set(new Uint8Array(plaintext.buffer));
 
         var ciphertext_len = plaintext_len;
         if (this.ciphertext_max_len_) {
@@ -101,7 +101,7 @@ var Transformer = (function() {
         dataHeap3.set(new Uint8Array(data.buffer));
 
         var ret = transform(this.handle,
-            dataHeap1.byteOffset, plain_text.byteLength,
+            dataHeap1.byteOffset, plaintext.byteLength,
             dataHeap2.byteOffset, dataHeap3.byteOffset);
 
         if (ret != 0) {
@@ -126,14 +126,14 @@ var Transformer = (function() {
     /**
      * Restores data from obfuscated form to original form.
      *
-     * @param {Uint8Array} cipher_text obfuscated data.
+     * @param {Uint8Array} ciphertext obfuscated data.
      * @return {?Uint8Array} original data, or null if failed.
      */
-    Transformer.prototype.restore = function(cipher_text) {
-        var len = cipher_text.byteLength;
+    Transformer.prototype.restore = function(ciphertext) {
+        var len = ciphertext.byteLength;
         var ptr = Module._malloc(len);
         var dataHeap1 = new Uint8Array(Module.HEAPU8.buffer, ptr, len);
-        dataHeap1.set(new Uint8Array(cipher_text.buffer, 0, len));
+        dataHeap1.set(new Uint8Array(ciphertext.buffer, 0, len));
 
         ptr = Module._malloc(len);
         var dataHeap2 = new Uint8Array(Module.HEAPU8.buffer, ptr, len);
@@ -144,7 +144,7 @@ var Transformer = (function() {
         dataHeap3.set(new Uint8Array(data.buffer));
 
         var ret = restore(this.handle,
-            dataHeap1.byteOffset, cipher_text.byteLength,
+            dataHeap1.byteOffset, ciphertext.byteLength,
             dataHeap2.byteOffset, dataHeap3.byteOffset);
         if (ret != 0) {
             return null;

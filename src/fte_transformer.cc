@@ -62,7 +62,6 @@ bool FteTransformer::Configure(const uint8_t* data, uint32_t data_len) {
   std::string ciphertext_dfa = document["ciphertext_dfa"].GetString();
   uint32_t ciphertext_max_len = document["ciphertext_max_len"].GetInt();
 
-  cryptor_ = fte::Fte();
   cryptor_.set_key(key_);
   cryptor_.SetLanguages(plaintext_dfa, plaintext_max_len,
                         ciphertext_dfa, ciphertext_max_len);
