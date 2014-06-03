@@ -112,4 +112,4 @@ nodejs bin/test.rabbit.js
 mkdir -p /vagrant/build
 cp -f html/js/transformer.rabbit.js /vagrant build
 cp -f html/js/transformer.fte.js /vagrant build
-cp -fr demo /vagrant/build/
+cp -fr html /vagrant/build/demo
