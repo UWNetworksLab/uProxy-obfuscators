@@ -5,43 +5,25 @@ The uProxy obfuscation layer provides resistance against large-scale DPI attempt
 
 This obfsucation layer does not protect against active adversaries, or adversaries that can throw expensive resources (such as people) at identifying connection properties.
 
+Dependencies
+------------
+
+### Building
+
+* node.js: http://nodejs.org/
+* emscripten: https://github.com/kripken/emscripten
+* emscripten-fastcomp: https://github.com/kripken/emscripten-fastcomp
+* emscripten-fastcomp-clang: https://github.com/kripken/emscripten-fastcomp-clang
+
+### Runtime
+
+* GMP: http://libgmp.org/
+* libfte: https://github.com/uProxy/libfte
+
 Building
 --------
 
-The process of building this library is complex enough to require a Vagrant script. (See ```vagrant/build.sh```.) So far, we've only had success building this module on a 32-bit Linux guest system.
-
-### Required software 
-
-* Vagrant: https://vagrantup.com/
-* Ubuntu Vagrant image: https://cloud-images.ubuntu.com/vagrant/trusty/current/trusty-server-cloudimg-i386-vagrant-disk1.box
-
-### Add an Ubuntu 14.04 32-bit vagrant box
-
-```shell
-vagrant box add ubuntu-14.04-i386 https://cloud-images.ubuntu.com/vagrant/trusty/current/trusty-server-cloudimg-i386-vagrant-disk1.box
-```
-
-### Install the vagrant vbguest plugin
-
-```shell
-vagrant plugin install vagrant-vbguest
-```
-
-### Run the vagrant script
-
-```
-cd vagrant 
-vagrant up
-```
-
-wait roughly 1-2 hours, then
-
-```shell
-$ ls build/html/
-benchmark.fte.html  benchmark.rabbit.html  js
-$ ls build/html/js/
-benchmark.data.js  benchmark.fte.js  benchmark.rabbit.js  common.js regex2dfa.js transformer.fte.js transformer.rabbit.js
-```
+See ```vagrant/README.md```.
 
 Example Usage
 -------------
@@ -65,7 +47,7 @@ Then one can invoke the FTE transformer as follows.
 var transformer = new Transformer();
 
 var key = "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF";
-var ab_key = str2ab8(key);
+var ab_key = str2ab(key);
 transformer.setKey(ab_key);
         
 // The plaintext_dfa and ciphertext_dfa strings are AT&T-formatted DFAs.
@@ -78,7 +60,7 @@ var jsonObj = {
   'ciphertext_max_len': 128
         
 var json_str = JSON.stringify(jsonObj);
-var ab_json_str = str2ab8(json_str);
+var ab_json_str = str2ab(json_str);
 transformer.configure(ab_json_str);
 
 var ab_plaintext = str2ab(input_plaintext);
