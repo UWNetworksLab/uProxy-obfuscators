@@ -1,7 +1,7 @@
 function do_fte_benchmark(plaintext_regex, plaintext_max_len,
   ciphertext_regex, ciphertext_max_len) {
 
-  var input_plaintext = "Hello, World!";
+  var input_plaintext = "HelloWorld";
 
   var plaintext_dfa = regex2dfa(plaintext_regex);
   var ciphertext_dfa = regex2dfa(ciphertext_regex);
@@ -9,7 +9,7 @@ function do_fte_benchmark(plaintext_regex, plaintext_max_len,
   var transformer = new Transformer();
 
   var key = "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF";
-  var ab_key = str2ab8(key);
+  var ab_key = str2ab(key);
   transformer.setKey(ab_key);
 
   var json_obj = {
@@ -20,7 +20,7 @@ function do_fte_benchmark(plaintext_regex, plaintext_max_len,
   };
 
   var json_str = JSON.stringify(json_obj);
-  var ab_json_str = str2ab8(json_str);
+  var ab_json_str = str2ab(json_str);
   transformer.configure(ab_json_str);
 
   var ab_plaintext = str2ab(input_plaintext);

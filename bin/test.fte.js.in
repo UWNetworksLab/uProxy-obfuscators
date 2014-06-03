@@ -3,8 +3,16 @@ for (var i = 0; i < test_languages.length; i++) {
                             test_languages[i]['plaintext_max_len'],
                             test_languages[i]['ciphertext_regex'],
                             test_languages[i]['ciphertext_max_len']);
+if (retval[0]) {
   console.log(["fte",[test_languages[i]['plaintext_regex'],
                             test_languages[i]['plaintext_max_len'],
                             test_languages[i]['ciphertext_regex'],
                             test_languages[i]['ciphertext_max_len']], "avg. cost (ms) = "+retval[1], "success = "+retval[0]]);
+} else {
+  console.log(["fte",[test_languages[i]['plaintext_regex'],
+                            test_languages[i]['plaintext_max_len'],
+                            test_languages[i]['ciphertext_regex'],
+                            test_languages[i]['ciphertext_max_len']], "avg. cost (ms) = "+retval[1], "success = "+retval[0]]);
+  console.log("*** FAIL");
+}
 }

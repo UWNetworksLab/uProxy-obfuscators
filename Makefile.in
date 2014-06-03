@@ -13,6 +13,9 @@ GMP_LIB_DIR=$(GMP_DIR)/lib
 
 RAPIDJSON_INC_DIR=$(THIRDPARTY_DIR)/rapidjson/include
 
+REGEX2DFA_GIT = https://github.com/kpdyer/regex2dfa.git
+REGEX2DFA_DIR = $(THIRDPARTY_DIR)/regex2dfa
+
 EXPORTS=-s EXPORTED_FUNCTIONS="[\
     '_delete_transformer','_create_transformer',\
     '_set_key','_set_init_vector','_configure',\
@@ -26,6 +29,8 @@ TARGET_TESTFTEJS = bin/test.fte.js
 TARGET_TESTRABBITJS = bin/test.rabbit.js
 TARGET_FTEJS = html/js/transformer.fte.js
 TARGET_RABBITJS = html/js/transformer.rabbit.js
+TARGET_FTEREGEXES = html/js/regex2dfa.js
+TARGET_REGEX2DFA = $(REGEX2DFA_DIR)/bin/regex2dfa
 
 default: $(TARGET_FTEJS) $(TARGET_RABBITJS) $(TARGET_TESTFTEJS) $(TARGET_TESTRABBITJS)
 
@@ -38,6 +43,15 @@ RABBITJS_OBJS = src/rabbit_transformer.o \
                 src/rabbit.o \
                 src/transformer_factory.o
 
+$(TARGET_FTEREGEXES): $(TARGET_REGEX2DFA)
+	./contrib/build_dfas.py > $(TARGET_FTEREGEXES)
+
+$(REGEX2DFA_DIR):
+	cd $(THIRDPARTY_DIR) && git clone $(REGEX2DFA_GIT)
+	
+$(TARGET_REGEX2DFA): $(REGEX2DFA_DIR)
+	cd $(REGEX2DFA_DIR) && ./configure && $(MAKE)
+
 $(TARGET_FTEJS): $(FTEJS_OBJS)
 	$(CXX) $(LDFLAGS_) -o $@ $^
 	cat $(TRANSFORMERJS) >> $(TARGET_FTEJS)
@@ -46,7 +60,7 @@ $(TARGET_RABBITJS): $(RABBITJS_OBJS)
 	$(CXX) $(LDFLAGS_) -o $@ $^
 	cat $(TRANSFORMERJS) >> $(TARGET_RABBITJS)
 
-$(TARGET_TESTFTEJS): $(TARGET_FTEJS)
+$(TARGET_TESTFTEJS): $(TARGET_FTEJS) $(TARGET_FTEREGEXES)
 	cat $(TARGET_FTEJS) > $(TARGET_TESTFTEJS)
 	cat html/js/common.js >> $(TARGET_TESTFTEJS)
 	cat html/js/regex2dfa.js >> $(TARGET_TESTFTEJS)
@@ -54,7 +68,7 @@ $(TARGET_TESTFTEJS): $(TARGET_FTEJS)
 	cat html/js/benchmark.fte.js >> $(TARGET_TESTFTEJS)
 	cat bin/test.fte.js.in >> $(TARGET_TESTFTEJS)
 
-$(TARGET_TESTRABBITJS): $(TARGET_RABBITJS)
+$(TARGET_TESTRABBITJS): $(TARGET_RABBITJS) $(TARGET_FTEREGEXES)
 	cat $(TARGET_RABBITJS) > $(TARGET_TESTRABBITJS)
 	cat html/js/common.js >> $(TARGET_TESTRABBITJS)
 	cat html/js/regex2dfa.js >> $(TARGET_TESTRABBITJS)
@@ -75,3 +89,4 @@ clean:
 	rm -f $(TARGET_RABBITJS)
 	rm -f $(TARGET_TESTFTEJS)
 	rm -f $(TARGET_TESTRABBITJS)
+	rm -f $(TARGET_FTEREGEXES)

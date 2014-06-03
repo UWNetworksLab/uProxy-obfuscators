@@ -2,7 +2,7 @@ function do_rabbit_benchmark(plaintext_len) {
   var transformer = new Transformer();
 
   var key = "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF";
-  var ab_key = str2ab8(key);
+  var ab_key = str2ab(key);
   transformer.setKey(ab_key);
 
   var input_plaintext = "";
