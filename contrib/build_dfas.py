@@ -4,14 +4,12 @@ import sys
 import os
 import commands
 
-regex2dfa_binary = "third_party/regex2dfa/bin/regex2dfa"
+regex2dfa_binary_path = os.path.abspath("third_party/regex2dfa/bin")
+regex2dfa_binary = "regex2dfa"
 regexes_configuration = "src/fte_regexes.conf"
 
-regex2dfa_binary = os.path.abspath(regex2dfa_binary)
-regexes_configuration = os.path.abspath(regexes_configuration)
-
 try:
-    with open(regex2dfa_binary,'r'):
+    with open(os.path.join(regex2dfa_binary_path, regex2dfa_binary),'r'):
         pass
 except:
     print "*** ERROR: regex2dfa binary does not exist at: " + regex2dfa_binary
@@ -27,7 +25,8 @@ print """var dfa_cache = {};
 
 for regex in regexes:
     if regex.strip() == "": continue
-    cmd = regex2dfa_binary + " -r \"" + regex + "\""
+    cmd = "PATH="+regex2dfa_binary_path+":$PATH " + regex2dfa_binary + " -r \"" + regex + "\""
+    print cmd
     dfa = commands.getstatusoutput(cmd)
     dfa = dfa[1]
     dfa = dfa.split("\n")
