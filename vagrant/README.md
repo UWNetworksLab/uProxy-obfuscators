@@ -28,8 +28,6 @@ vagrant up
 wait roughly 1-2 hours, then
 
 ```shell
-$ ls build/html/
-benchmark.fte.html  benchmark.rabbit.html  js
-$ ls build/html/js/
-benchmark.data.js  benchmark.fte.js  benchmark.rabbit.js  common.js regex2dfa.js transformer.fte.js transformer.rabbit.js
+$ ls build/
+demo transformer.fte.js transformer.rabbit.js
 ```

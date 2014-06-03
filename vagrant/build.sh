@@ -110,4 +110,6 @@ nodejs bin/test.rabbit.js
 
 # copy to shared directroy
 mkdir -p /vagrant/build
-cp -fr html /vagrant/build/
+cp -f html/js/transformer.rabbit.js /vagrant build
+cp -f html/js/transformer.fte.js /vagrant build
+cp -fr demo /vagrant/build/

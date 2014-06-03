@@ -1,29 +1,30 @@
 uProxy obfuscation
 ==================
 
-The uProxy obfuscation layer provides resistance against large-scale DPI attempts to passively detect uProxy.
+The uProxy obfuscation layer provides resistance against large-scale DPI attempts to passively detect uProxy. This obfsucation layer does not protect against active adversaries, or adversaries that can throw expensive resources (such as people) at identifying connection properties.
 
-This obfsucation layer does not protect against active adversaries, or adversaries that can throw expensive resources (such as people) at identifying connection properties.
+This library builds two obfuscation modules:
+
+* rabbit: based on http://en.wikipedia.org/wiki/Rabbit\_(cipher)
+* fte: based on https://github.com/uproxy/libfte
+
+See ``Example Usage" below for more details.
 
 Dependencies
 ------------
 
-### Building
-
+* build tools: autoconf, automake, m4
 * node.js: http://nodejs.org/
 * emscripten: https://github.com/kripken/emscripten
 * emscripten-fastcomp: https://github.com/kripken/emscripten-fastcomp
 * emscripten-fastcomp-clang: https://github.com/kripken/emscripten-fastcomp-clang
-
-### Runtime
-
 * GMP: http://libgmp.org/
 * libfte: https://github.com/uProxy/libfte
 
 Building
 --------
 
-See ```vagrant/README.md```.
+See ```vagrant/README.md``` for details.
 
 Example Usage
 -------------
