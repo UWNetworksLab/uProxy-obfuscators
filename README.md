@@ -5,8 +5,8 @@ The uProxy obfuscation layer provides resistance against large-scale DPI attempt
 
 This library builds two obfuscation modules:
 
-* rabbit: based on http://en.wikipedia.org/wiki/Rabbit\_(cipher)
-* fte: based on https://github.com/uproxy/libfte
+* **rabbit**: based on http://en.wikipedia.org/wiki/Rabbit_(cipher)
+* **fte**: based on https://github.com/uproxy/libfte
 
 See "Example Usage" below for more details.
 
