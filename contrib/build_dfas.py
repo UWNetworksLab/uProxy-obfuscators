@@ -26,7 +26,6 @@ print """var dfa_cache = {};
 for regex in regexes:
     if regex.strip() == "": continue
     cmd = "PATH="+regex2dfa_binary_path+":$PATH " + regex2dfa_binary + " -r \"" + regex + "\""
-    print cmd
     dfa = commands.getstatusoutput(cmd)
     dfa = dfa[1]
     dfa = dfa.split("\n")
