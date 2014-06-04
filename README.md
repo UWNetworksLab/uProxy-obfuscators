@@ -35,7 +35,7 @@ If you wish to build formats for FTE.
 make clean
 ```
 
-Update ```src/fte_regexes.conf```, with one regex per line.
+Update ```src/fte_regexes.conf```, with one regex per line. Then:
 
 ```
 make html/js/regex2dfa.js
