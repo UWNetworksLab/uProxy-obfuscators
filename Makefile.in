@@ -27,8 +27,8 @@ LDFLAGS_ = $(LDFLAGS) $(OPTIMIZATION_FLAGS) -Wall $(EXPORTS) -L$(FTE_LIB_DIR) -L
 TRANSFORMERJS = src/transformer.js
 TARGET_TESTFTEJS = bin/test.fte.js
 TARGET_TESTRABBITJS = bin/test.rabbit.js
-TARGET_FTEJS = html/js/transformer.fte.js
-TARGET_RABBITJS = html/js/transformer.rabbit.js
+TARGET_FTEJS = html/js/utransformers.fte.js
+TARGET_RABBITJS = html/js/utransformers.rabbit.js
 TARGET_FTEREGEXES = html/js/regex2dfa.js
 TARGET_REGEX2DFA = $(REGEX2DFA_DIR)/bin/regex2dfa
 
@@ -54,11 +54,11 @@ $(TARGET_REGEX2DFA): $(REGEX2DFA_DIR)
 
 $(TARGET_FTEJS): $(FTEJS_OBJS)
 	$(CXX) $(LDFLAGS_) -o $@ $^
-	cat $(TRANSFORMERJS) >> $(TARGET_FTEJS)
+	./contrib/postprocess_js.py fte
 
 $(TARGET_RABBITJS): $(RABBITJS_OBJS)
 	$(CXX) $(LDFLAGS_) -o $@ $^
-	cat $(TRANSFORMERJS) >> $(TARGET_RABBITJS)
+	./contrib/postprocess_js.py rabbit
 
 $(TARGET_TESTFTEJS): $(TARGET_FTEJS) $(TARGET_FTEREGEXES)
 	cat $(TARGET_FTEJS) > $(TARGET_TESTFTEJS)

@@ -1,4 +1,3 @@
-var Transformer = (function () {
   var iv_size_ = 8;
 
   var generateRandomUint8Array = function (len) {
@@ -173,4 +172,3 @@ var Transformer = (function () {
   }
 
   return Transformer;
-}());
