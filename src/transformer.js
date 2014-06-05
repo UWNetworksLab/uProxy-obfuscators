@@ -1,4 +1,3 @@
-var Transformer = (function () {
   var iv_size_ = 8;
 
   var generateRandomUint8Array = function (len) {
@@ -43,15 +42,21 @@ var Transformer = (function () {
   //                     uint32_t data_len)
   var configure = Module.cwrap('configure', 'number',
                                ['number', 'number', 'number']);
+  /**
+   * Performs configuration to the transformer. 
+   *  
+   * @param {String} serialized Json string.  
+   */
   Transformer.prototype.configure = function (jsonStr) {
-    var jsonStrE = ab2str(jsonStr);
-    var jsonStrO = JSON.parse(jsonStrE);
-    this.ciphertext_max_len_ = jsonStrO.ciphertext_max_len;
-    var ptr = Module._malloc(jsonStr.byteLength);
+    var jsonStrArrayBuffer = str2ab(jsonStr);
+    var jsonStrObj = JSON.parse(jsonStr);
+    this.ciphertext_max_len_ = jsonStrObj.ciphertext_max_len;
+    var ptr = Module._malloc(jsonStrArrayBuffer.byteLength);
     var dataHeap = new Uint8Array(Module.HEAPU8.buffer, ptr,
-                                  jsonStr.byteLength);
-    dataHeap.set(new Uint8Array(jsonStr.buffer));
-    var ret = configure(this.handle_, dataHeap.byteOffset, jsonStr.byteLength);
+                                  jsonStrArrayBuffer.byteLength);
+    dataHeap.set(new Uint8Array(jsonStrArrayBuffer));
+    var ret = configure(this.handle_, dataHeap.byteOffset,
+                        jsonStrArrayBuffer.byteLength);
     Module._free(dataHeap.byteOffset);
     return ret == 0;
   }
@@ -156,7 +161,7 @@ var Transformer = (function () {
     }
     var len = (new Uint32Array(dataHeap3.buffer, dataHeap3.byteOffset, 4))[0];
     var result = new Uint8Array(len);
-    result.set(new Uint8Array(dataHeap2.buffer, dataHeap2.byteOffset, length));
+    result.set(new Uint8Array(dataHeap2.buffer, dataHeap2.byteOffset, len));
     Module._free(dataHeap1.byteOffset);
     Module._free(dataHeap2.byteOffset);
     Module._free(dataHeap3.byteOffset);
@@ -178,4 +183,3 @@ var Transformer = (function () {
   }
 
   return Transformer;
-}());
