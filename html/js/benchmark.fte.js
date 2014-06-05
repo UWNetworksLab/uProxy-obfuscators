@@ -20,8 +20,7 @@ function do_fte_benchmark(plaintext_regex, plaintext_max_len,
   };
 
   var json_str = JSON.stringify(json_obj);
-  var ab_json_str = str2ab(json_str);
-  transformer.configure(ab_json_str);
+  transformer.configure(json_str);
 
   var ab_plaintext = str2ab(input_plaintext);
   var ciphertext = transformer.transform(ab_plaintext);
