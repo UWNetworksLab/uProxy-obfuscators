@@ -31,7 +31,7 @@
         }
         function fillTable(i) {
   
-              retval = doBenchmark(test_languages[i]['plaintext_regex'], test_languages[i]['plaintext_max_len'],
+              retval = do_fte_benchmark(test_languages[i]['plaintext_regex'], test_languages[i]['plaintext_max_len'],
                                    test_languages[i]['ciphertext_regex'], test_languages[i]['ciphertext_max_len']);
               var success = retval[0];
               var elapsed = retval[1];
