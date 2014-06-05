@@ -1,0 +1,9 @@
+{
+  "name": "utransformers",
+  "description": "emscripten-ified transformers for uProxy",
+  "version": "0.1.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/uProxy/uTransformers.git"
+  }
+}
