@@ -43,14 +43,19 @@ var Transformer = (function () {
   //                     uint32_t data_len)
   var configure = Module.cwrap('configure', 'number',
                                ['number', 'number', 'number']);
+  /**
+   * Performs configuration to the transformer. 
+   *  
+   * @param {String} serialized Json string.  
+   */
   Transformer.prototype.configure = function (jsonStr) {
-    var jsonStrE = ab2str(jsonStr);
-    var jsonStrO = JSON.parse(jsonStrE);
-    this.ciphertext_max_len_ = jsonStrO.ciphertext_max_len;
-    var ptr = Module._malloc(jsonStr.byteLength);
+    var jsonStrArrayBuffer = str2ab(jsonStr);
+    var jsonStrObj = JSON.parse(jsonStr);
+    this.ciphertext_max_len_ = jsonStrObj.ciphertext_max_len;
+    var ptr = Module._malloc(jsonStrArrayBuffer.byteLength);
     var dataHeap = new Uint8Array(Module.HEAPU8.buffer, ptr,
-                                  jsonStr.byteLength);
-    dataHeap.set(new Uint8Array(jsonStr.buffer));
+                                  jsonStrArrayBuffer.byteLength);
+    dataHeap.set(new Uint8Array(jsonStrArrayBuffer));
     var ret = configure(this.handle_, dataHeap.byteOffset, jsonStr.byteLength);
     Module._free(dataHeap.byteOffset);
     return ret == 0;
