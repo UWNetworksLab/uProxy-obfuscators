@@ -56,7 +56,7 @@ Include the following scripts on your page.
 <!-- Provides regex2dfa. -->
 <script src="js/regex2dfa.js"></script>
 <!-- Provides the emscripten-compiled FteTransformer. -->
-<script src="js/transformer.fte.js"></script>
+<script src="js/utransformers.fte.js"></script>
 ```
 
 Then one can invoke the FTE transformer as follows.
@@ -95,7 +95,7 @@ Include the following scripts on your page.
 <!-- Provides str2ab and ab2str functions. -->
 <script src="js/common.js"></script>
 <!-- Provides the emscripten-compiled RabbitTransformer. -->
-<script src="js/transformer.rabbit.js"></script>
+<script src="js/utransformers.rabbit.js"></script>
 ```
 
 Then one can invoke the Rabbit transformer as follows.
