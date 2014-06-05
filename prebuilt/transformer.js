@@ -44,7 +44,7 @@ var Transformer = (function () {
   var configure = Module.cwrap('configure', 'number',
                                ['number', 'number', 'number']);
   Transformer.prototype.configure = function (jsonStr) {
-    var jsonStrE = ab2str(jsonStr);
+    var jsonStrE = ab2str8(jsonStr);
     var jsonStrO = JSON.parse(jsonStrE);
     this.ciphertext_max_len_ = jsonStrO.ciphertext_max_len;
     var ptr = Module._malloc(jsonStr.byteLength);
