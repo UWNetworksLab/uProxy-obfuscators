@@ -56,7 +56,8 @@ var Transformer = (function () {
     var dataHeap = new Uint8Array(Module.HEAPU8.buffer, ptr,
                                   jsonStrArrayBuffer.byteLength);
     dataHeap.set(new Uint8Array(jsonStrArrayBuffer));
-    var ret = configure(this.handle_, dataHeap.byteOffset, jsonStr.byteLength);
+    var ret = configure(this.handle_, dataHeap.byteOffset,
+                        jsonStrArrayBuffer.byteLength);
     Module._free(dataHeap.byteOffset);
     return ret == 0;
   }
