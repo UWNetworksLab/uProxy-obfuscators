@@ -1,6 +1,8 @@
 uProxy obfuscation
 ==================
 
+[![Build Status](https://travis-ci.org/uProxy/obfuscation.svg?branch=master)](https://travis-ci.org/uProxy/obfuscation)
+
 The uProxy obfuscation layer provides resistance against large-scale DPI attempts to passively detect uProxy. This obfsucation layer does not protect against active adversaries, or adversaries that can throw expensive resources (such as people) at identifying connection properties.
 
 This library builds two obfuscation modules:

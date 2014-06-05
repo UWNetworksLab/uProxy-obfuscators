@@ -1,0 +1,8 @@
+language:
+    - cpp
+
+before_install:
+  - "./vagrant/install_prereqs.sh"
+
+install:
+  - "./vagrant/build.sh"
