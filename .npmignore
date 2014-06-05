@@ -2,5 +2,10 @@ config.log
 config.status
 configure
 configure.ac
+Makefile.in
+bin/*
+contrib/*
+html/*
+src/*
 third_party/*
 vagrant/*
