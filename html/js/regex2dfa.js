@@ -1,6 +1,5 @@
 var dfa_cache = {};
 
-PATH=/Users/kpdyer/sandbox/uProxy/obfuscation/third_party/regex2dfa/bin:$PATH regex2dfa -r "^[a-zA-Z0-9]+$"
 dfa_cache["^[a-zA-Z0-9]+$"] = "0	1	49	49\n" + 
 "0	1	50	50\n" + 
 "0	1	51	51\n" + 
@@ -125,7 +124,6 @@ dfa_cache["^[a-zA-Z0-9]+$"] = "0	1	49	49\n" +
 "1	1	121	121\n" + 
 "1	1	122	122\n" + 
 "1\n";
-PATH=/Users/kpdyer/sandbox/uProxy/obfuscation/third_party/regex2dfa/bin:$PATH regex2dfa -r "^.*$"
 dfa_cache["^.*$"] = "0	0	1	1\n" + 
 "0	0	2	2\n" + 
 "0	0	3	3\n" + 
@@ -381,7 +379,6 @@ dfa_cache["^.*$"] = "0	0	1	1\n" +
 "0	0	254	254\n" + 
 "0	0	255	255\n" + 
 "0\n";
-PATH=/Users/kpdyer/sandbox/uProxy/obfuscation/third_party/regex2dfa/bin:$PATH regex2dfa -r "^.+$"
 dfa_cache["^.+$"] = "0	1	1	1\n" + 
 "0	1	2	2\n" + 
 "0	1	3	3\n" + 
