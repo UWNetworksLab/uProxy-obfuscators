@@ -161,7 +161,7 @@ var Transformer = (function () {
     }
     var len = (new Uint32Array(dataHeap3.buffer, dataHeap3.byteOffset, 4))[0];
     var result = new Uint8Array(len);
-    result.set(new Uint8Array(dataHeap2.buffer, dataHeap2.byteOffset, length));
+    result.set(new Uint8Array(dataHeap2.buffer, dataHeap2.byteOffset, len));
     Module._free(dataHeap1.byteOffset);
     Module._free(dataHeap2.byteOffset);
     Module._free(dataHeap3.byteOffset);
