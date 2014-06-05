@@ -1,5 +1,5 @@
 function do_rabbit_benchmark(plaintext_len) {
-  var transformer = new Transformer();
+  var transformer = new rabbit.Transformer();
 
   var key = "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF";
   var ab_key = str2ab(key);

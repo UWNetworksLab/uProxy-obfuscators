@@ -890,6 +890,13 @@ dfa_cache["^.+$"] = "0	1	1	1\n" +
 "1	1	255	255\n" + 
 "1\n";
 
-function regex2dfa(regex) {
+regex2dfa = function(regex) {
   return dfa_cache[regex];
 }
+
+if(typeof exports == 'undefined'){
+    var exports = {};
+}
+
+exports.regex2dfa = regex2dfa;
+

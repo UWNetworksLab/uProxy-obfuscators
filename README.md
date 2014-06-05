@@ -60,7 +60,7 @@ Include the following scripts on your page.
 Then one can invoke the FTE transformer as follows.
 
 ```javascript
-var transformer = new Transformer();
+var transformer = new fte.Transformer();
 
 var key = "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF";
 var ab_key = str2ab(key);
@@ -99,7 +99,7 @@ Include the following scripts on your page.
 Then one can invoke the Rabbit transformer as follows.
 
 ```javascript
-var transformer = new Transformer();
+var transformer = new rabbit.Transformer();
 
 var key = "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF";
 var ab_key = str2ab8(key);

@@ -6,7 +6,7 @@ function do_fte_benchmark(plaintext_regex, plaintext_max_len,
   var plaintext_dfa = regex2dfa(plaintext_regex);
   var ciphertext_dfa = regex2dfa(ciphertext_regex);
 
-  var transformer = new Transformer();
+  var transformer = new fte.Transformer();
 
   var key = "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF";
   var ab_key = str2ab(key);

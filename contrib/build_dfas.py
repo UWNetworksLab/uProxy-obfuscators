@@ -37,6 +37,13 @@ for regex in regexes:
     print "dfa_cache[\"" + regex + "\"] = " + dfa + ";"
 
 print """
-exports.regex2dfa = function(regex) {
+regex2dfa = function(regex) {
   return dfa_cache[regex];
-}"""
+}
+
+if(typeof exports == 'undefined'){
+    var exports = {};
+}
+
+exports.regex2dfa = regex2dfa;
+"""

@@ -7,7 +7,12 @@ transformer_name = sys.argv[1]
 
 assert os.path.exists('html/js/utransformers.' + transformer_name + '.js')
 
-retval =  """var """ + transformer_name + """ = {};
+retval =  """
+if(typeof exports == 'undefined'){
+    var exports = {};
+}
+
+var """ + transformer_name + """ = {};
 """ + transformer_name + """.Module = function() {
 """
 
