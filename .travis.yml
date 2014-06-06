@@ -1,11 +1,10 @@
 language:
-    - cpp
+  - cpp
 
 compiler:
   - gcc
 
 before_install:
-  - "./vagrant/create_swap_file.sh"
   - "./vagrant/install_prereqs.sh"
 
 install:

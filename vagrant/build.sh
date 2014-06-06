@@ -16,7 +16,8 @@ export HTTP_NODEJS=http://nodejs.org/dist/v0.10.28/node-v0.10.28.tar.gz
 export GIT_LIBFTE=https://github.com/uProxy/libfte.git
 export GIT_OBFUSCATION=https://github.com/uProxy/obfuscation.git
 
-export EMCC_CORES=`nproc`
+export CORES=1
+export EMCC_CORES=$CORES
 
 export EMSCRIPTEN_VERSION=1.16.0
 export EMSCRIPTEN_FASTCOMP_VERSION=1.16.0
@@ -38,7 +39,7 @@ wget $HTTP_NODEJS
 tar xvf node-v0.10.28.tar.gz
 cd node-*
 ./configure --prefix=$INSTALL_DIR
-make -j`nproc`
+make -j$CORES
 make install
 ln -s $INSTALL_DIR/bin/node $INSTALL_DIR/bin/nodejs
 
@@ -62,7 +63,7 @@ git checkout $EMSCRIPTEN_FASTCOMP_CLANG_VERSION
 cd ..
 cd ..
 ./configure --prefix=$INSTALL_DIR --enable-optimized --disable-assertions --enable-targets=host,js
-make -j`nproc`
+make -j$CORES
 
 
 # init emscripten
@@ -83,7 +84,7 @@ cd gmp-*
 emconfigure ./configure --prefix=$INSTALL_DIR --disable-assembly --enable-shared --disable-static
 # hack
 sed -i 's/HAVE_OBSTACK_VPRINTF 1/HAVE_OBSTACK_VPRINTF 0/g' config.h
-make -j`nproc`
+make -j$CORES
 make install
 cp -f gmpxx.h $INSTALL_DIR/include/
 
@@ -93,7 +94,7 @@ cd $BUILD_DIR
 git clone $GIT_LIBFTE
 cd libfte
 emconfigure ./configure --prefix=$INSTALL_DIR
-make -j`nproc`
+make -j$CORES
 make install
 
 
@@ -102,7 +103,7 @@ cd $BUILD_DIR
 git clone $GIT_OBFUSCATION
 cd obfuscation
 emconfigure ./configure
-make -j`nproc`
+make -j$CORES
 
 # test the transformers
 nodejs bin/test.fte.js
