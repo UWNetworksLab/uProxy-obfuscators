@@ -1,4 +1,4 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python
 
 import sys
 import os
@@ -29,7 +29,6 @@ for regex in regexes:
     dfa = commands.getstatusoutput(cmd)
     dfa = dfa[1]
     dfa = dfa.split("\n")
-    dfa = dfa[1:]
     while '' in dfa: dfa.remove('')
     for i in range(len(dfa)):
         dfa[i] = "\"" + dfa[i] + "\\n\""
