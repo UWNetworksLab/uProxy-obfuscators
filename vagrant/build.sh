@@ -34,46 +34,48 @@ mkdir -p $INSTALL_DIR
 
 
 # install nodejs
-cd $BUILD_DIR
-wget $HTTP_NODEJS
-tar xvf node-v0.10.28.tar.gz
-cd node-*
-./configure --prefix=$INSTALL_DIR
-make -j$CORES
-make install
-ln -s $INSTALL_DIR/bin/node $INSTALL_DIR/bin/nodejs
+#cd $BUILD_DIR
+#wget $HTTP_NODEJS
+#tar xvf node-v0.10.28.tar.gz
+#cd node-*
+#./configure --prefix=$INSTALL_DIR
+#make -j$CORES
+#make install
+#ln -s $INSTALL_DIR/bin/node $INSTALL_DIR/bin/nodejs
+sudo apt-get -y install nodejs
 
 
 # https://github.com/kripken/emscripten/wiki/LLVM-Backend
-cd $BUILD_DIR
-git clone $GIT_EMSCRIPTEN
-cd emscripten
-git checkout $EMSCRIPTEN_VERSION
+#cd $BUILD_DIR
+#git clone $GIT_EMSCRIPTEN
+#cd emscripten
+#git checkout $EMSCRIPTEN_VERSION
 
-cd $BUILD_DIR
-git clone $GIT_EMSCRIPTEN_FASTCOMP
-cd emscripten-fastcomp
-git checkout $EMSCRIPTEN_FASTCOMP_VERSION
+#cd $BUILD_DIR
+#git clone $GIT_EMSCRIPTEN_FASTCOMP
+#cd emscripten-fastcomp
+#git checkout $EMSCRIPTEN_FASTCOMP_VERSION
 
-cd $BUILD_DIR
-cd emscripten-fastcomp/tools
-git clone $GIT_EMSCRIPTEN_FASTCOMP_CLANG clang
-cd clang
-git checkout $EMSCRIPTEN_FASTCOMP_CLANG_VERSION
-cd ..
-cd ..
-./configure --prefix=$INSTALL_DIR --enable-optimized --disable-assertions --enable-targets=host,js
-make -j$CORES
+#cd $BUILD_DIR
+#cd emscripten-fastcomp/tools
+#git clone $GIT_EMSCRIPTEN_FASTCOMP_CLANG clang
+#cd clang
+#git checkout $EMSCRIPTEN_FASTCOMP_CLANG_VERSION
+#cd ..
+#cd ..
+#./configure --prefix=$INSTALL_DIR --enable-optimized --disable-assertions --enable-targets=host,js
+#make -j$CORES
+sudo apt-get -y install emscripten
 
 
 # init emscripten
-$BUILD_DIR/emscripten/emcc
+#$BUILD_DIR/emscripten/emcc
 
 
 # fix broken emar
 #  - using emar provided by emscripten results in archives that cause llvm-nm to hang
-sudo rm $BUILD_DIR/emscripten/emar
-sudo ln -s /usr/bin/ar $BUILD_DIR/emscripten/emar
+#sudo rm $BUILD_DIR/emscripten/emar
+#sudo ln -s /usr/bin/ar $BUILD_DIR/emscripten/emar
 
 
 # build/install gmp
