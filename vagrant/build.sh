@@ -23,8 +23,8 @@ export EMSCRIPTEN_FASTCOMP_VERSION=1.16.0
 export EMSCRIPTEN_FASTCOMP_CLANG_VERSION=1.16.0
 
 # gtest relies on cxxabi, so we need to include this following hack
-export CFLAGS="-m32 -O3"
-export CXXFLAGS="-m32 -O3 -I$INSTALL_DIR/include -I$BUILD_DIR/emscripten/system/lib/libcxxabi/include"
+export CFLAGS="-O3"
+export CXXFLAGS="-O3 -I$INSTALL_DIR/include -I$BUILD_DIR/emscripten/system/lib/libcxxabi/include"
 export LDFLAGS="-O3 -L$INSTALL_DIR/lib"
 
 ###
