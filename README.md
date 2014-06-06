@@ -1,8 +1,6 @@
 uProxy uTransformers
 ====================
 
-[![Build Status](https://travis-ci.org/uProxy/uTransformers.svg?branch=master)](https://travis-ci.org/uProxy/uTransformers)
-
 The uProxy uTransformers layer provides resistance against large-scale DPI attempts to passively detect uProxy. This obfsucation layer does not protect against active adversaries, or adversaries that can throw expensive resources (such as people) at identifying connection properties.
 
 This library builds two uTransformers modules:
@@ -65,7 +63,6 @@ Then one can invoke the FTE transformer as follows.
 var transformer = new fte.Transformer();
 
 var key = "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF";
-var ab_key = str2ab(key);
 transformer.setKey(ab_key);
         
 // The plaintext_dfa and ciphertext_dfa strings are AT&T-formatted DFAs.
@@ -104,7 +101,6 @@ Then one can invoke the Rabbit transformer as follows.
 var transformer = new rabbit.Transformer();
 
 var key = "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF";
-var ab_key = str2ab8(key);
 transformer.setKey(ab_key);
 
 var ab_plaintext = str2ab(input_plaintext);
