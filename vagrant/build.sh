@@ -20,6 +20,7 @@ export EMSCRIPTEN_VERSION=1.16.0
 
 # gtest relies on cxxabi, so we need to include this following hack
 export CFLAGS="-O3"
+export CPPFLAGS="-O3"
 export CXXFLAGS="-O3 -I$INSTALL_DIR/include -I$BUILD_DIR/emscripten/system/lib/libcxxabi/include"
 export LDFLAGS="-O3 -L$INSTALL_DIR/lib"
 
@@ -49,7 +50,8 @@ tar xvf gmp-6.0.0a.tar.bz2
 cd gmp-*
 emconfigure ./configure --prefix=$INSTALL_DIR --disable-assembly --enable-shared --disable-static
 sed -i 's/HAVE_OBSTACK_VPRINTF 1/HAVE_OBSTACK_VPRINTF 0/g' config.h
-make -j$CORES
+# <hack> need to add CFLAGS because GMP configure doesn't use env CFLAGS </hack>
+CFLAGS=-O3 make -j$CORES
 make install
 cp -f gmpxx.h $INSTALL_DIR/include/
 

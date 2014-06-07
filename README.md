@@ -63,20 +63,20 @@ Then one can invoke the FTE transformer as follows.
 var transformer = new fte.Transformer();
 
 var key = "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF";
+var ab_key = str2ab(key);
 transformer.setKey(ab_key);
         
 // The plaintext_dfa and ciphertext_dfa strings are AT&T-formatted DFAs.
 // The plaintext_max_len and ciphertext_max_len are the largest strings
 //   we'll encrypt/decrypt.
-var jsonObj = {
+var json_obj = {
   'plaintext_dfa': regex2dfa("^.+$"),
   'plaintext_max_len': 128,
   'ciphertext_dfa': regex2dfa("^.+$"),,
   'ciphertext_max_len': 128
         
-var json_str = JSON.stringify(jsonObj);
-var ab_json_str = str2ab(json_str);
-transformer.configure(ab_json_str);
+var json_str = JSON.stringify(json_obj);
+transformer.configure(json_str);
 
 var ab_plaintext = str2ab(input_plaintext);
 var ciphertext = transformer.transform(ab_plaintext);
@@ -101,6 +101,7 @@ Then one can invoke the Rabbit transformer as follows.
 var transformer = new rabbit.Transformer();
 
 var key = "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF";
+var ab_key = str2ab(key);
 transformer.setKey(ab_key);
 
 var ab_plaintext = str2ab(input_plaintext);
