@@ -7,5 +7,6 @@ bin/*
 contrib/*
 html/*
 src/*
+typescript/*
 third_party/*
 vagrant/*
