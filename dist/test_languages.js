@@ -29,3 +29,10 @@ var test_languages = [{
   'ciphertext_regex': '^[a-zA-Z0-9]+$',
   'ciphertext_max_len': 512 
 }];
+
+
+if(typeof exports == 'undefined'){
+    var exports = this['mymodule'] = {};
+}
+
+exports.test_languages = test_languages;

@@ -5,7 +5,7 @@ import sys
 
 transformer_name = sys.argv[1]
 
-assert os.path.exists('html/js/utransformers.' + transformer_name + '.js')
+assert os.path.exists('dist/utransformers.' + transformer_name + '.js')
 
 retval =  """
 if(typeof exports == 'undefined'){
@@ -16,7 +16,7 @@ var """ + transformer_name + """ = {};
 """ + transformer_name + """.Module = function() {
 """
 
-with open('html/js/utransformers.' + transformer_name + '.js') as fh:
+with open('dist/utransformers.' + transformer_name + '.js') as fh:
     retval +=  fh.read()
 
 retval +=  """return Module;
@@ -41,5 +41,5 @@ replace = "Module['exports'] = Module;"
 
 retval = retval.replace(find, replace)
 
-with open('html/js/utransformers.' + transformer_name + '.js', 'w') as fh:
+with open('dist/utransformers.' + transformer_name + '.js', 'w') as fh:
     fh.write(retval)

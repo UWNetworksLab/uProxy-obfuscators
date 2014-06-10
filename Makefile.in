@@ -26,14 +26,12 @@ CXXFLAGS_ = $(CXXFLAGS) $(OPTIMIZATION_FLAGS) -Wall -I$(GMP_INC_DIR) -I$(FTE_INC
 LDFLAGS_ = $(LDFLAGS) $(OPTIMIZATION_FLAGS) -Wall $(EXPORTS) -L$(FTE_LIB_DIR) -L$(GMP_LIB_DIR) -L$(FTE_LIB_DIR) -lgmp -lfte
 
 TRANSFORMERJS = src/transformer.js
-TARGET_TESTFTEJS = bin/test.fte.js
-TARGET_TESTRABBITJS = bin/test.rabbit.js
-TARGET_FTEJS = html/js/utransformers.fte.js
-TARGET_RABBITJS = html/js/utransformers.rabbit.js
-TARGET_FTEREGEXES = html/js/regex2dfa.js
+TARGET_FTEJS = dist/utransformers.fte.js
+TARGET_RABBITJS = dist/utransformers.rabbit.js
+TARGET_FTEREGEXES = dist/regex2dfa.js
 TARGET_REGEX2DFA = $(REGEX2DFA_DIR)/bin/regex2dfa
 
-default: $(TARGET_FTEJS) $(TARGET_RABBITJS) $(TARGET_TESTFTEJS) $(TARGET_TESTRABBITJS)
+default: $(TARGET_FTEJS) $(TARGET_RABBITJS)
 
 .PHONY: directories
 
@@ -61,28 +59,16 @@ $(TARGET_RABBITJS): $(RABBITJS_OBJS)
 	$(CXX) $(LDFLAGS_) -o $@ $^
 	./contrib/postprocess_js.py rabbit
 
-$(TARGET_TESTFTEJS): $(TARGET_FTEJS) $(TARGET_FTEREGEXES)
-	cat $(TARGET_FTEJS) > $(TARGET_TESTFTEJS)
-	cat html/js/common.js >> $(TARGET_TESTFTEJS)
-	cat html/js/regex2dfa.js >> $(TARGET_TESTFTEJS)
-	cat html/js/benchmark.settings.js >> $(TARGET_TESTFTEJS)
-	cat html/js/benchmark.fte.js >> $(TARGET_TESTFTEJS)
-	cat bin/test.fte.js.in >> $(TARGET_TESTFTEJS)
-
-$(TARGET_TESTRABBITJS): $(TARGET_RABBITJS) $(TARGET_FTEREGEXES)
-	cat $(TARGET_RABBITJS) > $(TARGET_TESTRABBITJS)
-	cat html/js/common.js >> $(TARGET_TESTRABBITJS)
-	cat html/js/regex2dfa.js >> $(TARGET_TESTRABBITJS)
-	cat html/js/benchmark.settings.js >> $(TARGET_TESTRABBITJS)
-	cat html/js/benchmark.rabbit.js >> $(TARGET_TESTRABBITJS)
-	cat bin/test.rabbit.js.in >> $(TARGET_TESTRABBITJS)
-
 $(DIST_DIR): $(TARGET_FTEJS) $(TARGET_RABBITJS) $(TARGET_FTEREGEXS)
 	mkdir -p $(DIST_DIR)
 	cp -f $(TARGET_FTEJS) $(DIST_DIR)
 	cp -f $(TARGET_RABBITJS) $(DIST_DIR)
 	cp -f $(TARGET_FTEREGEXES) $(DIST_DIR)
 	cp -f html/js/common.js $(DIST_DIR)
+
+test: $(DIST_DIR)
+	cat dist/common.js src/fte_transformer_test.js | node
+	cat dist/common.js src/rabbit_transformer_test.js | node
 	
 %.o: %.cc
 	$(CXX) -o $@ $< $(CXXFLAGS_)
