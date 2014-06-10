@@ -16,8 +16,8 @@ function str2ab(str) {
   return buf.buffer;
 }
 
-if(typeof exports == 'undefined'){
-    var exports = this['mymodule'] = {};
+if (typeof exports == 'undefined') {
+  var exports = {};
 }
 
 exports.ab2str = ab2str;

@@ -67,8 +67,8 @@ $(DIST_DIR): $(TARGET_FTEJS) $(TARGET_RABBITJS) $(TARGET_FTEREGEXS)
 	cp -f html/js/common.js $(DIST_DIR)
 
 test: $(DIST_DIR)
-	cat dist/common.js src/fte_transformer_test.js | node
-	cat dist/common.js src/rabbit_transformer_test.js | node
+	@cat dist/common.js src/fte_transformer_test.js | node
+	@cat dist/common.js src/rabbit_transformer_test.js | node
 	
 %.o: %.cc
 	$(CXX) -o $@ $< $(CXXFLAGS_)

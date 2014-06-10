@@ -71,10 +71,9 @@ function do_rabbit_benchmark(plaintext_len) {
   return [success, elapsed];
 }
 
-if(typeof exports == 'undefined'){
-    var exports = this['mymodule'] = {};
+if (typeof exports == 'undefined') {
+  var exports = {};
 }
 
 exports.do_fte_benchmark = do_fte_benchmark;
 exports.do_rabbit_benchmark = do_rabbit_benchmark;
-
