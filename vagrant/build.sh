@@ -84,5 +84,7 @@ make test
 mkdir -p /vagrant/build
 cp -f dist/utransformers.rabbit.js /vagrant/build
 cp -f dist/utransformers.fte.js /vagrant/build
-cp -rfv dist /vagrant/build/demo
-cp -rfv html /vagrant/build/demo
+
+mkdir -p /vagrant/build/demo
+cp -rfv dist /vagrant/build/demo/dist
+cp -rfv html /vagrant/build/demo/html
