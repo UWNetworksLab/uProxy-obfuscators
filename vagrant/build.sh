@@ -73,6 +73,7 @@ make install
 cd $BUILD_DIR
 git clone $GIT_OBFUSCATION
 cd uTransformers
+git checkout kpdyer-issue12
 emconfigure ./configure
 make -j$CORES
 

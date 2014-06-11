@@ -14,6 +14,11 @@ var test_languages = [{
   'ciphertext_regex': '^.+$',
   'ciphertext_max_len': 512
 }, {
+  'plaintext_regex': '^.+$',
+  'plaintext_max_len': 1024,
+  'ciphertext_regex': '^.+$',
+  'ciphertext_max_len': 1024 
+}, {
   'plaintext_regex': '^.*$',
   'plaintext_max_len': 512,
   'ciphertext_regex': '^.*$',

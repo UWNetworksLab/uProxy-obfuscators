@@ -1,7 +1,10 @@
 CXX=@CXX@
 
+ifeq ($(NODE),)
+NODE=nodejs
+endif
+
 THIRDPARTY_DIR = third_party
-DIST_DIR = dist
 
 # TODO: no hardcoded vagrant paths
 FTE_DIR=@libftedir@
@@ -59,16 +62,9 @@ $(TARGET_RABBITJS): $(RABBITJS_OBJS)
 	$(CXX) $(LDFLAGS_) -o $@ $^
 	./contrib/postprocess_js.py rabbit
 
-$(DIST_DIR): $(TARGET_FTEJS) $(TARGET_RABBITJS) $(TARGET_FTEREGEXS)
-	mkdir -p $(DIST_DIR)
-	cp -f $(TARGET_FTEJS) $(DIST_DIR)
-	cp -f $(TARGET_RABBITJS) $(DIST_DIR)
-	cp -f $(TARGET_FTEREGEXES) $(DIST_DIR)
-	cp -f html/js/common.js $(DIST_DIR)
-
-test: $(DIST_DIR)
-	@cat dist/common.js src/fte_transformer_test.js | node
-	@cat dist/common.js src/rabbit_transformer_test.js | node
+test:
+	@cat dist/common.js src/fte_transformer_test.js | $(NODE)
+	@cat dist/common.js src/rabbit_transformer_test.js | $(NODE)
 	
 %.o: %.cc
 	$(CXX) -o $@ $< $(CXXFLAGS_)
@@ -80,7 +76,4 @@ clean:
 	rm -f $(TARGET_FTEJS)
 	rm -f $(RABBITJS_OBJS)
 	rm -f $(TARGET_RABBITJS)
-	rm -f $(TARGET_TESTFTEJS)
-	rm -f $(TARGET_TESTRABBITJS)
 	rm -f $(TARGET_FTEREGEXES)
-	rm -rfv $(DIST_DIR)

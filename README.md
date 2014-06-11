@@ -16,8 +16,7 @@ Dependencies
 * build tools: autoconf, automake, m4
 * node.js: http://nodejs.org/
 * emscripten: https://github.com/kripken/emscripten
-* emscripten-fastcomp: https://github.com/kripken/emscripten-fastcomp
-* emscripten-fastcomp-clang: https://github.com/kripken/emscripten-fastcomp-clang
+* clang: http://clang.llvm.org/
 * GMP: http://libgmp.org/
 * libfte: https://github.com/uProxy/libfte
 
