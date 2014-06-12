@@ -83,6 +83,7 @@ $(DIST_DIR): $(TARGET_FTEJS) $(TARGET_RABBITJS) $(TARGET_FTEREGEXS)
 	cp -f $(TARGET_RABBITJS) $(DIST_DIR)
 	cp -f $(TARGET_FTEREGEXES) $(DIST_DIR)
 	cp -f html/js/common.js $(DIST_DIR)
+	cp -fR src/interfaces $(DIST_DIR)
 	
 %.o: %.cc
 	$(CXX) -o $@ $< $(CXXFLAGS_)
