@@ -55,11 +55,11 @@ $(TARGET_REGEX2DFA): $(REGEX2DFA_DIR)
 	cd $(REGEX2DFA_DIR) && ./configure && $(MAKE)
 
 $(TARGET_FTEJS): $(FTEJS_OBJS)
-	$(CXX) $(LDFLAGS_) -o $@ $^
+	$(CXX) -o $@ $^ $(LDFLAGS_)
 	./contrib/postprocess_js.py fte
 
 $(TARGET_RABBITJS): $(RABBITJS_OBJS)
-	$(CXX) $(LDFLAGS_) -o $@ $^
+	$(CXX) -o $@ $^ $(LDFLAGS_)
 	./contrib/postprocess_js.py rabbit
 
 test:

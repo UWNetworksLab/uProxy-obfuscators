@@ -36,8 +36,8 @@ exports.Transformer = function() {
 };
 """
 
-find = "module['exports'] = Module;"
-replace = "Module['exports'] = Module;"
+find = "module[\"exports\"]=Module"
+replace = "Module['exports']=Module"
 
 retval = retval.replace(find, replace)
 
