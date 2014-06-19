@@ -3,7 +3,6 @@ var benchmarks = require('./dist/benchmarks.js');
 var regex2dfa = require('./dist/regex2dfa.js');
 var test_languages = require('./dist/test_languages.js');
 
-
 function fte_basic_test() {
   for (var i = 0; i < test_languages.test_languages.length; i++) {
     var plaintext_dfa = regex2dfa.regex2dfa(test_languages.test_languages[i][
@@ -27,6 +26,8 @@ function fte_basic_test() {
 
 
 function fte_issue12_test() {
+  // This test cases is in support of issue uProxy/uTransformers#12.
+  //   link: https://github.com/uProxy/uTransformers/issues/12
   var transformer = new fte.Transformer();
   var key = "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF";
   var ab_key = str2ab(key);
@@ -40,6 +41,8 @@ function fte_issue12_test() {
   var json_str = JSON.stringify(json_obj);
   transformer.configure(json_str);
 
+  // These bytes were taken from a STUN message
+  // that couldn't be recovered.
   var ab_plaintext = Uint8Array([0x0, 0x3, 0x0, 0x64, 0x21, 0x12, 0xa4, 0x42,
     0x32, 0xef, 0x10, 0x97, 0x9, 0x3e, 0x8a, 0x86, 0x8c, 0x88, 0xbc, 0x63,
     0x0, 0x19, 0x0, 0x4, 0x11, 0x0, 0x0, 0x0, 0x0, 0xd, 0x0, 0x4, 0x0, 0x0,
