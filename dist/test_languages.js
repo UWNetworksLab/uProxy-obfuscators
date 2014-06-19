@@ -12,20 +12,32 @@ var test_languages = [{
   'plaintext_regex': '^.+$',
   'plaintext_max_len': 512,
   'ciphertext_regex': '^.+$',
-  'ciphertext_max_len': 512 
+  'ciphertext_max_len': 512
+}, {
+  'plaintext_regex': '^.+$',
+  'plaintext_max_len': 1024,
+  'ciphertext_regex': '^.+$',
+  'ciphertext_max_len': 1024 
 }, {
   'plaintext_regex': '^.*$',
   'plaintext_max_len': 512,
   'ciphertext_regex': '^.*$',
-  'ciphertext_max_len': 512 
+  'ciphertext_max_len': 512
 }, {
   'plaintext_regex': '^[a-zA-Z0-9]+$',
   'plaintext_max_len': 512,
   'ciphertext_regex': '^[a-zA-Z0-9]+$',
-  'ciphertext_max_len': 512 
+  'ciphertext_max_len': 512
 }, {
   'plaintext_regex': '^.+$',
   'plaintext_max_len': 64,
   'ciphertext_regex': '^[a-zA-Z0-9]+$',
-  'ciphertext_max_len': 512 
+  'ciphertext_max_len': 512
 }];
+
+
+if (typeof exports == 'undefined') {
+  var exports = {};
+}
+
+exports.test_languages = test_languages;

@@ -25,7 +25,7 @@ cd vagrant
 vagrant up
 ```
 
-wait roughly 1-2 hours, then
+wait roughly 10 minutes, then
 
 ```shell
 $ ls build/

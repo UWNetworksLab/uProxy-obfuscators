@@ -1,3 +1,7 @@
+// This file is not a valid class in its own right.
+// This is used as input to the contrib/postprocess_js.py file,
+//   and is wrapped with a per-transformer namespace.
+
   var iv_size_ = 8;
 
   var generateRandomUint8Array = function (len) {
