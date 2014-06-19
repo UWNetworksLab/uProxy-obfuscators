@@ -6,17 +6,19 @@ export WORKING_DIR=/home/vagrant
 export BUILD_DIR=$WORKING_DIR/build
 export INSTALL_DIR=$WORKING_DIR/install
 export PATH=$INSTALL_DIR/bin:$BUILD_DIR/emscripten-fastcomp/Release/bin:$BUILD_DIR/emscripten:$PATH
-export LLVM=/usr/lib/llvm-3.3/bin
 
-export GIT_EMSCRIPTEN=https://github.com/kripken/emscripten.git
 export HTTP_GMP=https://ftp.gnu.org/gnu/gmp/gmp-6.0.0a.tar.bz2
 export GIT_LIBFTE=https://github.com/uProxy/libfte.git
 export GIT_OBFUSCATION=https://github.com/uProxy/uTransformers.git
 
 export CORES=`nproc`
+
+export LLVM=$BUILD_DIR/emscripten-fastcomp/Release/bin
+export GIT_EMSCRIPTEN=https://github.com/kripken/emscripten.git
+export GIT_EMSCRIPTEN_FASTCOMP=https://github.com/kripken/emscripten-fastcomp
+export GIT_EMSCRIPTEN_FASTCOMP_CLANG=https://github.com/kripken/emscripten-fastcomp-clang
 export EMCC_CORES=$CORES
-export EMCC_FAST_COMPILER=0
-export EMSCRIPTEN_VERSION=1.16.0
+export EMSCRIPTEN_VERSION=master
 
 # gtest relies on cxxabi, so we need to include this following hack
 export CFLAGS="-O3"
@@ -28,20 +30,23 @@ export LDFLAGS="-O3 -L$INSTALL_DIR/lib"
 mkdir -p $BUILD_DIR
 mkdir -p $INSTALL_DIR
 
-# get emscripten
+# https://github.com/kripken/emscripten/wiki/LLVM-Backend
 cd $BUILD_DIR
 git clone $GIT_EMSCRIPTEN
-cd emscripten
-git checkout $EMSCRIPTEN_VERSION
+git clone $GIT_EMSCRIPTEN_FASTCOMP
+cd emscripten-fastcomp/tools
+git clone $GIT_EMSCRIPTEN_FASTCOMP_CLANG clang
+cd ..
+./configure --prefix=$INSTALL_DIR --enable-optimized --disable-assertions --enable-targets=host,js
+make -j$CORES
 
-#
-sudo ln -s /usr/bin/clang /usr/lib/llvm-3.3/bin/clang
-sudo ln -s /usr/bin/clang++ /usr/lib/llvm-3.3/bin/clang++
-sudo ln -s /usr/bin/clang-check /usr/lib/llvm-3.3/bin/clang-check
-sudo ln -s /usr/bin/clang-tblgen /usr/lib/llvm-3.3/bin/clang-tblgen
+# init emscripten
+$BUILD_DIR/emscripten/emcc
 
-# init. emscripten
-emcc
+# fix broken emar
+#  - using emar provided by emscripten results in archives that cause llvm-nm to hang
+sudo rm $BUILD_DIR/emscripten/emar
+sudo ln -s /usr/bin/ar $BUILD_DIR/emscripten/emar
 
 # build/install gmp
 cd $BUILD_DIR
@@ -50,8 +55,9 @@ tar xvf gmp-6.0.0a.tar.bz2
 cd gmp-*
 emconfigure ./configure --prefix=$INSTALL_DIR --disable-assembly --enable-shared --disable-static
 sed -i 's/HAVE_OBSTACK_VPRINTF 1/HAVE_OBSTACK_VPRINTF 0/g' config.h
+sed -i 's/HAVE_QUAD_T 1/HAVE_QUAD_T 0/g' config.h
 # <hack> need to add CFLAGS because GMP configure doesn't use env CFLAGS </hack>
-CFLAGS=-O3 make -j$CORES
+make -j$CORES
 make install
 cp -f gmpxx.h $INSTALL_DIR/include/
 
