@@ -65,6 +65,31 @@ $(TARGET_RABBITJS): $(RABBITJS_OBJS)
 test:
 	@cat dist/common.js src/fte_transformer_test.js | $(NODE)
 	@cat dist/common.js src/rabbit_transformer_test.js | $(NODE)
+
+$(TARGET_TESTFTEJS): $(TARGET_FTEJS) $(TARGET_FTEREGEXES)
+	cat $(TARGET_FTEJS) > $(TARGET_TESTFTEJS)
+	cat html/js/common.js >> $(TARGET_TESTFTEJS)
+	cat html/js/regex2dfa.js >> $(TARGET_TESTFTEJS)
+	cat html/js/benchmark.settings.js >> $(TARGET_TESTFTEJS)
+	cat html/js/benchmark.fte.js >> $(TARGET_TESTFTEJS)
+	cat bin/test.fte.js.in >> $(TARGET_TESTFTEJS)
+
+$(TARGET_TESTRABBITJS): $(TARGET_RABBITJS) $(TARGET_FTEREGEXES)
+	cat $(TARGET_RABBITJS) > $(TARGET_TESTRABBITJS)
+	cat html/js/common.js >> $(TARGET_TESTRABBITJS)
+	cat html/js/regex2dfa.js >> $(TARGET_TESTRABBITJS)
+	cat html/js/benchmark.settings.js >> $(TARGET_TESTRABBITJS)
+	cat html/js/benchmark.rabbit.js >> $(TARGET_TESTRABBITJS)
+	cat bin/test.rabbit.js.in >> $(TARGET_TESTRABBITJS)
+
+$(DIST_DIR): $(TARGET_FTEJS) $(TARGET_RABBITJS) $(TARGET_FTEREGEXS)
+	mkdir -p $(DIST_DIR)
+	cp -f $(TARGET_FTEJS) $(DIST_DIR)
+	cp -f $(TARGET_RABBITJS) $(DIST_DIR)
+	cp -f $(TARGET_FTEREGEXES) $(DIST_DIR)
+	cp -f html/js/common.js $(DIST_DIR)
+	cp -fR src/interfaces $(DIST_DIR)
+>>>>>>> master
 	
 %.o: %.cc
 	$(CXX) -o $@ $< $(CXXFLAGS_)
