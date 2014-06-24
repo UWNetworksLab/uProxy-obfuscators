@@ -22,10 +22,10 @@ export GIT_EMSCRIPTEN_FASTCOMP_CLANG=https://github.com/kripken/emscripten-fastc
 export EMCC_CORES=$CORES
 
 # gtest relies on cxxabi, so we need to include this following hack
-export CFLAGS="-O0 -g4 -s DISABLE_EXCEPTION_CATCHING=2"
-export CPPFLAGS="-O0 -g4 -s DISABLE_EXCEPTION_CATCHING=2"
-export CXXFLAGS="-O0 -g4 -s DISABLE_EXCEPTION_CATCHING=2 -I$INSTALL_DIR/include -I$BUILD_DIR/emscripten/system/lib/libcxxabi/include"
-export LDFLAGS="-O0 -g4 -s DISABLE_EXCEPTION_CATCHING=2 -L$INSTALL_DIR/lib"
+export CFLAGS="-O3"
+export CPPFLAGS="-O3"
+export CXXFLAGS="-O3 -I$INSTALL_DIR/include -I$BUILD_DIR/emscripten/system/lib/libcxxabi/include"
+export LDFLAGS="-O3 -L$INSTALL_DIR/lib"
 
 mkdir -p $BUILD_DIR
 mkdir -p $INSTALL_DIR
