@@ -1,7 +1,7 @@
 # build/install gmp
 cd $BUILD_DIR
 wget $HTTP_GMP
-tar xvf gmp-6.0.0a.tar.bz2
+tar xvf gmp-$GMP_VERSION.tar.bz2
 cd gmp-*
 emconfigure ./configure --prefix=$INSTALL_DIR --disable-assembly --enable-shared --disable-static
 sed -i 's/HAVE_OBSTACK_VPRINTF 1/HAVE_OBSTACK_VPRINTF 0/g' config.h
