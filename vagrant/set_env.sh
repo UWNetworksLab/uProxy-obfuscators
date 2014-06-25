@@ -4,7 +4,7 @@ export INSTALL_DIR=$WORKING_DIR/install
 export PATH=$INSTALL_DIR/bin:$BUILD_DIR/emscripten-fastcomp/Release/bin:$BUILD_DIR/emscripten:$PATH
 
 export GMP_VERSION=6.0.0a
-export HTTP_GMP=https://ftp.gnu.org/gnu/gmp-$GMP_VERSION.tar.bz2
+export HTTP_GMP=https://ftp.gnu.org/gnu/gmp/gmp-$GMP_VERSION.tar.bz2
 
 export LIBFTE_VERSION=0.1.1
 export GIT_LIBFTE=https://github.com/uProxy/libfte.git
