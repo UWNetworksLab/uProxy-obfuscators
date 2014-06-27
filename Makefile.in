@@ -5,6 +5,7 @@ NODE=nodejs
 endif
 
 THIRDPARTY_DIR = third_party
+NPM_DIR = npm
 
 # TODO: no hardcoded vagrant paths
 FTE_DIR=@libftedir@
@@ -17,9 +18,6 @@ GMP_LIB_DIR=$(GMP_DIR)/lib
 
 RAPIDJSON_INC_DIR=$(THIRDPARTY_DIR)/rapidjson/include
 
-REGEX2DFA_GIT = https://github.com/kpdyer/regex2dfa.git
-REGEX2DFA_DIR = $(THIRDPARTY_DIR)/regex2dfa
-
 EXPORTS=-s EXPORTED_FUNCTIONS="[\
     '_delete_transformer','_create_transformer',\
     '_set_key','_set_init_vector','_configure',\
@@ -29,12 +27,10 @@ CXXFLAGS_ = $(CXXFLAGS) $(OPTIMIZATION_FLAGS) -Wall -I$(GMP_INC_DIR) -I$(FTE_INC
 LDFLAGS_ = $(LDFLAGS) $(OPTIMIZATION_FLAGS) -Wall $(EXPORTS) -L$(FTE_LIB_DIR) -L$(GMP_LIB_DIR) -L$(FTE_LIB_DIR) -lgmp -lfte
 
 TRANSFORMERJS = src/transformer.js
-TARGET_FTEJS = dist/utransformers.fte.js
-TARGET_RABBITJS = dist/utransformers.rabbit.js
-TARGET_FTEREGEXES = dist/regex2dfa.js
-TARGET_REGEX2DFA = $(REGEX2DFA_DIR)/bin/regex2dfa
+TARGET_FTEJS = $(NPM_DIR)/uTransformers.fte.js
+TARGET_RABBITJS = $(NPM_DIR)/uTransformers.rabbit.js
 
-default: $(TARGET_FTEJS) $(TARGET_RABBITJS) $(TARGET_FTEREGEXES)
+default: $(TARGET_FTEJS) $(TARGET_RABBITJS)
 
 .PHONY: directories
 
@@ -45,15 +41,6 @@ RABBITJS_OBJS = src/rabbit_transformer.o \
                 src/rabbit.o \
                 src/transformer_factory.o
 
-$(TARGET_FTEREGEXES): $(TARGET_REGEX2DFA)
-	./contrib/build_dfas.py > $(TARGET_FTEREGEXES)
-
-$(REGEX2DFA_DIR):
-	cd $(THIRDPARTY_DIR) && git clone $(REGEX2DFA_GIT)
-	
-$(TARGET_REGEX2DFA): $(REGEX2DFA_DIR)
-	cd $(REGEX2DFA_DIR) && ./configure && $(MAKE)
-
 $(TARGET_FTEJS): $(FTEJS_OBJS)
 	$(CXX) -o $@ $^ $(LDFLAGS_)
 	./contrib/postprocess_js.py fte
@@ -63,13 +50,12 @@ $(TARGET_RABBITJS): $(RABBITJS_OBJS)
 	./contrib/postprocess_js.py rabbit
 
 test:
-	@cat dist/common.js src/fte_transformer_test.js | $(NODE)
-	@cat dist/common.js src/rabbit_transformer_test.js | $(NODE)
+	@cat $(NPM_DIR)/common.js src/fte_transformer_test.js | $(NODE)
+	@cat $(NPM_DIR)/common.js src/rabbit_transformer_test.js | $(NODE)
 
 $(TARGET_TESTFTEJS): $(TARGET_FTEJS) $(TARGET_FTEREGEXES)
 	cat $(TARGET_FTEJS) > $(TARGET_TESTFTEJS)
 	cat html/js/common.js >> $(TARGET_TESTFTEJS)
-	cat html/js/regex2dfa.js >> $(TARGET_TESTFTEJS)
 	cat html/js/benchmark.settings.js >> $(TARGET_TESTFTEJS)
 	cat html/js/benchmark.fte.js >> $(TARGET_TESTFTEJS)
 	cat bin/test.fte.js.in >> $(TARGET_TESTFTEJS)
@@ -77,7 +63,6 @@ $(TARGET_TESTFTEJS): $(TARGET_FTEJS) $(TARGET_FTEREGEXES)
 $(TARGET_TESTRABBITJS): $(TARGET_RABBITJS) $(TARGET_FTEREGEXES)
 	cat $(TARGET_RABBITJS) > $(TARGET_TESTRABBITJS)
 	cat html/js/common.js >> $(TARGET_TESTRABBITJS)
-	cat html/js/regex2dfa.js >> $(TARGET_TESTRABBITJS)
 	cat html/js/benchmark.settings.js >> $(TARGET_TESTRABBITJS)
 	cat html/js/benchmark.rabbit.js >> $(TARGET_TESTRABBITJS)
 	cat bin/test.rabbit.js.in >> $(TARGET_TESTRABBITJS)

@@ -1,6 +1,5 @@
-var rabbit = require('./dist/utransformers.rabbit.js');
-var benchmarks = require('./dist/benchmarks.js');
-var regex2dfa = require('./dist/regex2dfa.js');
+var rabbit = require('./npm/utransformers.rabbit.js');
+var benchmarks = require('./npm/benchmarks.js');
 
 function rabbit_basic_test() {
   var test_lengths = [128, 256, 512, 1024, 2048, 4096, 8192];

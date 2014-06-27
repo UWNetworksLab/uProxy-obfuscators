@@ -1,7 +1,7 @@
-var fte = require('./dist/utransformers.fte.js');
-var benchmarks = require('./dist/benchmarks.js');
-var regex2dfa = require('./dist/regex2dfa.js');
-var test_languages = require('./dist/test_languages.js');
+var fte = require('./npm/utransformers.fte.js');
+var benchmarks = require('./npm/benchmarks.js');
+var regex2dfa = require('regex2dfa/regex2dfa.js');
+var test_languages = require('./npm/test_languages.js');
 
 function fte_basic_test() {
   for (var i = 0; i < test_languages.test_languages.length; i++) {
@@ -71,7 +71,7 @@ function main() {
     console.log('SUCCESS\tfte_basic_test');
   }
 
-  if (!fte_basic_test()) {
+  if (!fte_issue12_test()) {
     console.log('FAIL\tfte_issue12_test');
     process.exit(code = 1);
   }

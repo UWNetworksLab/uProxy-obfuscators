@@ -1,6 +1,9 @@
 uProxy uTransformers
 ====================
 
+[![Build Status](https://travis-ci.org/uProxy/uTransformers.svg?branch=master)](https://travis-ci.org/uProxy/uTransformers) [![devDependency Status](https://david-dm.org/uProxy/uTransformers/dev-status.svg)](https://david-dm.org/uProxy/uTransformers#info=devDependencies)
+
+
 The uProxy uTransformers layer provides resistance against large-scale DPI attempts to passively detect uProxy. This obfsucation layer does not protect against active adversaries, or adversaries that can throw expensive resources (such as people) at identifying connection properties.
 
 This library builds two uTransformers modules:
