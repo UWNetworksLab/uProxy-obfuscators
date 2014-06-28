@@ -28,21 +28,6 @@ Compiling
 
 See ```vagrant/README.md``` for details.
 
-Building formats for FTE
-------------------------
-
-If you wish to build formats for FTE.
-
-```
-make clean
-```
-
-Update ```src/fte_regexes.conf```, with one regex per line. Then:
-
-```
-make html/js/regex2dfa.js
-```
-
 Example Usage
 -------------
 
