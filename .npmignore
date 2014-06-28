@@ -5,7 +5,7 @@ configure.ac
 Makefile.in
 bin/*
 contrib/*
-html/*
+demo/*
 src/*
 third_party/*
 vagrant/*
