@@ -7,7 +7,7 @@ emconfigure ./configure
 emmake make clean
 emmake make -j$CORES
 
-npm install
+sudo npm install
 grunt clean
 grunt build
 grunt test
