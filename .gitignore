@@ -1,6 +1,8 @@
+build
 config.log
 config.status
 Makefile
+node_modules
 *.o
 *.map
 vagrant/.vagrant

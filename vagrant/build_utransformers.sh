@@ -4,16 +4,13 @@ git clone $GIT_OBFUSCATION
 cd uTransformers
 git checkout $UTRANSFORMERS_VERSION
 emconfigure ./configure
-make -j$CORES
+emmake make clean
+emmake make -j$CORES
 
-# test the transformers
-make test
+npm install
+grunt clean
+grunt build
+grunt test
 
-# copy to shared directroy
-mkdir -p /vagrant/build
-cp -f npm/utransformers.rabbit.js /vagrant/build
-cp -f npm/utransformers.fte.js /vagrant/build
-
-mkdir -p /vagrant/build/demo
-cp -rfv npm /vagrant/build/demo/npm
-cp -rfv html /vagrant/build/demo/html
+cp -rvf build /vagrant/
+cp -rvf demp /vagrant/

@@ -9,7 +9,7 @@ export HTTP_GMP=https://ftp.gnu.org/gnu/gmp/gmp-$GMP_VERSION.tar.bz2
 export LIBFTE_VERSION=0.1.2
 export GIT_LIBFTE=https://github.com/uProxy/libfte.git
 
-export UTRANSFORMERS_VERSION=0.1.3
+export UTRANSFORMERS_VERSION=kpdyer-issue15
 export GIT_OBFUSCATION=https://github.com/uProxy/uTransformers.git
 
 export CORES=`nproc`
