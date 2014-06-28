@@ -12,12 +12,17 @@ This library currently builds two uTransformers modules:
 
 See "Example Usage" below for more details.
 
+Installation
+------------
+
+```bash
+npm install uTransformers
+```
+
 Example Usage
 -------------
 
 ### FTE
-
-Then one can invoke the FTE transformer as follows.
 
 ```javascript
 var fte = require('uTransformers/transformers/uTransformers.fte.js');
@@ -28,12 +33,9 @@ var transformer = new fte.Transformer();
 var key = "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF";
 var ab_key = str2ab(key);
 transformer.setKey(ab_key);
-        
-// The plaintext_dfa and ciphertext_dfa strings are AT&T-formatted DFAs.
-// The plaintext_max_len and ciphertext_max_len are the largest strings
-//   we'll encrypt/decrypt.
+
 var json_obj = {
-  'plaintext_dfa': regex2dfa("^.+$"),
+  'plaintext_dfa': regex2dfa.regex2dfa("^.+$"),
   'plaintext_max_len': 128,
   'ciphertext_dfa': regex2dfa.regex2dfa("^.+$"),,
   'ciphertext_max_len': 128
@@ -48,8 +50,6 @@ var output_plaintext = ab2str(ab_output_plaintext);
 ```
 
 ### Rabbit
-
-Then one can invoke the Rabbit transformer as follows.
 
 ```javascript
 var rabbit = require('uTransformers/transformers/uTransformers.rabbit.js');

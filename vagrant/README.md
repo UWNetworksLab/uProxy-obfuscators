@@ -1,5 +1,5 @@
-cBuilding uProxy obfuscation
-===========================
+Building uTransformers
+======================
 
 Dependencies
 ------------
@@ -38,9 +38,4 @@ cd vagrant
 vagrant up
 ```
 
-wait roughly 10 minutes, then
-
-```shell
-$ ls build/
-demo transformer.fte.js transformer.rabbit.js
-```
+This will produce a directory ```uTransformers``` in vagrant. In this directory ```npm publish``` can be executed to update uTransformers on npm. There is also a ```demo``` directory with a simple HTML page that can be run to evaluate the performance of the uTransformers.

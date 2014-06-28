@@ -12,6 +12,5 @@ grunt clean
 grunt build
 grunt test
 
-cp -rvf build /vagrant/
-cp -rvf demo /vagrant/
-
+rm -rfv /vagrant/uTransformers
+cp -rvf $BUILD_DIR/uTransformers /vagrant/
