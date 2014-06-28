@@ -34,10 +34,10 @@ default: $(TARGET_FTEJS) $(TARGET_RABBITJS)
 
 .PHONY: directories
 
-FTEJS_OBJS = src/transformers/fte_transformer.o \
+FTEJS_OBJS = src/transformers/uTransformers.fte.o \
              src/transformers/transformer_factory.o
 
-RABBITJS_OBJS = src/transformers/rabbit_transformer.o \
+RABBITJS_OBJS = src/transformers/uTransformers.rabbit.o \
                 src/transformers/rabbit.o \
                 src/transformers/transformer_factory.o
 
