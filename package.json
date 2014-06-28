@@ -10,7 +10,6 @@
     "grunt-jasmine-node": "^0.2",
     "grunt-contrib-copy": "^0.5",
     "grunt-contrib-clean": "^0.5",
-    "grunt-browserify": "^2.1",
     "uproxy-build-tools": "^0.0",
     "regex2dfa": "^0.1",
     "ws": "^0.4"

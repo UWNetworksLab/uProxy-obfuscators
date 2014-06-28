@@ -1,47 +1,65 @@
-//var fte = require('./uTransformers.fte.js');
+var fte = require('./uTransformers.fte.js');
+var benchmarks = require('./benchmarks.js');
+var regex2dfa = require('regex2dfa/regex2dfa.js');
+
+var test_languages = [{
+  'plaintext_regex': '^.+$',
+  'plaintext_max_len': 128,
+  'ciphertext_regex': '^.+$',
+  'ciphertext_max_len': 128
+}, {
+  'plaintext_regex': '^.+$',
+  'plaintext_max_len': 256,
+  'ciphertext_regex': '^.+$',
+  'ciphertext_max_len': 256
+}, {
+  'plaintext_regex': '^.+$',
+  'plaintext_max_len': 512,
+  'ciphertext_regex': '^.+$',
+  'ciphertext_max_len': 512
+}, {
+  'plaintext_regex': '^.+$',
+  'plaintext_max_len': 1024,
+  'ciphertext_regex': '^.+$',
+  'ciphertext_max_len': 1024 
+}, {
+  'plaintext_regex': '^.*$',
+  'plaintext_max_len': 512,
+  'ciphertext_regex': '^.*$',
+  'ciphertext_max_len': 512
+}, {
+  'plaintext_regex': '^[a-zA-Z0-9]+$',
+  'plaintext_max_len': 512,
+  'ciphertext_regex': '^[a-zA-Z0-9]+$',
+  'ciphertext_max_len': 512
+}, {
+  'plaintext_regex': '^.+$',
+  'plaintext_max_len': 64,
+  'ciphertext_regex': '^[a-zA-Z0-9]+$',
+  'ciphertext_max_len': 512
+}];
 
 describe("uTransformers.fte", function() {
-  /*var transformer;
-
-  beforeEach(function() {
-    transformer = new fte.Transformer();
-    transformer.setKey(new Uint8Array([16]).buffer);
-  });*/
-
-  it('transform', function() {
-    //expect(transformer.transformByte(0)).toEqual(4);
-    expect(true);
-  });
-});
-
-/*var fte = require('./npm/utransformers.fte.js');
-var benchmarks = require('./npm/benchmarks.js');
-var regex2dfa = require('regex2dfa/regex2dfa.js');
-var test_languages = require('./npm/test_languages.js');
-
-function fte_basic_test() {
-  for (var i = 0; i < test_languages.test_languages.length; i++) {
-    var plaintext_dfa = regex2dfa.regex2dfa(test_languages.test_languages[i][
+  it('basic', function() {
+  for (var i = 0; i < test_languages.length; i++) {
+    var plaintext_dfa = regex2dfa.regex2dfa(test_languages[i][
       'plaintext_regex'
     ]);
-    var ciphertext_dfa = regex2dfa.regex2dfa(test_languages.test_languages[i][
+    var ciphertext_dfa = regex2dfa.regex2dfa(test_languages[i][
       'ciphertext_regex'
     ]);
     retval = benchmarks.do_fte_benchmark(plaintext_dfa,
-      test_languages.test_languages[i]['plaintext_max_len'],
+      test_languages[i]['plaintext_max_len'],
       ciphertext_dfa,
-      test_languages.test_languages[i]['ciphertext_max_len']);
+      test_languages[i]['ciphertext_max_len']);
     var success = retval[0];
     if (!success) {
       return false;
     }
   }
+  });
 
-  return true;
-}
-
-
-function fte_issue12_test() {
+  it('issue12', function () {
   // This test cases is in support of issue uProxy/uTransformers#12.
   //   link: https://github.com/uProxy/uTransformers/issues/12
   var transformer = new fte.Transformer();
@@ -76,27 +94,5 @@ function fte_issue12_test() {
   var output_plaintext = ab2str(ab_output_plaintext);
 
   return (input_plaintext == output_plaintext);
-}
-
-function main() {
-  if (!fte_basic_test()) {
-    console.log('FAIL\tfte_basic_test');
-    process.exit(code = 1);
-  }
-  else {
-    console.log('SUCCESS\tfte_basic_test');
-  }
-
-  if (!fte_issue12_test()) {
-    console.log('FAIL\tfte_issue12_test');
-    process.exit(code = 1);
-  }
-  else {
-    console.log('SUCCESS\tfte_issue12_test');
-  }
-
-  process.exit(code = 0);
-}
-
-main();
-*/
+  });
+});
