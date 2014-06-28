@@ -1,52 +1,28 @@
-uProxy uTransformers
-====================
+uTransformers
+=============
 
 [![Build Status](https://travis-ci.org/uProxy/uTransformers.svg?branch=master)](https://travis-ci.org/uProxy/uTransformers) [![devDependency Status](https://david-dm.org/uProxy/uTransformers/dev-status.svg)](https://david-dm.org/uProxy/uTransformers#info=devDependencies)
 
+uTransformers is a transport-layer obfuscation library for uProxy.
 
-The uProxy uTransformers layer provides resistance against large-scale DPI attempts to passively detect uProxy. This obfsucation layer does not protect against active adversaries, or adversaries that can throw expensive resources (such as people) at identifying connection properties.
+This library currently builds two uTransformers modules:
 
-This library builds two uTransformers modules:
-
-* **rabbit**: based on http://en.wikipedia.org/wiki/Rabbit_(cipher)
-* **fte**: based on https://github.com/uproxy/libfte
+* **uTransformers.rabbit**: based on http://en.wikipedia.org/wiki/Rabbit_(cipher)
+* **uTransformers.fte**: based on https://github.com/uproxy/libfte
 
 See "Example Usage" below for more details.
-
-Dependencies
-------------
-
-* build tools: autoconf, automake, m4
-* node.js: http://nodejs.org/
-* emscripten: https://github.com/kripken/emscripten
-* clang: http://clang.llvm.org/
-* GMP: http://libgmp.org/
-* libfte: https://github.com/uProxy/libfte
-
-Compiling
----------
-
-See ```vagrant/README.md``` for details.
 
 Example Usage
 -------------
 
 ### FTE
 
-Include the following scripts on your page.
-
-```html
-<!-- Provides str2ab and ab2str functions. -->
-<script src="js/common.js"></script>
-<!-- Provides regex2dfa. -->
-<script src="js/regex2dfa.js"></script>
-<!-- Provides the emscripten-compiled FteTransformer. -->
-<script src="js/utransformers.fte.js"></script>
-```
-
 Then one can invoke the FTE transformer as follows.
 
 ```javascript
+var fte = require('uTransformers/transformers/uTransformers.fte.js');
+var regex2dfa = require('regex2dfa/regex2dfa.js');
+
 var transformer = new fte.Transformer();
 
 var key = "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF";
@@ -59,7 +35,7 @@ transformer.setKey(ab_key);
 var json_obj = {
   'plaintext_dfa': regex2dfa("^.+$"),
   'plaintext_max_len': 128,
-  'ciphertext_dfa': regex2dfa("^.+$"),,
+  'ciphertext_dfa': regex2dfa.regex2dfa("^.+$"),,
   'ciphertext_max_len': 128
         
 var json_str = JSON.stringify(json_obj);
@@ -73,18 +49,10 @@ var output_plaintext = ab2str(ab_output_plaintext);
 
 ### Rabbit
 
-Include the following scripts on your page.
-
-```html
-<!-- Provides str2ab and ab2str functions. -->
-<script src="js/common.js"></script>
-<!-- Provides the emscripten-compiled RabbitTransformer. -->
-<script src="js/utransformers.rabbit.js"></script>
-```
-
 Then one can invoke the Rabbit transformer as follows.
 
 ```javascript
+var rabbit = require('uTransformers/transformers/uTransformers.rabbit.js');
 var transformer = new rabbit.Transformer();
 
 var key = "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF";
@@ -96,3 +64,8 @@ var ciphertext = transformer.transform(ab_plaintext);
 var ab_output_plaintext = transformer.restore(ciphertext);
 var output_plaintext = ab2str(ab_output_plaintext);
 ```
+
+Building
+--------
+
+See ```vagrant/README.md``` for details.

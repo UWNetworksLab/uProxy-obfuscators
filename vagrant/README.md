@@ -1,6 +1,19 @@
 cBuilding uProxy obfuscation
 ===========================
 
+Dependencies
+------------
+
+* build tools: autoconf, automake, m4
+* node.js: http://nodejs.org/
+* emscripten: https://github.com/kripken/emscripten
+* clang: http://clang.llvm.org/
+* GMP: http://libgmp.org/
+* libfte: https://github.com/uProxy/libfte
+
+Building
+--------
+
 ### Required software 
 
 * Vagrant: https://vagrantup.com/
