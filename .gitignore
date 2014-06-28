@@ -3,11 +3,6 @@ config.status
 Makefile
 *.o
 *.map
-bin/test.fte.js
-bin/test.rabbit.js
-html/js/utransformers.fte.js
-html/js/utransformers.rabbit.js
 vagrant/.vagrant
-third_party/regex2dfa
 vagrant/build
 nbproject

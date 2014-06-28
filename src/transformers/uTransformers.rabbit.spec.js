@@ -1,4 +1,4 @@
-var rabbit = require('./npm/utransformers.rabbit.js');
+/*var rabbit = require('./npm/utransformers.rabbit.js');
 var benchmarks = require('./npm/benchmarks.js');
 
 function rabbit_basic_test() {
@@ -24,3 +24,4 @@ function main() {
 }
 
 main();
+*/

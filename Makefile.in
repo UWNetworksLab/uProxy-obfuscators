@@ -26,20 +26,20 @@ OPTIMIZATION_FLAGS = -O3
 CXXFLAGS_ = $(CXXFLAGS) $(OPTIMIZATION_FLAGS) -Wall -I$(GMP_INC_DIR) -I$(FTE_INC_DIR) -I$(RAPIDJSON_INC_DIR) $(EXPORTS) 
 LDFLAGS_ = $(LDFLAGS) $(OPTIMIZATION_FLAGS) -Wall $(EXPORTS) -L$(FTE_LIB_DIR) -L$(GMP_LIB_DIR) -L$(FTE_LIB_DIR) -lgmp -lfte
 
-TRANSFORMERJS = src/transformer.js
-TARGET_FTEJS = $(NPM_DIR)/uTransformers.fte.js
-TARGET_RABBITJS = $(NPM_DIR)/uTransformers.rabbit.js
+TRANSFORMERJS = src/transformers/transformer.js
+TARGET_FTEJS = src/transformers/uTransformers.fte.ts
+TARGET_RABBITJS = src/transformers/uTransformers.rabbit.ts
 
 default: $(TARGET_FTEJS) $(TARGET_RABBITJS)
 
 .PHONY: directories
 
-FTEJS_OBJS = src/fte_transformer.o \
-             src/transformer_factory.o
+FTEJS_OBJS = src/transformers/fte_transformer.o \
+             src/transformers/transformer_factory.o
 
-RABBITJS_OBJS = src/rabbit_transformer.o \
-                src/rabbit.o \
-                src/transformer_factory.o
+RABBITJS_OBJS = src/transformers/rabbit_transformer.o \
+                src/transformers/rabbit.o \
+                src/transformers/transformer_factory.o
 
 $(TARGET_FTEJS): $(FTEJS_OBJS)
 	$(CXX) -o $@ $^ $(LDFLAGS_)
@@ -48,24 +48,6 @@ $(TARGET_FTEJS): $(FTEJS_OBJS)
 $(TARGET_RABBITJS): $(RABBITJS_OBJS)
 	$(CXX) -o $@ $^ $(LDFLAGS_)
 	./contrib/postprocess_js.py rabbit
-
-test:
-	@cat $(NPM_DIR)/common.js src/fte_transformer_test.js | $(NODE)
-	@cat $(NPM_DIR)/common.js src/rabbit_transformer_test.js | $(NODE)
-
-$(TARGET_TESTFTEJS): $(TARGET_FTEJS) $(TARGET_FTEREGEXES)
-	cat $(TARGET_FTEJS) > $(TARGET_TESTFTEJS)
-	cat html/js/common.js >> $(TARGET_TESTFTEJS)
-	cat html/js/benchmark.settings.js >> $(TARGET_TESTFTEJS)
-	cat html/js/benchmark.fte.js >> $(TARGET_TESTFTEJS)
-	cat bin/test.fte.js.in >> $(TARGET_TESTFTEJS)
-
-$(TARGET_TESTRABBITJS): $(TARGET_RABBITJS) $(TARGET_FTEREGEXES)
-	cat $(TARGET_RABBITJS) > $(TARGET_TESTRABBITJS)
-	cat html/js/common.js >> $(TARGET_TESTRABBITJS)
-	cat html/js/benchmark.settings.js >> $(TARGET_TESTRABBITJS)
-	cat html/js/benchmark.rabbit.js >> $(TARGET_TESTRABBITJS)
-	cat bin/test.rabbit.js.in >> $(TARGET_TESTRABBITJS)
 
 $(DIST_DIR): $(TARGET_FTEJS) $(TARGET_RABBITJS) $(TARGET_FTEREGEXS)
 	mkdir -p $(DIST_DIR)
