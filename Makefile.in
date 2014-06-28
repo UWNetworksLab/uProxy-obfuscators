@@ -27,8 +27,8 @@ CXXFLAGS_ = $(CXXFLAGS) $(OPTIMIZATION_FLAGS) -Wall -I$(GMP_INC_DIR) -I$(FTE_INC
 LDFLAGS_ = $(LDFLAGS) $(OPTIMIZATION_FLAGS) -Wall $(EXPORTS) -L$(FTE_LIB_DIR) -L$(GMP_LIB_DIR) -L$(FTE_LIB_DIR) -lgmp -lfte
 
 TRANSFORMERJS = src/transformers/transformer.js
-TARGET_FTEJS = src/transformers/uTransformers.fte.ts
-TARGET_RABBITJS = src/transformers/uTransformers.rabbit.ts
+TARGET_FTEJS = src/transformers/uTransformers.fte.js
+TARGET_RABBITJS = src/transformers/uTransformers.rabbit.js
 
 default: $(TARGET_FTEJS) $(TARGET_RABBITJS)
 
