@@ -13,4 +13,5 @@ grunt build
 grunt test
 
 cp -rvf build /vagrant/
-cp -rvf demp /vagrant/
+cp -rvf demo /vagrant/
+
