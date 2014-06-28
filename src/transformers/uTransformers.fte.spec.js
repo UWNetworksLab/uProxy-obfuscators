@@ -53,9 +53,7 @@ describe("uTransformers.fte", function() {
       ciphertext_dfa,
       test_languages[i]['ciphertext_max_len']);
     var success = retval[0];
-    if (!success) {
-      return false;
-    }
+    expect(success).toBe(true);
   }
   });
 
@@ -93,6 +91,6 @@ describe("uTransformers.fte", function() {
   var ab_output_plaintext = transformer.restore(ciphertext);
   var output_plaintext = ab2str(ab_output_plaintext);
 
-  return (input_plaintext == output_plaintext);
+  expect(input_plaintext == output_plaintext).toBe(true);
   });
 });
