@@ -1,4 +1,5 @@
-var test_languages = [{
+var test_languages = [
+{
   'plaintext_regex': '^.+$',
   'plaintext_max_len': 128,
   'ciphertext_regex': '^.+$',
