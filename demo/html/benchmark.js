@@ -21,7 +21,6 @@ function WriteFteTable() {
 }
 
 function FillFteTable(i) {
-
   var plaintext_dfa = regex2dfa(test_languages[i]['plaintext_regex']);
   var ciphertext_dfa = regex2dfa(test_languages[i]['ciphertext_regex']);
   retval = do_fte_benchmark(plaintext_dfa, test_languages[i][
@@ -35,7 +34,6 @@ function FillFteTable(i) {
   if (success) {
     rowClass = 'success';
   }
-
 
   var toUpdate = document.getElementById('fte_row' + i).className = rowClass;
   var toUpdate = document.getElementById('fte_row' + i).getElementsByClassName(
