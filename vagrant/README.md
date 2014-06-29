@@ -1,15 +1,15 @@
 Building uTransformers
 ======================
 
-Dependencies
-------------
+This directory contains a vagrant-powered build environment for uTransformers.
 
-* build tools: autoconf, automake, m4
-* node.js: http://nodejs.org/
-* emscripten: https://github.com/kripken/emscripten
-* clang: http://clang.llvm.org/
-* GMP: http://libgmp.org/
-* libfte: https://github.com/uProxy/libfte
+Once you have vagrant and a 32-bit vagrant Linux VM installed named ```ubuntu-14.04-i386``` you can type ```vagrant up``` in this directory and it will kick off the full build process. The result of this build process is a directory in ```vagrant/uTransformers``` with a fully-build version of this software.
+
+### Why use vagrant?
+
+* Building uTransformers currently does not work on 64-bit systems. Specifically, GMP does not build. 
+* Emscripten requires a lot of special flags, and changes to the software in order to get all uTransformers dependencies to build correclty.
+* Reproducibility.
 
 Building
 --------
@@ -38,4 +38,12 @@ cd vagrant
 vagrant up
 ```
 
-This will produce a directory ```uTransformers``` in vagrant. In this directory ```npm publish``` can be executed to update uTransformers on npm. There is also a ```demo``` directory with a simple HTML page that can be run to evaluate the performance of the uTransformers.
+This will produce a directory ```uTransformers``` in ```vagrant```. In ```vagrant/uTransformers``` ```npm publish``` can be executed to update uTransformers on npm. There is also a ```uTransformers/demo``` directory with a simple HTML page that can be run to evaluate the performance of the uTransformers.
+
+Testing
+-------
+
+There are two ways to test uTransformers:
+
+* *Command line:* run ```grunt clean && grunt build && grunt test``` in the generated ```vagrant/uTransformers``` directory.
+* *Browser:* open ```demo/html/benchmarks.html``` in your browser. Success is when all rows in all tables are green.
