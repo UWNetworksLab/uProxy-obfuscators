@@ -3,13 +3,13 @@ Building uTransformers
 
 This directory contains a vagrant-powered build environment for uTransformers.
 
-Once you have vagrant and a 32-bit vagrant Linux VM installed named ```ubuntu-14.04-i386``` you can type ```vagrant up``` in this directory and it will kick off the full build process. The result of this build process is a directory in ```vagrant/uTransformers``` with a fully-build version of this software.
+Once you have vagrant and a 32-bit vagrant Linux VM installed named ```ubuntu-14.04-i386``` you can type ```vagrant up``` in this directory to start the build process. The product of this build process is the directory ```vagrant/uTransformers```.
 
 ### Why use vagrant?
 
-* Building uTransformers currently does not work on 64-bit systems. Specifically, GMP does not build. 
-* Emscripten requires a lot of special flags, and changes to the software in order to get all uTransformers dependencies to build correclty.
-* Reproducibility.
+* Building uTransformers is difficult on 64-bit systems. Specifically, GMP does not successfully compile on 64-bit systems with emscripten. This requires further investigation.
+* Emscripten requires special hacks. As an example, we have to build everything from source, and we have to have special compile/configure flags for all dependencies. 
+* Vagrant makes it easy to document and reproduce the build process.
 
 Building
 --------
@@ -46,4 +46,4 @@ Testing
 There are two ways to test uTransformers:
 
 * *Command line:* run ```grunt clean && grunt build && grunt test``` in the generated ```vagrant/uTransformers``` directory.
-* *Browser:* open ```demo/html/benchmarks.html``` in your browser. Success is when all rows in all tables are green.
+* *Browser:* open ```demo/html/benchmarks.html``` in your browser. If all rows in all tables are green, then you have success.
