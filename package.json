@@ -1,0 +1,20 @@
+{
+  "name": "utransformers-integration-tests",
+  "description": "integration tests for uTransformers",
+  "version": "0.1.0",
+  "scripts": {
+    "test": "grunt test"
+  },
+  "devDependencies": {
+    "grunt": "^0.4",
+    "grunt-jasmine-node": "^0.2",
+    "grunt-contrib-copy": "^0.5",
+    "grunt-contrib-clean": "^0.5",
+    "uproxy-build-tools": "^0.0",
+    "uTransformers": "latest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/uProxy/uTransformers.git"
+  }
+}
