@@ -10,7 +10,7 @@ module.exports = function(grunt) {
         extensions: 'js',
         specNameMatcher: '*'
       },
-      all: ['tests/']
+      all: ['src/']
     }
   });
 
