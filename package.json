@@ -8,7 +8,7 @@
   "devDependencies": {
     "grunt": "^0.4",
     "grunt-jasmine-node": "^0.2",
-    "sleep": "latest",
+    "regex2dfa": "latest",
     "udp": "latest",
     "uproxy-build-tools": "^0.0",
     "utransformers": "latest"
