@@ -9,7 +9,8 @@ module.exports = function(grunt) {
         matchall: false,
         extensions: 'js',
         specNameMatcher: '*'
-      }
+      },
+      all: ['tests/']
     }
   });
 
@@ -21,7 +22,7 @@ module.exports = function(grunt) {
     'jasmine_node'
   ]);
 
-  taskManager.add('default', ['build']);
+  taskManager.add('default', ['test']);
 
   taskManager.list().forEach(function(taskName) {
     grunt.registerTask(taskName, taskManager.get(taskName));
