@@ -5,7 +5,9 @@ module.exports = function(grunt) {
     copy: {
       build: {
         files: [ {
-          expand: true, cwd: 'src/', src: ['**/*.js', '**/*.ts'], dest: 'build/'
+          expand: true, cwd: 'src/', src: ['transformers/uTransformers.fte.js', 'transformers/uTransformers.rabbit.js', '**/*.ts'], dest: 'build/'
+        }, {
+          expand: true, cwd: 'src/transformers', src: ['uTransformers.fte.js', 'uTransformers.rabbit.js'], dest: 'demo/html/'
         } ]
       },
     },

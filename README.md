@@ -25,7 +25,7 @@ Example Usage
 ### FTE
 
 ```javascript
-var fte = require('uTransformers/transformers/uTransformers.fte.js');
+var fte = require('uTransformers/src/transformers/uTransformers.fte.js');
 var regex2dfa = require('regex2dfa/regex2dfa.js');
 
 var transformer = new fte.Transformer();
@@ -52,7 +52,7 @@ var output_plaintext = ab2str(ab_output_plaintext);
 ### Rabbit
 
 ```javascript
-var rabbit = require('uTransformers/transformers/uTransformers.rabbit.js');
+var rabbit = require('uTransformers/src/transformers/uTransformers.rabbit.js');
 var transformer = new rabbit.Transformer();
 
 var key = "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF";
@@ -68,4 +68,7 @@ var output_plaintext = ab2str(ab_output_plaintext);
 Building
 --------
 
-See ```vagrant/README.md``` for details.
+There are two stages to the build process:
+
+* The first stage is the process of building ```uTransformers.fte.js``` and ```uTransformers.rabbit.js``` using emscripten. This is done in a vagrant virutal machine. See ```vagrant/README.md``` for details. To ease the build process, these artifacts are checked into git when the their cc files change.
+* The second step of the build process runs jasmine tests with grunt. This produces artifacts in ```build/```. 

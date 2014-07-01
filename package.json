@@ -2,6 +2,7 @@
   "name": "utransformers",
   "description": "emscripten-ified transformers for uProxy",
   "version": "0.2.0",
+  "cwd": "build",
   "scripts": {
     "test": "grunt test"
   },
