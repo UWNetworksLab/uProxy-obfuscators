@@ -1,5 +1,18 @@
-Building uProxy obfuscation
-===========================
+Building uTransformers
+======================
+
+This directory contains a vagrant-powered build environment for uTransformers.
+
+Once you have vagrant and a 32-bit vagrant Linux VM installed named ```ubuntu-14.04-i386``` you can type ```vagrant up``` in this directory to start the build process. The product of this build process is the directory ```vagrant/uTransformers```.
+
+### Why use vagrant?
+
+* Building uTransformers is difficult on 64-bit systems. Specifically, GMP does not successfully compile on 64-bit systems with emscripten. This requires further investigation.
+* Emscripten requires special hacks. As an example, we have to build everything from source, and we have to have special compile/configure flags for all dependencies. 
+* Vagrant makes it easy to document and reproduce the build process.
+
+Building
+--------
 
 ### Required software 
 
@@ -25,9 +38,12 @@ cd vagrant
 vagrant up
 ```
 
-wait roughly 10 minutes, then
+This will produce a directory ```uTransformers``` in ```vagrant```. In ```vagrant/uTransformers``` ```npm publish``` can be executed to update uTransformers on npm. There is also a ```uTransformers/demo``` directory with a simple HTML page that can be run to evaluate the performance of the uTransformers.
 
-```shell
-$ ls build/
-demo transformer.fte.js transformer.rabbit.js
-```
+Testing
+-------
+
+There are two ways to test uTransformers:
+
+* *Command line:* run ```grunt clean && grunt build && grunt test``` in the generated ```vagrant/uTransformers``` directory.
+* *Browser:* open ```demo/html/benchmarks.html``` in your browser. If all rows in all tables are green, then you have success.
