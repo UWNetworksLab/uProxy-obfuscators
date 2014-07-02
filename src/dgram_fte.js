@@ -1,5 +1,5 @@
 var dgram = require('dgram');
-var fte = require('utransformers/dist/utransformers.fte.js');
+var fte = require('uTransformers/src/transformers/uTransformers.fte.js');
 var regex2dfa = require('regex2dfa/regex2dfa.js');
 
 function toBuffer(ab) {

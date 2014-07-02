@@ -1,5 +1,5 @@
-var fte = require('utransformers/dist/utransformers.fte.js');
 var regex2dfa = require('regex2dfa/regex2dfa.js');
+var fte = require('uTransformers/src/transformers/uTransformers.fte.js');
 
 describe("sanity_fte", function() {
   var input_plaintext = "Hello, World!";

@@ -1,4 +1,4 @@
-var rabbit = require('utransformers/dist/utransformers.rabbit.js');
+var rabbit = require('uTransformers/src/transformers/uTransformers.rabbit.js');
 
 describe("sanity_rabbit", function() {
   var input_plaintext = "Hello, World!";

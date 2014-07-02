@@ -1,5 +1,5 @@
 var dgram = require('dgram');
-var rabbit = require('utransformers/dist/utransformers.rabbit.js');
+var rabbit = require('uTransformers/src/transformers/uTransformers.rabbit.js');
 
 function toBuffer(ab) {
   var buffer = new Buffer(ab.byteLength);
