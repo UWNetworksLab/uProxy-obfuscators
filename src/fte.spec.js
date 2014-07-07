@@ -42,7 +42,6 @@ describe("fte", function () {
 
         // initialize transformer
         runs(function () {
-          console.log(dpi_device + '.' + protocol);
           this.transformer_ = new fte_transformer();
           var plaintext_regex = "^.+$"; // default, allow any input
           var plaintext_max_len = 64;
