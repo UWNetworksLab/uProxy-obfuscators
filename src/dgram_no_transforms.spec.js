@@ -51,10 +51,5 @@ describe("dgram_basic", function() {
       return (message_received_ != '');
     });
 
-    waitsFor(function() {
-      server_.unref();
-      return true;
-    });
-
   });
 });

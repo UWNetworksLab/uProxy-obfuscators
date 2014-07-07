@@ -8,7 +8,7 @@ module.exports = function(grunt) {
         match: '.',
         matchall: false,
         extensions: 'js',
-        specNameMatcher: '*'
+        specNameMatcher: 'spec'
       },
       all: ['src/']
     }
