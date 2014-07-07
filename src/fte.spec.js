@@ -40,7 +40,6 @@ describe("fte", function () {
     for (var protocol in regex_struct[dpi_device]) {
       it(dpi_device + '.' + protocol, function () {
 
-        // initialize transformer
         runs(function () {
           this.transformer_ = new fte_transformer();
           var plaintext_regex = "^.+$"; // default, allow any input
@@ -53,11 +52,9 @@ describe("fte", function () {
           this.server_.start(this.transformer_);
         });
 
-
         waitsFor(function () {
           return this.server_.ready();
         });
-
 
         runs(function () {
           var dst = this.server_.address();
@@ -69,11 +66,9 @@ describe("fte", function () {
 
         });
 
-
         waitsFor(function () {
           return (this.server_.message_received() == this.plaintext);
         });
-
 
         runs(function () {
           this.server_.stop();

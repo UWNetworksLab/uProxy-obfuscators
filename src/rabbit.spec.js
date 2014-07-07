@@ -25,7 +25,6 @@ describe("rabbit", function () {
 
       it("default", function () {
 
-        // initialize transformer
         runs(function () {
           this.transformer_ = new rabbit_transformer();
           this.transformer_.init_transformer();
@@ -34,11 +33,9 @@ describe("rabbit", function () {
           this.server_.start(this.transformer_);
         });
 
-
         waitsFor(function () {
           return this.server_.ready();
         });
-
 
         runs(function () {
           var dst = this.server_.address();
@@ -50,15 +47,14 @@ describe("rabbit", function () {
 
         });
 
-
         waitsFor(function () {
           return (this.server_.message_received() == this.plaintext);
         });
 
-
         runs(function () {
           this.server_.stop();
         });
+
       });
 
 });
