@@ -1,5 +1,5 @@
 // our npm packages
-var regex2dfa = require('regex2dfa/regex2dfa.js');
+var regex2dfa = require('regex2dfa');
 var fte = require('utransformers/src/transformers/uTransformers.fte.js');
 
 // our local helper files
@@ -42,11 +42,12 @@ describe("fte", function () {
 
         // initialize transformer
         runs(function () {
+          console.log(dpi_device + '.' + protocol);
           this.transformer_ = new fte_transformer();
           var plaintext_regex = "^.+$"; // default, allow any input
-          var plaintext_max_len = 100;
+          var plaintext_max_len = 64;
           var ciphertext_regex = regex_struct[dpi_device][protocol];
-          var ciphertext_max_len = 150;
+          var ciphertext_max_len = 128;
           this.transformer_.init_transformer(plaintext_regex, plaintext_max_len, ciphertext_regex, ciphertext_max_len);
 
           this.server_ = new udp_server.udp_server();
@@ -78,6 +79,7 @@ describe("fte", function () {
         runs(function () {
           this.server_.stop();
         });
+
       });
     }
   }
