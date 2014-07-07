@@ -4,20 +4,17 @@ uTransformers Integration Tests
 [![Build Status](https://travis-ci.org/uProxy/uTransformers.svg?branch=integration-tests)](https://travis-ci.org/uProxy/uTransformers)
 [![devDependency Status](https://david-dm.org/uProxy/turn-relay/dev-status.svg?branch=integration-tests)](https://david-dm.org/uProxy/turn-relay#info=devDependencies)
 
-This branch contains integration tests for uTransformers.
+### Overview
+
+This branch contains integration tests for uTransformers. Specifically, the goal is to test uTransformers that uTransformers works under a range of normal configurations.
+
+For each test, a UDP client and server are spawned. A message is transformed, sent to the server, then restored by the server. The test passes iff the plaintext can be recovered.
 
 ### Running the tests
 
-```bash
+```console
 $ npm install
-npm http GET https://registry.npmjs.org/regex2dfa
-npm http GET https://registry.npmjs.org/uproxy-build-tools
 ...
-├── findup-sync@0.1.3 (glob@3.2.11, lodash@2.4.1)
-├── js-yaml@2.0.5 (esprima@1.0.4, argparse@0.1.15)
-└── grunt-legacy-log@0.1.1 (underscore.string@2.3.3, lodash@2.4.1)
-
-regex2dfa@0.1.5-1 node_modules/regex2dfa
 $ grunt test
 Running "jasmine_node:all" (jasmine_node) task
 
