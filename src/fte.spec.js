@@ -3,9 +3,9 @@ var regex2dfa = require('regex2dfa/regex2dfa.js');
 var fte = require('uTransformers/src/transformers/uTransformers.fte.js');
 
 // our local helper files
-var regexes = require('./regexes.js');
-var udp_client = require('../udp_client.js')
-var udp_server = require('../udp_server.js')
+var regexes = require('./fte.regexes.js');
+var udp_client = require('./udp_client.js')
+var udp_server = require('./udp_server.js')
 
 
 var fte_transformer = function () {
@@ -38,15 +38,16 @@ describe("fte", function () {
   var regex_struct = regexes.regexes;
   for (var dpi_device in regex_struct) {
     for (var protocol in regex_struct[dpi_device]) {
-
       it(dpi_device + '.' + protocol, function () {
 
-
+        // initialize transformer
         runs(function () {
           this.transformer_ = new fte_transformer();
           var plaintext_regex = "^.+$"; // default, allow any input
+          var plaintext_max_len = 100;
           var ciphertext_regex = regex_struct[dpi_device][protocol];
-          this.transformer_.init_transformer(plaintext_regex, 100, ciphertext_regex, 150);
+          var ciphertext_max_len = 150;
+          this.transformer_.init_transformer(plaintext_regex, plaintext_max_len, ciphertext_regex, ciphertext_max_len);
 
           this.server_ = new udp_server.udp_server();
           this.server_.start(this.transformer_);
@@ -59,22 +60,23 @@ describe("fte", function () {
 
 
         runs(function () {
-          var client = new udp_client.udp_client();
           var dst = this.server_.address();
           this.plaintext = "Hello, World!";
-          client.send_message('127.0.0.1', dst['port'], this.transformer_, this.plaintext);
+          
+          var client = new udp_client.udp_client();
+          var localhost = '127.0.0.1';
+          client.send_message(localhost, dst['port'], this.transformer_, this.plaintext);
 
         });
 
 
         waitsFor(function () {
-          return this.server_.received_message();
+          return (this.server_.message_received() == this.plaintext);
         });
 
 
         runs(function () {
           this.server_.stop();
-          expect(this.server_.received_message()).toBe(this.plaintext);
         });
       });
     }

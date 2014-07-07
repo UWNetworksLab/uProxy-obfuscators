@@ -1,8 +1,9 @@
 var dgram = require('dgram');
-var utils = require('../utils.js');
 var rabbit = require('uTransformers/src/transformers/uTransformers.rabbit.js');
 
-describe("dgram_basic", function() {
+var utils = require('./utils.js');
+
+describe("rabbit", function() {
   var client_ = null;
   var server_ = null;
   var transformer_ = null;
@@ -42,7 +43,7 @@ describe("dgram_basic", function() {
     expect(message_sent_).toBe(message_received_);
   });
 
-  it("uTransformers.rabbit", function() {
+  it("default", function() {
 
     waitsFor(function() {
       return server_up_;

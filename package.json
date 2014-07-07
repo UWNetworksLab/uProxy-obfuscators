@@ -6,11 +6,11 @@
     "test": "grunt test"
   },
   "devDependencies": {
-    "grunt": "^0.4",
-    "grunt-jasmine-node": "^0.2",
+    "grunt": "latest",
+    "grunt-jasmine-node": "latest",
     "regex2dfa": "latest",
     "udp": "latest",
-    "uproxy-build-tools": "^0.0",
+    "uproxy-build-tools": "latest",
     "utransformers": "latest"
   },
   "repository": {

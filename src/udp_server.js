@@ -1,5 +1,7 @@
 var dgram = require('dgram');
+
 var utils = require('./utils.js');
+
 
 var udp_server = function () {
   this.server_ = null;
@@ -11,11 +13,7 @@ var udp_server = function () {
     return this.server_.server_up_;
   }
 
-  this.received_message = function () {
-    return (this.server_.message_received_ != null);
-  }
-
-  this.received_message = function () {
+  this.message_received = function () {
     return this.server_.message_received_;
   }
 
