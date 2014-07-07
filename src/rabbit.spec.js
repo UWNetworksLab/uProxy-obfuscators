@@ -1,5 +1,5 @@
 var dgram = require('dgram');
-var rabbit = require('uTransformers/src/transformers/uTransformers.rabbit.js');
+var rabbit = require('utransformers/src/transformers/uTransformers.rabbit.js');
 
 var utils = require('./utils.js');
 

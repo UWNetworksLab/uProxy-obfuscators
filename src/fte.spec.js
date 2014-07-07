@@ -1,6 +1,6 @@
 // our npm packages
 var regex2dfa = require('regex2dfa/regex2dfa.js');
-var fte = require('uTransformers/src/transformers/uTransformers.fte.js');
+var fte = require('utransformers/src/transformers/uTransformers.fte.js');
 
 // our local helper files
 var regexes = require('./fte.regexes.js');
