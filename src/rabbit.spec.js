@@ -1,69 +1,64 @@
-var dgram = require('dgram');
+// our npm packages
 var rabbit = require('utransformers/src/transformers/uTransformers.rabbit.js');
 
-var utils = require('./utils.js');
+// our local helper files
+var udp_client = require('./udp_client.js')
+var udp_server = require('./udp_server.js')
 
-describe("rabbit", function() {
-  var client_ = null;
-  var server_ = null;
-  var transformer_ = null;
-  var server_up_ = false;
-  var family_ = "udp4";
-  var message_sent_ = "Some bytes";
-  var message_received_ = "";
 
-  beforeEach(function() {
-    server_ = dgram.createSocket(family_);
-
-    server_.on("error", function(err) {
-      console.log("server error:\n" + err.stack);
-    });
-
-    server_.on("message", function(b_ciphertext, rinfo) {
-      var ab_ciphertext = utils.toArrayBuffer(b_ciphertext);
-      var ab_plaintext = transformer_.restore(ab_ciphertext);
-      message_received_ = ab2str(ab_plaintext);
-    });
-
-    server_.on("listening", function(err) {
-      server_up_ = true;
-    });
-
-    server_.bind(0); // bind to any open port
-
-    transformer_ = new rabbit.Transformer();
+var rabbit_transformer = function () {
+  this.init_transformer = function () {
+    this.transformer_ = new rabbit.Transformer();
 
     var key = "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF";
     var ab_key = str2ab(key);
-    transformer_.setKey(ab_key);
-  });
+    this.transformer_.setKey(ab_key);
 
-  afterEach(function() {
-    server_.close();
-    expect(message_sent_).toBe(message_received_);
-  });
+    return this.transformer_;
+  }
+}
 
-  it("default", function() {
 
-    waitsFor(function() {
-      return server_up_;
-    });
+describe("rabbit", function () {
+  this.server_ = null;
+  this.transformer_ = null;
 
-    runs(function() {
-      client_ = dgram.createSocket(family_);
-      var server_address = server_.address();
-      var port = server_address['port'];
-      var message = str2ab(message_sent_);
-      var ciphertext = transformer_.transform(message);
-      var datagram = utils.toBuffer(ciphertext);
-      client_.send(datagram, 0, datagram.length, port, '127.0.0.1', function() {
-        client_.close();
+      it("default", function () {
+
+        // initialize transformer
+        runs(function () {
+          this.transformer_ = new rabbit_transformer();
+          this.transformer_.init_transformer();
+
+          this.server_ = new udp_server.udp_server();
+          this.server_.start(this.transformer_);
+        });
+
+
+        waitsFor(function () {
+          return this.server_.ready();
+        });
+
+
+        runs(function () {
+          var dst = this.server_.address();
+          this.plaintext = "Hello, World!";
+          
+          var client = new udp_client.udp_client();
+          var localhost = '127.0.0.1';
+          client.send_message(localhost, dst['port'], this.transformer_, this.plaintext);
+
+        });
+
+
+        waitsFor(function () {
+          return (this.server_.message_received() == this.plaintext);
+        });
+
+
+        runs(function () {
+          this.server_.stop();
+        });
       });
-    });
 
-    waitsFor(function() {
-      return (message_received_ != '');
-    });
-
-  });
 });
