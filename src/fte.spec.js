@@ -3,7 +3,7 @@ var regex2dfa = require('regex2dfa/regex2dfa.js');
 var fte = require('utransformers/src/transformers/uTransformers.fte.js');
 
 // our local helper files
-var regexes = require('./fte.regexes.js');
+var regexes = require('./regexes.js');
 var udp_client = require('./udp_client.js')
 var udp_server = require('./udp_server.js')
 
