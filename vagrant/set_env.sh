@@ -6,7 +6,7 @@ export PATH=$INSTALL_DIR/bin:$BUILD_DIR/emscripten-fastcomp/Release/bin:$BUILD_D
 export GMP_VERSION=6.0.0a
 export HTTP_GMP=https://ftp.gnu.org/gnu/gmp/gmp-$GMP_VERSION.tar.bz2
 
-export LIBFTE_VERSION=0.1.2
+export LIBFTE_VERSION=0.1.3
 export GIT_LIBFTE=https://github.com/uProxy/libfte.git
 
 export UTRANSFORMERS_VERSION=0.2.0
@@ -14,7 +14,7 @@ export GIT_OBFUSCATION=https://github.com/uProxy/uTransformers.git
 
 export CORES=`nproc`
 
-export EMSCRIPTEN_VERSION=1.20.0
+export EMSCRIPTEN_VERSION=1.21.1
 export LLVM=$BUILD_DIR/emscripten-fastcomp/Release/bin
 export GIT_EMSCRIPTEN=https://github.com/kripken/emscripten.git
 export GIT_EMSCRIPTEN_FASTCOMP=https://github.com/kripken/emscripten-fastcomp
