@@ -18,13 +18,14 @@ GMP_LIB_DIR=$(GMP_DIR)/lib
 
 RAPIDJSON_INC_DIR=$(THIRDPARTY_DIR)/rapidjson/include
 
-EXPORTS=-s EXPORTED_FUNCTIONS="[\
+EMFLAGS = -s EXPORTED_FUNCTIONS="[\
     '_delete_transformer','_create_transformer',\
     '_set_key','_set_init_vector','_configure',\
     '_transform','_flush_transform','_restore']"
+EMFLAGS += -s ALLOW_MEMORY_GROWTH=1
 OPTIMIZATION_FLAGS = -O3
-CXXFLAGS_ = $(CXXFLAGS) $(OPTIMIZATION_FLAGS) -Wall -I$(GMP_INC_DIR) -I$(FTE_INC_DIR) -I$(RAPIDJSON_INC_DIR) $(EXPORTS) 
-LDFLAGS_ = $(LDFLAGS) $(OPTIMIZATION_FLAGS) -Wall $(EXPORTS) -L$(FTE_LIB_DIR) -L$(GMP_LIB_DIR) -L$(FTE_LIB_DIR) -lgmp -lfte
+CXXFLAGS_ = $(CXXFLAGS) $(OPTIMIZATION_FLAGS) -Wall -I$(GMP_INC_DIR) -I$(FTE_INC_DIR) -I$(RAPIDJSON_INC_DIR) $(EMFLAGS) 
+LDFLAGS_ = $(LDFLAGS) $(OPTIMIZATION_FLAGS) -Wall $(EMFLAGS) -L$(FTE_LIB_DIR) -L$(GMP_LIB_DIR) -L$(FTE_LIB_DIR) -lgmp -lfte
 
 TRANSFORMERJS = src/transformers/transformer.js
 TARGET_FTEJS = src/transformers/uTransformers.fte.js
