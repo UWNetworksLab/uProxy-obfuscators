@@ -94,10 +94,10 @@ void RabbitCryptor::keysetup(const uint8_t *key, uint32_t keysize,
   memcpy(key_int, key, keysize);
 
   /* Generate four subkeys */
-  k0 = U8TO32_LITTLE(key_int[0]);
-  k1 = U8TO32_LITTLE(key_int[1]);
-  k2 = U8TO32_LITTLE(key_int[2]);
-  k3 = U8TO32_LITTLE(key_int[3]);
+  k0 = U32TO32_LITTLE(key_int[0]);
+  k1 = U32TO32_LITTLE(key_int[1]);
+  k2 = U32TO32_LITTLE(key_int[2]);
+  k3 = U32TO32_LITTLE(key_int[3]);
 
   /* Generate initial state variables */
   _master_ctx.x[0] = k0;
@@ -150,8 +150,8 @@ void RabbitCryptor::ivsetup(const uint8_t *iv) {
   uint32_t iv_int[2];
   memcpy(iv_int, iv, 8);
   /* Generate four subvectors */
-  i0 = U8TO32_LITTLE(iv_int[0]);
-  i2 = U8TO32_LITTLE(iv_int[1]);
+  i0 = U32TO32_LITTLE(iv_int[0]);
+  i2 = U32TO32_LITTLE(iv_int[1]);
   i1 = (i0 >> 16) | (i2 & 0xFFFF0000);
   i3 = (i2 << 16) | (i0 & 0x0000FFFF);
 
