@@ -46,9 +46,10 @@ Doing a release
 * Check-in all changes to uTransformers.
 * Ensure all ```*_VERSION``` variables in ```uTransformers/vagrant/set_env.sh``` are correct.
 * Update ```UTRANSFORMERS_VERSION``` in ```uTransformers/vagrant/set_env.sh``` to ```master```.
-* Do the uTransformers build as described above.
+* Do the uTransformers build as described above, which will generate ```vagrant/uTransformers```.
 * Update the version number in ```vagrant/uTransformers/npm/package.json```.
 * In the generated directory in ```vagrant/uTransformers``` commit ```npm/uTransformers.*.js``` and ```npm/package.json```.
+* Run ```npm publish``` in ```vagrant/uTransformers/npm```.
 * Update ```UTRANSFORMERS_VERSION``` in ```uTransformers/vagrant/set_env.sh``` to the latest version and commit.
 
 Testing
