@@ -37,12 +37,14 @@ transformer.setKey(ab_key);
 var json_obj = {
   'plaintext_dfa': regex2dfa.regex2dfa("^.+$"),
   'plaintext_max_len': 128,
-  'ciphertext_dfa': regex2dfa.regex2dfa("^.+$"),,
+  'ciphertext_dfa': regex2dfa.regex2dfa("^.+$"),
   'ciphertext_max_len': 128
+};
         
 var json_str = JSON.stringify(json_obj);
 transformer.configure(json_str);
 
+var input_plaintext = "Hello, World!";
 var ab_plaintext = str2ab(input_plaintext);
 var ciphertext = transformer.transform(ab_plaintext);
 var ab_output_plaintext = transformer.restore(ciphertext);
@@ -59,6 +61,7 @@ var key = "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF";
 var ab_key = str2ab(key);
 transformer.setKey(ab_key);
 
+var input_plaintext = "Hello, World!";
 var ab_plaintext = str2ab(input_plaintext);
 var ciphertext = transformer.transform(ab_plaintext);
 var ab_output_plaintext = transformer.restore(ciphertext);
