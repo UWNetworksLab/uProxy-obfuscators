@@ -8,9 +8,9 @@ var regexes = {
     "whois": "^[ !-~]+\x0d\x0a$"
   },
   "appid": {
-    "bittorrent": "^(\x13BitTorrent protocol|GET /announce\?(info_hash|peer_id|ip|port|uploaded|downloaded|left|event).*$",
+    "bittorrent": "^(\x13BitTorrent protocol|GET /announce\?(info_hash|peer_id|ip|port|uploaded|downloaded|left|event)).*$",
     "ntp": "^((\x00|\x01|\x02|\x03|\x04|\x40|\x41|\x42|\x43|\x44|\x80|\x81|\x02|\x83|\x84|\xc0|\xc1|\xc2|\xc3|\xc4)(\x00-\x04))((\x19|\x1a|\x1b|\x1c|\x1d|\x21|\x22|\x23|\x24|\x25|\x59|\x5a|\x5b|\x5c|\x5d|\x61|\x62|\x63|\x64|\x65|\x99|\x9a|\x9b|\x9c|\x9d|\xa1|\xa2|\xa3|\xa4|\xa5|\xd9|\xda|\xdb|\xdc|\xdd|\xe1|\xe2|\xe3|\xe4|\xe5)[\x00-\x15]).*$",
-    "rip": "(\x01|\x02)\x02\x00\x00\x00\x02.{14}\x00\x00\x00[\x00-\x16].*$",
+    "rip": "^(\x01|\x02)\x02\x00\x00\x00\x02.{14}\x00\x00\x00[\x00-\x16].*$",
     "sip": "^(INVITE|CANCEL|MESSAGE|REGISTER)\ssip:[^\r\n]*\sSIP/2\.0\r\n.*$"
   }
 };
