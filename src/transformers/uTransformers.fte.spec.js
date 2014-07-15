@@ -35,7 +35,7 @@ var test_languages = [{
 }, {
   'plaintext_regex': '^.+$',
   'plaintext_max_len': 64,
-  'ciphertext_regex': '^[a-zA-Z0-9]+$',
+  'ciphertext_regex': '^(INVITE|CANCEL|MESSAGE|REGISTER)\ssip:[^\r\n]*\sSIP/2\.0\r\n.*$',
   'ciphertext_max_len': 512
 }];
 

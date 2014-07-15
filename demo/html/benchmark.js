@@ -83,14 +83,20 @@ function WriteFteTable() {
     var retval = '';
     retval += '<tr id="fte_row' + i + '">';
     retval += '<td class="obfuscatorName">fte</td>';
-    retval += '<td class="testNum">' + (i + 1) + '</td>';
+    retval += '<td class="testNum">' + test_languages[i]['description'] + '</td>';
+    retval += '<td class="testProto">' + test_languages[i]['protocol'] + '</td>';
     retval += '<td class="testInputLanguage">(' + test_languages[i][
       'plaintext_regex'
-    ] + ', ' + test_languages[i]['plaintext_max_len'] + ')</td>';
-    retval += '<td class="testInputLaguage">(' + test_languages[i][
-      'ciphertext_regex'
-    ] + ', ' + test_languages[i]['ciphertext_max_len'] + ')</td>';
+    ].substr(0,16) + ', ' + test_languages[i]['plaintext_max_len'] + ')</td>';
+    if (test_languages[i]['protocol'] == "stream cipher") {
+      retval += '<td class="testInputLaguage">(^.+$, ' + test_languages[i]['ciphertext_max_len'] + ')</td>';
+    } else {
+      retval += '<td class="testInputLaguage">(-, ' + test_languages[i]['ciphertext_max_len'] + ')</td>';
+    }
     retval += '<td class="testCost">';
+    retval += '-';
+    retval += '</td>';
+    retval += '<td class="testBandwidth">';
     retval += '-';
     retval += '</td>';
     retval += '</tr>';
@@ -100,8 +106,8 @@ function WriteFteTable() {
 }
 
 function FillFteTable(i) {
-  var plaintext_dfa = regex2dfa(test_languages[i]['plaintext_regex']);
   var ciphertext_dfa = regex2dfa(test_languages[i]['ciphertext_regex']);
+  var plaintext_dfa = regex2dfa(test_languages[i]['plaintext_regex']);
   retval = do_fte_benchmark(plaintext_dfa, test_languages[i][
       'plaintext_max_len'
     ],
@@ -115,23 +121,36 @@ function FillFteTable(i) {
   }
 
   var toUpdate = document.getElementById('fte_row' + i).className = rowClass;
-  var toUpdate = document.getElementById('fte_row' + i).getElementsByClassName(
+  var cost_cell = document.getElementById('fte_row' + i).getElementsByClassName(
     'testCost')[0];
-  toUpdate.innerHTML = elapsed;
+  cost_cell.innerHTML = elapsed;
+
+  var throughput_cell = document.getElementById('fte_row' + i).getElementsByClassName(
+    'testBandwidth')[0];
+  var throughput = test_languages[i]['plaintext_max_len']; // bytes encrypted per encrypt call
+  throughput *= (1000 / elapsed); // from bytes/call to bytes/sec
+  throughput /= 1048576; // bytes/sec to MB/sec
+  throughput *= 8; // MB/sec to Mb/sec
+  throughput_cell.innerHTML = Math.round(throughput * 10, 2) / 10;
 
 }
 
 
 // Functions for the Rabbit table
-var test_lengths = [128, 256, 512, 1024, 2048, 4096, 8192];
+var test_lengths = [512, 1024, 2048];
 function WriteRabbitTable() {
   for (var i = 0; i < test_lengths.length; i++) {
     var retval = '';
     retval += '<tr id="rabbit_row' + i + '">';
     retval += '<td class="obfuscatorName">rabbit</td>';
-    retval += '<td class="testNum">' + (i + 1) + '</td>';
-    retval += '<td class="plaintext_len">' + test_lengths[i] + '</td>';
+    retval += '<td class="testNum">FPE</td>';
+    retval += '<td class="testProto">stream cipher</td>';
+    retval += '<td class="inputLanguage">(^.+$, ' + test_lengths[i] + ')</td>';
+    retval += '<td class="outputLanguage">(^.+$, ' + test_lengths[i] + ')</td>';
     retval += '<td class="testCost">';
+    retval += '-';
+    retval += '</td>';
+    retval += '<td class="testBandwidth">';
     retval += '-';
     retval += '</td>';
     retval += '</tr>';
@@ -155,6 +174,13 @@ function FillRabbitTable(i) {
     'testCost')[0];
   toUpdate.innerHTML = elapsed;
 
+  var throughput_cell = document.getElementById('rabbit_row' + i).getElementsByClassName(
+    'testBandwidth')[0];
+  var throughput = test_languages[i]['plaintext_max_len']; // bytes encrypted per encrypt call
+  throughput *= (1000 / elapsed); // from bytes/call to bytes/sec
+  throughput /= 1048576; // bytes/sec to MB/sec
+  throughput *= 8; // MB/sec to Mb/sec
+  throughput_cell.innerHTML = Math.round(throughput * 10, 2) / 10;
 }
 
 
