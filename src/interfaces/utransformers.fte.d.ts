@@ -1,19 +1,7 @@
 /// <reference path='utransformer.d.ts' />
 
-declare module fte {
-  class Transformer implements UTransformers.Transformer {
-    /**
-     * Create a transformer instance.
-     * @constructor
-     */
-    constructor();
+import Transformer = require('./utransformer');
 
-    // It's unfortunate that TypeScript class declarations must explicitly
-    // declare the functions of their declared interfaces.
-    setKey(key:ArrayBuffer) : void;
-    configure(json:string) : void;
-    transform(buffer:ArrayBuffer) : ArrayBuffer;
-    restore(buffer:ArrayBuffer) : ArrayBuffer;
-    dispose() : void;
-  }
-}
+declare class Fte extends Transformer {}
+
+export = Fte
